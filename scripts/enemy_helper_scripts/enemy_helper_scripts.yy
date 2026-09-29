@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"enemy_helper_scripts",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"enemy_helper_scripts",
+  "parent":{
+    "name":"EnemyAI",
+    "path":"folders/EnemyAI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

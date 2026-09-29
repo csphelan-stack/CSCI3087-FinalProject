@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"draw_buttons_settings_script",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_buttons_settings_script",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Settings.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

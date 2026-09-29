@@ -1,0 +1,1 @@
+if (state == ENEMY_STATE.DEAD) instance_destroy();
