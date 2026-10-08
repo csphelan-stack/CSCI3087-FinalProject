@@ -14,10 +14,12 @@ global.BASE_H = 360;
 // GUI scaling
 gui_scaling = 1.2;
 
-global.left_button = ord("A");
-global.right_button = ord("D");
-global.up_button = ord("W");
-global.down_button = ord("S");
+global.left_button = vk_left;
+global.right_button = vk_right;
+global.up_button = vk_up;
+global.down_button = vk_down;
+
+
 
 
 
