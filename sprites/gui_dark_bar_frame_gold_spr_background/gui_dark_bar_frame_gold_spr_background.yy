@@ -1,10 +1,10 @@
 {
   "$GMSprite":"v2",
-  "%Name":"gui_dark_bar_frame_gold_spr",
+  "%Name":"gui_dark_bar_frame_gold_spr_background",
   "bboxMode":0,
-  "bbox_bottom":14,
+  "bbox_bottom":29,
   "bbox_left":0,
-  "bbox_right":85,
+  "bbox_right":171,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -16,14 +16,14 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":15,
+  "height":30,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"1774c187-3314-40e5-8680-75f95d4d5832","blendMode":0,"displayName":"default","isLocked":false,"name":"1774c187-3314-40e5-8680-75f95d4d5832","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"gui_dark_bar_frame_gold_spr",
+  "name":"gui_dark_bar_frame_gold_spr_background",
   "nineSlice":null,
-  "origin":0,
+  "origin":9,
   "parent":{
     "name":"Dark_Ages_UI",
     "path":"folders/Gui Sprites/Dark_Ages_UI.yy",
@@ -33,7 +33,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"gui_dark_bar_frame_gold_spr",
+    "%Name":"gui_dark_bar_frame_gold_spr_background",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -57,7 +57,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"gui_dark_bar_frame_gold_spr",
+    "name":"gui_dark_bar_frame_gold_spr_background",
     "playback":1,
     "playbackSpeed":30.0,
     "playbackSpeedType":0,
@@ -69,13 +69,13 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b12ddcb8-d8a3-4dad-a863-6dec9204552d","path":"sprites/gui_dark_bar_frame_gold_spr/gui_dark_bar_frame_gold_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b12ddcb8-d8a3-4dad-a863-6dec9204552d","path":"sprites/gui_dark_bar_frame_gold_spr_background/gui_dark_bar_frame_gold_spr_background.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"7373991e-2650-413d-a2b9-269afb5bc327","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":87,
     "yorigin":0,
   },
   "swatchColours":null,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":86,
+  "width":172,
 }

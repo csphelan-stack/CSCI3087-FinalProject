@@ -53,7 +53,13 @@ can_attack = true;
 facing = 270; // start facing down (toward the camera)
 
 total_hp = 50;
-hp = total_hp
+hp = total_hp;
+
+healthbar_width = 100;
+healthbar_height = 12;
+
+healthbar_x = display_get_gui_width() / 2;
+healthbar_y = display_get_gui_height() - 82;
 
 attackBtn = ord("Z");
 dashBtn = vk_space;
