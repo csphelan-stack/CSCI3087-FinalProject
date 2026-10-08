@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"dashStateMC",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"dashStateMC",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Main_character/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
