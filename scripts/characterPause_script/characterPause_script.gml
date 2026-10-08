@@ -8,8 +8,8 @@ can_move=false;
 }
 function characterUnPause_script(){
 
-can_attack = True;
-can_move=True;
+can_attack = true;
+can_move= true;
 
 
 
