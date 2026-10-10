@@ -1,93 +1,88 @@
-//pauses every enemy that inherits from this
-if (global.gameIsPaused) { image_speed = 0; exit; }
+// ============================================================
+// ENEMY STEP
+// The logic lives in the scripts in the EnemyAI folder:
+//   enemy_state_machine, enemy_state_logic, enemy_perception,
+//   enemy_movement, enemy_combat, enemy_animation
+// ============================================================
 
-// ANY state -> DEAD
-if (hp <= 0 && state != ENEMY_STATE.DEAD) enemy_change_state(ENEMY_STATE.DEAD);
 
-move_spd = 0; // states set this if they want to walk this step
+// ============================================================
+// GAME PAUSE
+// ============================================================
 
-// ======================= STATE MACHINE =======================
-switch (state) {
+// Check whether the game is paused.
+if (global.gameIsPaused)
+{
+    // Freeze the enemy's animation.
+    image_speed = 0;
 
-    case ENEMY_STATE.IDLE:
-        if (enemy_can_see_player(sight_range, true)) { enemy_change_state(ENEMY_STATE.CHASE); break; }
+    // Stop processing the Step event.
+    exit;
+}
 
-        state_timer--;
-        if (state_timer <= 0) enemy_change_state(ENEMY_STATE.WANDER);
-    break;
 
-    case ENEMY_STATE.WANDER:
-        if (enemy_can_see_player(sight_range, true)) { enemy_change_state(ENEMY_STATE.CHASE); break; }
+// ============================================================
+// UNIVERSAL DEATH CHECK
+// ============================================================
 
-        state_timer--;
-        if (enemy_walk_to(wander_x, wander_y, wander_spd) || state_timer <= 0) {
-            enemy_change_state(ENEMY_STATE.IDLE);
-        }
-    break;
+// If the enemy has no HP and is not already dead...
+if (hp <= 0 && state != ENEMY_STATE.DEAD)
+{
+    // Change to the DEAD state.
+    enemy_change_state(ENEMY_STATE.DEAD);
+}
 
-    case ENEMY_STATE.CHASE:
-        if (!enemy_can_see_player(lose_range, false)) { enemy_change_state(ENEMY_STATE.SEARCH); break; }
 
-        last_x = target.x;
-        last_y = target.y;
+// ============================================================
+// ATTACK COOLDOWN
+// ============================================================
 
-        if (point_distance(x, y, target.x, target.y) > stop_range) {
-            enemy_walk_to(target.x, target.y, movespd);
-        } else {
-            facing = point_direction(x, y, target.x, target.y);
-            // an ATTACK state would go here later: enemy_change_state(ENEMY_STATE.ATTACK);
-        }
-    break;
+// If the attack cooldown is active...
+if (attack_cooldown > 0)
+{
+    // Count it down by one frame.
+    attack_cooldown--;
+}
 
-    case ENEMY_STATE.SEARCH:
-        // he's alert now, so no view cone needed to re-spot you
-        if (enemy_can_see_player(sight_range, false)) { enemy_change_state(ENEMY_STATE.CHASE); break; }
 
-        state_timer--;
-        var _arrived = enemy_walk_to(last_x, last_y, movespd);
+// ============================================================
+// DEFAULT MOVEMENT
+// ============================================================
 
-        // once at the last known spot, look around
-        if (_arrived && state_timer mod 40 == 0) facing = (facing + 90) mod 360;
+// Reset normal movement each frame.
+// Individual states enable movement when necessary.
+move_spd = 0;
 
-        if (state_timer <= 0) {
-            home_x = x; // wander around wherever he gave up
-            home_y = y;
-            enemy_change_state(ENEMY_STATE.IDLE);
-        }
-    break;
 
-    case ENEMY_STATE.HURT:
-        kb_x *= kb_friction;
-        kb_y *= kb_friction;
+// ============================================================
+// ENEMY STATE MACHINE  (state logic: enemy_state_logic)
+// ============================================================
 
-        state_timer--;
-        if (state_timer <= 0) {
-            kb_x = 0;
-            kb_y = 0;
-            enemy_change_state(ENEMY_STATE.CHASE); // getting hit makes him aggro
-        }
-    break;
+switch (state)
+{
+    case ENEMY_STATE.IDLE:   enemy_state_idle();   break;
+    case ENEMY_STATE.WANDER: enemy_state_wander(); break;
+    case ENEMY_STATE.CHASE:  enemy_state_chase();  break;
+    case ENEMY_STATE.ATTACK: enemy_state_attack(); break;
+    case ENEMY_STATE.SEARCH: enemy_state_search(); break;
+    case ENEMY_STATE.HURT:   enemy_state_hurt();   break;
 
     case ENEMY_STATE.DEAD:
-        image_speed = death_anim_spd;
-        exit; // Animation End event destroys him
+        // Keep the death animation playing, then skip everything below.
+        enemy_state_dead();
+        exit;
 }
 
-// ======================= MOVEMENT + ANIMATION =======================
-if (state != ENEMY_STATE.HURT) {
-    kb_x = lengthdir_x(move_spd, move_dir);
-    kb_y = lengthdir_y(move_spd, move_dir);
-    if (move_spd > 0) facing = move_dir;
-}
 
-var _d = enemy_dir4();
-if (move_spd > 0) {
-    sprite_index = spr_run[_d];
-    image_speed  = run_anim_spd;
-} else {
-    sprite_index = spr_idle[_d];
-    image_speed  = idle_anim_spd;
-}
+// ============================================================
+// MOVEMENT + ANIMATION  (enemy_movement / enemy_animation)
+// ============================================================
 
-x += kb_x;
-y += kb_y;
+// Turn move_spd / move_dir into velocity.
+enemy_update_velocity();
+
+// Pick the sprite and animation speed.
+enemy_update_animation();
+
+// Move, stopping at walls.
+enemy_apply_movement();
