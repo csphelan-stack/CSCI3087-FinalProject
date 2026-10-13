@@ -1,5 +1,6 @@
 function attackStatePlayer(){
 
+
     // has the swing reached the hit frame, and have we NOT made a hitbox yet this swing?
     if (image_index >= attack_hit_frame && !attack_hit_spawned) {
 
@@ -9,6 +10,9 @@ function attackStatePlayer(){
         var dir4 = round(facing / 90) mod 4;
        
         var _dir = dir4 * 90;
+		
+		//tracks the opposite of the swing direction so we can apply knockback
+		opp_swing_dir = dir4*90+180;
 
         // half the hitbox's size, so we can line up its EDGE instead of its centre
         var _half_w = sprite_get_width(main_character_hitbox_spr) / 2;
@@ -37,7 +41,7 @@ function startAttackPlayer(){
         case 3: sprite_index = skull_knight_attack_forward_spr;  break;
     }
     image_index = 0;   // start the swing from the first frame
-    image_speed = 1;   // play at the sprite's normal speed
+    image_speed = 1.2;   // play at the sprite's normal speed
 	
 	attack_hit_spawned = false;  //new swing, so it hasn't made a hitbox yet
 }

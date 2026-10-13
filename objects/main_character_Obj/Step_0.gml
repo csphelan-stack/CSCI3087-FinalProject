@@ -11,6 +11,10 @@ if(dash_cooldown>0){
 dash_cooldown-=1;	
 }
 
+if(invuln > 0){
+invuln -= 1;
+}
+
 if(parry_cooldown>0){
 parry_cooldown-=1;	
 }
@@ -27,6 +31,6 @@ switch (state){
 		dashStateMC();
 		break;
 	case PlayerState.PARRY:
-		dashStateMC();
+		parryStateMC();
 		break;
 }
