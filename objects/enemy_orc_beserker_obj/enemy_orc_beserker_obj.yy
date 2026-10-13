@@ -11,8 +11,8 @@
   "name":"enemy_orc_beserker_obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"EnemyAI",
-    "path":"folders/EnemyAI.yy",
+    "name":"enemy_objects",
+    "path":"folders/EnemyAI/enemy_objects.yy",
   },
   "parentObjectId":{
     "name":"Enemy_base_obj",

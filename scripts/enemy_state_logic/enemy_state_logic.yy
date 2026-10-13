@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"enemy_helper_scripts",
+  "%Name":"enemy_state_logic",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"enemy_helper_scripts",
+  "name":"enemy_state_logic",
   "parent":{
-    "name":"EnemyAI",
-    "path":"folders/EnemyAI.yy",
+    "name":"Enemy_scripts",
+    "path":"folders/EnemyAI/Enemy_scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
