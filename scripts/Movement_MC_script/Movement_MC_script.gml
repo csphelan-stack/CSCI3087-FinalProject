@@ -11,6 +11,11 @@ function applyMovement(){
 		return;
 	}
 	
+		if(keyboard_check_pressed(parryBtn) && can_move && parry_cooldown <=0 && !global.gameIsPaused){
+		startParryState();
+		return;
+	}
+	
 	
 if(global.gameIsPaused){
 	movespd = 0;
