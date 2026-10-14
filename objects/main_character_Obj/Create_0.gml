@@ -63,10 +63,9 @@ healthbar_x = display_get_gui_width() / 2;
 healthbar_y = display_get_gui_height() - 82;
 // 
 
-attackBtn = ord("Z");
-dashBtn = vk_space;
+// attack, dash and parry keys are global.attack_button / dash_button / parry_button now
+// (set in Room_controller_object, changeable on the pause menu's Settings page)
 consumeBtn = ord("A");
-parryBtn = ord("X");
 
 
 

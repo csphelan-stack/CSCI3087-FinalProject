@@ -8,6 +8,12 @@ window_set_cursor(gui_cursor_spr);
 global.BASE_W = 640;
 global.BASE_H = 360;
 
+// medieval pixel font, made once for the whole game. use it with draw_set_font(global.font_medieval)
+// it's white so draw_set_colour tints it, and it looks crispest at whole-number scales (1, 2, 3)
+if (!variable_global_exists("font_medieval")) {
+	global.font_medieval = font_add_sprite_ext(gui_font_medieval_spr, " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;-+'\"()/%&*_", true, 1);
+}
+
 // Window scale (2 = 1280×720)
 
 
@@ -18,6 +24,12 @@ global.left_button = vk_left;
 global.right_button = vk_right;
 global.up_button = vk_up;
 global.down_button = vk_down;
+global.attack_button = ord("Z");
+global.dash_button = ord("C");
+global.parry_button = ord("X");
+
+// swap in whatever keys the player picked on the pause menu's Settings page last time
+controls_load();
 
 
 

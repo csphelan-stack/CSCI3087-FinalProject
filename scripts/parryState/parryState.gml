@@ -54,8 +54,8 @@ function parryChargeComplete(){
 
 function parryStateMC(){
 
-	// let go of X -> drop the guard (and stop here, nothing else this step)
-	if(!keyboard_check(parryBtn)){
+	// let go of the parry key -> drop the guard (and stop here, nothing else this step)
+	if(!keyboard_check(global.parry_button)){
 		state = PlayerState.NORMAL;
 		parry_raising = false;
 		return;

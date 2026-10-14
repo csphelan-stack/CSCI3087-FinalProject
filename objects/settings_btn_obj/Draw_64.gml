@@ -1,4 +1,4 @@
-var col = hovered ? c_yellow : c_white;
+var col = hovered ? global.hover_color : c_white;
 
 draw_sprite_ext(
     sprite_index, 0,
@@ -7,4 +7,6 @@ draw_sprite_ext(
     button_h / sprite_height,
     0, col, 1
 );
+
+draw_button_label(gui_x, gui_y, button_w, button_h, label, col, label_scale);
 

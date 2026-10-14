@@ -1,6 +1,6 @@
 
 
-var col = hovered ? c_yellow : c_white;
+var col = hovered ? global.hover_color : c_white;
 
 draw_sprite_ext(
     sprite_index, 0,
