@@ -29,11 +29,11 @@
   "properties":[],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
-  "solid":false,
+  "solid":true,
   "spriteId":{
     "name":"wall_spr",
     "path":"sprites/wall_spr/wall_spr.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

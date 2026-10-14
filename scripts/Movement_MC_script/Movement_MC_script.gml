@@ -1,17 +1,17 @@
 function applyMovement(){
 	
 	
-       if (keyboard_check_pressed(attackBtn) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
+       if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
         startAttackPlayer();
         return;
     }
 	
-	if(keyboard_check_pressed(dashBtn) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
+	if(keyboard_check_pressed(global.dash_button) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
 		startDashState();
 		return;
 	}
 	
-		if(keyboard_check_pressed(parryBtn) && can_move && parry_cooldown <=0 && !global.gameIsPaused){
+		if(keyboard_check_pressed(global.parry_button) && can_move && parry_cooldown <=0 && !global.gameIsPaused){
 		startParryState();
 		return;
 	}

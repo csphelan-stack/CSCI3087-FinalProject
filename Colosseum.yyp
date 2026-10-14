@@ -57,7 +57,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2026.0.0.16",
+    "IDEVersion":"2024.14.4.222",
   },
   "name":"Colosseum",
   "resources":[
@@ -150,6 +150,7 @@
     {"id":{"name":"gui_dpad_right_spr","path":"sprites/gui_dpad_right_spr/gui_dpad_right_spr.yy",},},
     {"id":{"name":"gui_dpad_spr","path":"sprites/gui_dpad_spr/gui_dpad_spr.yy",},},
     {"id":{"name":"gui_dpad_up_spr","path":"sprites/gui_dpad_up_spr/gui_dpad_up_spr.yy",},},
+    {"id":{"name":"gui_font_medieval_spr","path":"sprites/gui_font_medieval_spr/gui_font_medieval_spr.yy",},},
     {"id":{"name":"gui_framed_achievement_spr","path":"sprites/gui_framed_achievement_spr/gui_framed_achievement_spr.yy",},},
     {"id":{"name":"gui_framed_arcane_spr","path":"sprites/gui_framed_arcane_spr/gui_framed_arcane_spr.yy",},},
     {"id":{"name":"gui_framed_assassin_spr","path":"sprites/gui_framed_assassin_spr/gui_framed_assassin_spr.yy",},},
