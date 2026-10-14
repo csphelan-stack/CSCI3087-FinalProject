@@ -1,4 +1,4 @@
-damage = 1;
+damage = 100;
 
 knockback = 10;
 
