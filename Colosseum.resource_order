@@ -65,6 +65,7 @@
     {"name":"enemy_perception","order":3,"path":"scripts/enemy_perception/enemy_perception.yy",},
     {"name":"enemy_state_logic","order":4,"path":"scripts/enemy_state_logic/enemy_state_logic.yy",},
     {"name":"enemy_state_machine","order":5,"path":"scripts/enemy_state_machine/enemy_state_machine.yy",},
+    {"name":"enemy_wave_spawn","order":6,"path":"scripts/enemy_wave_spawn/enemy_wave_spawn.yy",},
     {"name":"parryState","order":4,"path":"scripts/parryState/parryState.yy",},
     {"name":"parryShader","order":8,"path":"shaders/parryShader/parryShader.yy",},
     {"name":"gui_arrow_down_spr","order":19,"path":"sprites/gui_arrow_down_spr/gui_arrow_down_spr.yy",},

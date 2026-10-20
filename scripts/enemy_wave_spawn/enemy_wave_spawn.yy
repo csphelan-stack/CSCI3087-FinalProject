@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"enemy_wave_spawn",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"enemy_wave_spawn",
+  "parent":{
+    "name":"wave_scripts_objs",
+    "path":"folders/EnemyAI/wave_scripts_objs.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

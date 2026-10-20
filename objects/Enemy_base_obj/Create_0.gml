@@ -7,6 +7,8 @@
 //rescale enemie sprites
 //create boss for each type of enemy or maybe ->
 //=>just orc and skeleton and then game master
+//change the cone of view for enemies? perception is too low
+//finish hard coding the waves . . . up to 18 maybe (5 before boss wave)
 // ---------- defaults (children override these after event_inherited) ----------
 hp         = 10;
 movespd    = 1.6;   // chase speed

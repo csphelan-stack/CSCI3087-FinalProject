@@ -101,6 +101,7 @@
     {"id":{"name":"enemy_perception","path":"scripts/enemy_perception/enemy_perception.yy",},},
     {"id":{"name":"enemy_state_logic","path":"scripts/enemy_state_logic/enemy_state_logic.yy",},},
     {"id":{"name":"enemy_state_machine","path":"scripts/enemy_state_machine/enemy_state_machine.yy",},},
+    {"id":{"name":"enemy_wave_spawn","path":"scripts/enemy_wave_spawn/enemy_wave_spawn.yy",},},
     {"id":{"name":"Movement_MC_script","path":"scripts/Movement_MC_script/Movement_MC_script.yy",},},
     {"id":{"name":"parryState","path":"scripts/parryState/parryState.yy",},},
     {"id":{"name":"parryShader","path":"shaders/parryShader/parryShader.yy",},},
