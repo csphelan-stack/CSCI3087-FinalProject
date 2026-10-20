@@ -68,11 +68,13 @@ function enemy_attack_hit(){
         return false;
     }
 
-    target.hp -= attack_damage;
+//changed to running from the main character objects perspective
+//this helps me to be able to implement a parry mechanism
 
-    // prevent player HP from going below zero and crashing
-    target.hp = max(target.hp, 0);
+	var _hurt = false;   // did the hit actually hurt him? (false if he parried it)
+	with(main_character_Obj){
+			_hurt = Enemy_damage_applying(other.attack_damage,other.id);
+	}
 
-    // return successful hit
-    return true;
+	return _hurt;
 }

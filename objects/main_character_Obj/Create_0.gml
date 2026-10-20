@@ -12,6 +12,9 @@ enum PlayerState {
     ATTACK,
     DASH,
 	PARRY,
+	STUNNED,
+	SPECIAL_CHARGE,
+	SPECIAL_SPIN,
 }
 
 //which state the player is currently in (see PlayerState enum above)
@@ -80,12 +83,48 @@ attack_hit_frame = 1;        //which frame of the swing makes the hitbox (0 = fi
 attack_peak_x =         [  64,   -4,   -64,   -2 ];
 attack_peak_y =         [ -12,  -52,   -12,   34 ];
 attack_hit_spawned = false;  //has this swing already made its hitbox?
+//attack sprite for each direction. order matches dir4: [right, up, left, down]
+attack_spr = [skull_knight_attack_right_spr, skull_knight_attack_backward_spr,
+              skull_knight_attack_left_spr,  skull_knight_attack_forward_spr];
+
+//---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
+special_charge_time  = 60;       //steps to fully charge (60 = 1 second)
+special_charge_timer = 0;
+special_charged      = false;
+special_dir4         = 3;
+special_spin_time    = 150;      //how long the tornado lasts (150 = 2.5 seconds)
+special_spin_timer   = 0;
+special_spin_angle   = 0;
+special_spin_rate    = 24;       //degrees he turns each step (bigger = faster spin)
+special_spin_frame   = 2;        //which frame of the attack sprites he holds while spinning (the sword out)
+//moving while spinning: fast but hard to control (normal walk is 3)
+special_spin_speed   = 4.5;      //top speed while spinning
+special_spin_launch  = 3;        //speed he gets launched at, the way he was facing, when the spin starts
+special_spin_accel   = 0.35;     //how hard the movement keys push him (lower = slower to turn = less control)
+special_spin_drag    = 0.95;     //how much speed he keeps each step (closer to 1 = slides more)
+special_spin_wobble  = 0.2;      //how hard the tornado shoves him off course each step
+special_vx           = 0;        //his speed while spinning
+special_vy           = 0;
+special_wobble_dir   = 0;        //which way the tornado is shoving him (wanders round on its own)
+special_radius       = 48;       //reach of the tornado (room pixels from his middle)
+special_damage       = 3;        //damage to each enemy in reach, every tick
+special_tick_time    = 12;       //steps between damage ticks (12 = 5 hits a second)
+special_tick_timer   = 0;
+special_knockback    = 6;        //how hard enemies get flung out
+special_ghost_gap    = 3;        //steps between the coloured afterimages
+special_ghost_timer  = 0;
+special_cooldown_t   = 60*15;    //the HEAVY cooldown after a spin (15 seconds)
+special_interrupt_cd = 60*8;     //shorter cooldown if you get hit while charging
+special_cooldown     = 0;
 
 //tracks opp of swing
 opp_swing_dir = 0;
-//knockback variables
-player_kbx = 30;
-player_kby = 30;
+//knockback: a push that slides him and fades out, in any state (applied in Step)
+push_x = 0;
+push_y = 0;
+push_friction = 0.8;    //how much of the push is left each step (lower = stops sooner)
+attack_recoil = 3;      //push back when one of his swings lands on an enemy
+hit_knockback = 6;      //push back when an enemy hits him
 
 attack_cooldown_time = 10; //60 = 1 sec wait
 attack_cooldown = 0;
@@ -99,7 +138,20 @@ invuln_time = 30; // steps until he can be hit again
 invuln = 0;
 
 
+//real player damage spot
+player_damage = 4;
+//normal swing is 4
+counter_damage = round(player_damage*1.5);
 
+//---damage counter above enemies (functions at the bottom of attackState)---
+dmg_popups = [];       //one counter per enemy being hit
+dmg_combo_time = 90;   //steps a counter stays up after the last hit (hit again before then and it adds up)
+dmg_fade_time = 6;     //it fades out over the last this-many steps
+dmg_fall = 18;         //how far it drops while fading out (room pixels)
+dmg_hop_speed = 3;     //how fast it pops up on each hit (bigger = higher hop)
+dmg_hop_gravity = 1.3; //how fast it falls back (bigger = snappier)
+dmg_text_scale = 1;    //text size (whole numbers stay crisp)
+dmg_crit_time = 45;    //how long "Crit!" stays on screen after a counter hit
 
 
 //if parry is successful
@@ -108,13 +160,45 @@ parry_was_hit = false;
 
 
 
-//parry cooldown (only activate cooldown if a parry exhuast is used up)
-parry_cooldown_t = 60*3;
+//---parry: block + perfect parry (see the top of parryState for how it all fits together)---
+//perfect parry: a hit this many steps after pressing parry is parried perfectly (no damage + auto counter)
+parry_perfect_window = 10;
+parry_perfect_timer = 0;
+
+//parry cooldowns
+parry_cooldown_t = 60*6;     //the LONG one: after the guard breaks or runs out
+parry_recover_time = 15;     //the short one: after letting go, so you can't spam taps for perfect parries
 parry_cooldown = 0;
 
-//timer that decides how long we can parry for.
-parry_exhuast_timer = 60*3;
-parry_exhuast = 0;
+//guard meter: drains while guarding and when blocking hits, refills when not guarding
+parry_exhaust_time = 60*3;            //full meter (also = how long you can hold the guard with no hits)
+parry_exhaust_timer = parry_exhaust_time;
+parry_hit_cost = 15;                  //meter lost per point of damage blocked (a 3 damage hit = 45)
+parry_guard_regen = 2;                //meter gained per step while not guarding
+parry_perfect_refund = 60;            //meter given back by a perfect parry
+
+//when the meter is nearly empty it begins to blink until eventually
+// we exhuast the player.
+parry_blink_time = 60;
+
+//quick flash when a hit is blocked
+block_flash_time = 8;
+block_flash = 0;
+
+//how long the enemy is stunned for after we parry them
+parry_stagger_time = 40;
+
+//is the current swing a counter from a parry? (set by startAttackPlayer)
+attack_is_countered = false;
+
+//getting your guard broken stuns him
+stun_time = 45;    //steps he can't move or act (60 = 1 second)
+stun_timer = 0;
+//idle sprite for each direction, used while stunned. order matches dir4: [right, up, left, down]
+idle_spr = [skull_knight_idle_right_spr, skull_knight_idle_backward_spr,
+            skull_knight_idle_left_spr,  skull_knight_idle_forward_spr];
+
+
 
 dash_length = 120;  //total pixels one dash travels
 
@@ -134,28 +218,25 @@ dash_ghost_fade        = 16;    //steps each shadow takes to fade out
 dash_ghosts_made       = 0;     //how many shadows this dash has made so far
 
 
-//---parry effects---
-parry_fx_colour = c_aqua;   //colour of the charge glow and the shockwave
-parry_charged = false;      //has the guard finished rising this parry?
-
-parry_circle_radius = 44;    //size of the charge circle on the ground (was 28)
-
-parry_charge_time  = 45;   //steps it takes to fill the circle (60 = 1 second)
-parry_charge_timer = 0;    //counts UP while holding X; full when it reaches parry_charge_time
-
-//guard-raise animation that plays while the parry charges - when it finishes, the guard is up
-//order matches dir4: [right, up, left, down]
-//(forward one used for every direction for now - swap in the others when they're made)
-//put -1 in a slot to skip the animation for that direction and charge on the timer instead
-parry_raise_spr = [skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr,
-                   skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr];
-//looping block animation once the guard is up
+//looping block animation while the guard is up. order matches dir4: [right, up, left, down]
 parry_block_spr = [skull_knight_parry_right_spr, skull_knight_parry_backward_spr,
                    skull_knight_parry_left_spr,  skull_knight_parry_forward_spr];
-parry_raising = false;   //is the guard-raise animation playing right now?
 parry_dir4 = 3;          //which way this parry faces (0 right, 1 up, 2 left, 3 down)
+parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (and the saved shockwave fx below)
+parry_circle_radius = 44;   //size of the parry ring (and the saved charge circle below)
 
-//---sword glow (once the parry is fully charged)---
+
+//============================================================
+//shockwave / special attack visuals (the old charge-up parry's effects, now used by the special)
+//the fx functions at the bottom of parryState use these
+//============================================================
+
+//guard-raise animation he plays while charging the special. order matches dir4: [right, up, left, down]
+//(forward one used for every direction - swap in the others when they're made)
+parry_raise_spr = [skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr,
+                   skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr];
+
+//---sword glow (rainbow up the sword once something is fully charged)---
 sword_sweep        = 0;      //where the rainbow is: 0 = bottom of the sprite, 1 = top (moves on its own)
 sword_sweep_speed  = 0.02;   //how fast the rainbow climbs
 sword_band         = 0.4;    //how tall the rainbow band is
@@ -174,3 +255,8 @@ u_trail     = shader_get_uniform(parryShader, "u_trail");
 u_colours   = shader_get_uniform(parryShader, "u_colours");
 u_hue       = shader_get_uniform(parryShader, "u_hue");
 u_saturation = shader_get_uniform(parryShader, "u_saturation");
+
+
+
+
+

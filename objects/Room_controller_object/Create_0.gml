@@ -27,6 +27,7 @@ global.down_button = vk_down;
 global.attack_button = ord("Z");
 global.dash_button = ord("C");
 global.parry_button = ord("X");
+global.special_button = ord("S");   // hold to charge the special spin attack
 
 // swap in whatever keys the player picked on the pause menu's Settings page last time
 controls_load();

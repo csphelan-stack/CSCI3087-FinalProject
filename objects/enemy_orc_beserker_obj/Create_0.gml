@@ -19,7 +19,7 @@ event_inherited();
 // ============================================================
 
 // Give the Berserker 10 HP.
-hp = 10;
+hp = 200;
 
 // Give the Berserker a chase speed of 1.6.
 movespd = 1.6;

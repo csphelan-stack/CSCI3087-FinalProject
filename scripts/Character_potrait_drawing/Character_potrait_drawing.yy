@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Character_potrait_drawing",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Character_potrait_drawing",
+  "parent":{
+    "name":"Dialogue",
+    "path":"folders/Dialogue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
