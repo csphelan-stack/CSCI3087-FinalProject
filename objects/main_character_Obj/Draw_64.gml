@@ -25,3 +25,10 @@ draw_sprite_part_ext(
 );
 
 draw_sprite(gui_dark_bar_frame_gold_spr_border, 0, healthbar_x, healthbar_y);
+
+// damage numbers / "Crit!" above enemies (hidden behind the pause menu)
+if (!global.gameIsPaused) {
+	damagePopupsDraw();
+	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+}
+

@@ -1,69 +1,73 @@
-// how full the charge circle is: 0 = just started, 1 = full
-var _charge = 0;
-if (state == PlayerState.PARRY) {
-    if (parry_raising) {
-        _charge = min(1, image_index / image_number);              // how far through the raise animation
-    } else {
-        _charge = min(1, parry_charge_timer / parry_charge_time);  // no raise animation: use the timer
-    }
-    if (parry_charged) _charge = 1;   // guard is up: circle stays full
+// (the charge circle / rainbow sword / charge glow are fx functions at the bottom of parryState)
+
+// how full the special's charge is: 0 = just started, 1 = full
+var _special_charge = special_charged ? 1 : min(1, special_charge_timer / special_charge_time);
+
+// ---- 0. special charge circle on the ground (drawn BEFORE him, so it's underneath) ----
+if (state == PlayerState.SPECIAL_CHARGE) {
+    fxChargeCircleDraw(_special_charge, special_charged);
 }
 
-// ---- 1. the charge circle on the ground (drawn BEFORE him, so it's underneath) ----
-if (state == PlayerState.PARRY) {
-    var _R = parry_circle_radius;
-
-    gpu_set_blendmode(bm_add);
-    draw_set_colour(parry_fx_colour);
-
-    // the outline: full size from the start, so you can see what's being filled
-    draw_set_alpha(0.5);
-    for (var i = 0; i < 2; i++) {
-        var _o = _R - i;
-        draw_ellipse(x - _o, y - _o * 0.4, x + _o, y + _o * 0.4, true);
-    }
-
-    // the fill: grows from the middle out to the outline as it charges
-    var _r = _R * _charge;
-    draw_set_alpha(0.35);
-    if (parry_charged) draw_set_alpha(0.2);   // softer once full, while you hold the guard
-    if (_r > 1) {
-        draw_ellipse(x - _r, y - _r * 0.4, x + _r, y + _r * 0.4, false);
-    }
-
-    draw_set_alpha(1);
-    draw_set_colour(c_white);
-    gpu_set_blendmode(bm_normal);
-}
-
-// ---- 2. the knight: with the rainbow sword shader once fully charged ----
-if (state == PlayerState.PARRY && parry_charged) {
-    shader_set(parryShader);
-
-    var _uvs = sprite_get_uvs(sprite_index, image_index);
-    shader_set_uniform_f(u_uvs, _uvs[0], _uvs[1], _uvs[2], _uvs[3]);
-    shader_set_uniform_f(u_sweep, sword_sweep);
-    shader_set_uniform_f(u_band, sword_band);
-    shader_set_uniform_f(u_trail_len, sword_trail_len);
-    shader_set_uniform_f(u_colours, sword_colours);
-    shader_set_uniform_f(u_hue, sword_hue);
-    shader_set_uniform_f(u_saturation, sword_saturation);
-    shader_set_uniform_f(u_trail,
-        colour_get_red(sword_trail_colour)   / 255,
-        colour_get_green(sword_trail_colour) / 255,
-        colour_get_blue(sword_trail_colour)  / 255);
-
-    draw_self();
-    shader_reset();
+// ---- 1. the knight: rainbow sword once the special is charged and all through the spin ----
+if ((state == PlayerState.SPECIAL_CHARGE && special_charged) || state == PlayerState.SPECIAL_SPIN) {
+    fxRainbowSwordDraw();
 } else {
-    draw_self(); // draw the knight normally
+    draw_self();
 }
 
-// ---- 3. he glows in the parry colour while charging ----
-if (state == PlayerState.PARRY && !parry_charged) {
-    gpu_set_fog(true, parry_fx_colour, 0, 0);
-    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6 * _charge);
+// ---- 1b. special: glows while charging, wind swirls round him while spinning ----
+if (state == PlayerState.SPECIAL_CHARGE && !special_charged) {
+    fxChargeGlowDraw(_special_charge);
+}
+if (state == PlayerState.SPECIAL_SPIN) {
+    specialSpinRingDraw();
+}
+
+// ---- 2. perfect-parry window: a bright white flash right as the guard goes up, fading as the window closes ----
+if (state == PlayerState.PARRY && parry_perfect_timer > 0) {
+    gpu_set_fog(true, c_white, 0, 0);
+    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.8 * parry_perfect_timer / parry_perfect_window);
     gpu_set_fog(false, c_white, 0, 0);
+}
+
+// ---- 3. blocked a hit: quick flash in the parry colour ----
+if (block_flash > 0) {
+    gpu_set_fog(true, parry_fx_colour, 0, 0);
+    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.7 * block_flash / block_flash_time);
+    gpu_set_fog(false, c_white, 0, 0);
+}
+
+// ---- 4. blinks white when the guard meter is about to run out (exhausted = long cooldown) ----
+if (state == PlayerState.PARRY && parry_exhaust_timer <= parry_blink_time) {
+    var _blink_rate = (parry_exhaust_timer < parry_blink_time / 2) ? 3 : 6;   // blinks faster near the end
+    if ((parry_exhaust_timer div _blink_rate) mod 2 == 0) {
+        gpu_set_fog(true, c_white, 0, 0);
+        draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.75);
+        gpu_set_fog(false, c_white, 0, 0);
+    }
+}
+
+// ---- 5. flashes red while stunned (guard got broken) ----
+if (state == PlayerState.STUNNED && (stun_timer div 4) mod 2 == 0) {
+    gpu_set_fog(true, c_red, 0, 0);
+    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6);
+    gpu_set_fog(false, c_white, 0, 0);
+}
+
+// ---- 6. guard meter above his head: shows while guarding or refilling ----
+if (state == PlayerState.PARRY || parry_exhaust_timer < parry_exhaust_time) {
+    var _w = 24;
+    var _bx = x - _w / 2;
+    var _by = bbox_top - 6;
+    var _pct = parry_exhaust_timer / parry_exhaust_time;
+    var _col = parry_fx_colour;
+    if (parry_exhaust_timer <= parry_blink_time) _col = c_red;      // nearly empty
+    if (parry_cooldown > parry_recover_time) _col = c_dkgray;       // on the long cooldown: can't parry yet
+    draw_set_colour(c_black);
+    draw_rectangle(_bx - 1, _by - 1, _bx + _w, _by + 2, false);
+    draw_set_colour(_col);
+    if (_pct > 0) draw_rectangle(_bx, _by, _bx + (_w - 1) * _pct, _by + 1, false);
+    draw_set_colour(c_white);
 }
 
 // draw the hitbox outline in red

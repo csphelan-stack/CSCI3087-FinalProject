@@ -15,6 +15,12 @@ function applyMovement(){
 		startParryState();
 		return;
 	}
+
+	// special: hold to charge, let go to spin (see the SPECIAL ATTACK section of attackState)
+	if(keyboard_check_pressed(global.special_button) && can_move && special_cooldown <= 0 && !global.gameIsPaused){
+		startSpecialCharge();
+		return;
+	}
 	
 	
 if(global.gameIsPaused){

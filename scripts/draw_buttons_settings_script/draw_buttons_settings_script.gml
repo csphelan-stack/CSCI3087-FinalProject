@@ -156,6 +156,7 @@ function controls_list(){
 		{label:"Attack",   name:"attack_button"},
 		{label:"Dash",     name:"dash_button"},
 		{label:"Parry",    name:"parry_button"},
+		{label:"Special",  name:"special_button"},
 	];
 }
 
