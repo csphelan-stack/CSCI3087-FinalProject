@@ -18,6 +18,7 @@
     {"name":"inst_1621064F","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_5C695E66","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_5E301187","path":"rooms/Collesium/Collesium.yy",},
+    {"name":"inst_1C13BC62","path":"rooms/Collesium/Collesium.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -34,6 +35,7 @@
         {"$GMRInstance":"v4","%Name":"inst_1621064F","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1621064F","objectId":{"name":"enemy_skeleton_minion_obj","path":"objects/enemy_skeleton_minion_obj/enemy_skeleton_minion_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":672.0,"y":640.0,},
         {"$GMRInstance":"v4","%Name":"inst_5C695E66","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_5C695E66","objectId":{"name":"enemy_skeleton_soldier_obj","path":"objects/enemy_skeleton_soldier_obj/enemy_skeleton_soldier_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":832.0,"y":736.0,},
         {"$GMRInstance":"v4","%Name":"inst_5E301187","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_5E301187","objectId":{"name":"Dialogue_Obj","path":"objects/Dialogue_Obj/Dialogue_Obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":384.0,"y":512.0,},
+        {"$GMRInstance":"v4","%Name":"inst_1C13BC62","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1C13BC62","objectId":{"name":"obj_game_music","path":"objects/obj_game_music/obj_game_music.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":512.0,"y":704.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"Tiles_2","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Tiles_2","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":44,"SerialiseWidth":63,"TileCompressedData":[
           -2,-2147483648,-36,0,-27,-2147483648,-36,0,-27,-2147483648,-36,0,-27,-2147483648,-36,0,-27,-2147483648,
