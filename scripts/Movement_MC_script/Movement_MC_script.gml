@@ -2,7 +2,8 @@ function applyMovement(){
 	
 	
        if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
-        startAttackPlayer();
+       audio_play_sound(snd_sword, 20, false);
+	   startAttackPlayer();
         return;
     }
 	

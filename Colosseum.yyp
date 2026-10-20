@@ -15,6 +15,7 @@
     {"$GMFolder":"","%Name":"enemy_objects","folderPath":"folders/EnemyAI/enemy_objects.yy","name":"enemy_objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"enemy_scripts","folderPath":"folders/EnemyAI/enemy_scripts.yy","name":"enemy_scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"wave_scripts_objs","folderPath":"folders/EnemyAI/wave_scripts_objs.yy","name":"wave_scripts_objs","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Audio","folderPath":"folders/Audio.yy","name":"Audio","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Gui Sprites","folderPath":"folders/Gui Sprites.yy","name":"Gui Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Dark_Ages_UI","folderPath":"folders/Gui Sprites/Dark_Ages_UI.yy","name":"Dark_Ages_UI","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Medieval_UI","folderPath":"folders/Gui Sprites/Medieval_UI.yy","name":"Medieval_UI","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -61,7 +62,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.4.222",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"Colosseum",
   "resources":[
@@ -80,6 +81,7 @@
     {"id":{"name":"main_character_hitbox_obj","path":"objects/main_character_hitbox_obj/main_character_hitbox_obj.yy",},},
     {"id":{"name":"main_character_hurtbox_obj","path":"objects/main_character_hurtbox_obj/main_character_hurtbox_obj.yy",},},
     {"id":{"name":"main_character_Obj","path":"objects/main_character_Obj/main_character_Obj.yy",},},
+    {"id":{"name":"obj_game_music","path":"objects/obj_game_music/obj_game_music.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
     {"id":{"name":"options_btn_obj","path":"objects/options_btn_obj/options_btn_obj.yy",},},
     {"id":{"name":"parry_shockwave_obj","path":"objects/parry_shockwave_obj/parry_shockwave_obj.yy",},},
@@ -104,6 +106,8 @@
     {"id":{"name":"Movement_MC_script","path":"scripts/Movement_MC_script/Movement_MC_script.yy",},},
     {"id":{"name":"parryState","path":"scripts/parryState/parryState.yy",},},
     {"id":{"name":"parryShader","path":"shaders/parryShader/parryShader.yy",},},
+    {"id":{"name":"snd_game_music","path":"sounds/snd_game_music/snd_game_music.yy",},},
+    {"id":{"name":"snd_sword","path":"sounds/snd_sword/snd_sword.yy",},},
     {"id":{"name":"gui_arrow_down_spr","path":"sprites/gui_arrow_down_spr/gui_arrow_down_spr.yy",},},
     {"id":{"name":"gui_arrow_fast_forward_spr","path":"sprites/gui_arrow_fast_forward_spr/gui_arrow_fast_forward_spr.yy",},},
     {"id":{"name":"gui_arrow_left_spr","path":"sprites/gui_arrow_left_spr/gui_arrow_left_spr.yy",},},
