@@ -20,8 +20,9 @@ function attackStatePlayer(){
 
         // start at the peak of the swing, then step back toward him by half the box,
         // so the far edge of the box sits right on the peak
-        var _hx = x + attack_peak_x[dir4] - lengthdir_x(_half_w, _dir);
-        var _hy = y + attack_peak_y[dir4] - lengthdir_y(_half_h, _dir);
+        // (the peaks are in sprite pixels, so they grow with his size)
+        var _hx = x + attack_peak_x[dir4] * char_scale - lengthdir_x(_half_w, _dir);
+        var _hy = y + attack_peak_y[dir4] * char_scale - lengthdir_y(_half_h, _dir);
 
         var _hb = instance_create_layer(_hx, _hy, layer, main_character_hitbox_obj);
 		
@@ -41,12 +42,7 @@ function startAttackPlayer(_counter = false){
 
     // same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
     var dir4 = round(facing / 90) mod 4;
-    switch (dir4) {
-        case 0: sprite_index = skull_knight_attack_right_spr;    break;
-        case 1: sprite_index = skull_knight_attack_backward_spr; break;
-        case 2: sprite_index = skull_knight_attack_left_spr;     break;
-        case 3: sprite_index = skull_knight_attack_forward_spr;  break;
-    }
+    sprite_index = attack_spr[dir4];   // set in Create (skull knight or adventurer)
     image_index = 0;   // start the swing from the first frame
     image_speed = 1.2;   // play at the sprite's normal speed
 	

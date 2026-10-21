@@ -21,10 +21,11 @@ enum PlayerState {
 state = PlayerState.NORMAL;
 
 
+//(use_adventurer_sprites at the bottom of Create swaps all his sprites for the Adventurer ones)
 sprite_index = skull_knight_idle_forward_spr;
 image_speed =1;
-//how big he is drawn on screen (1 = normal size). change this back to 1 to undo the scale-up
-char_scale = 2;
+//how big he is drawn on screen (1 = normal size). change this to 2 to make him big again
+char_scale = 1;
 image_xscale = char_scale;
 image_yscale = char_scale;
 
@@ -77,11 +78,11 @@ consumeBtn = ord("A");
 //---attack settings---
 attack_hit_frame = 1;        //which frame of the swing makes the hitbox (0 = first frame)
 //the farthest point the sword's swoosh reaches in each direction, measured from his feet
-//(measured off the slash frame of each attack sprite at char_scale 2)
+//(measured off the slash frame of each attack sprite at char_scale 1 - attackState multiplies it by char_scale)
 //the hitbox's far edge gets lined up with this point
 //order matches dir4:   [right,  up,  left,  down]
-attack_peak_x =         [  64,   -4,   -64,   -2 ];
-attack_peak_y =         [ -12,  -52,   -12,   34 ];
+attack_peak_x =         [  32,   -2,   -32,   -1 ];
+attack_peak_y =         [  -6,  -26,    -6,   17 ];
 attack_hit_spawned = false;  //has this swing already made its hitbox?
 //attack sprite for each direction. order matches dir4: [right, up, left, down]
 attack_spr = [skull_knight_attack_right_spr, skull_knight_attack_backward_spr,
@@ -255,6 +256,45 @@ u_trail     = shader_get_uniform(parryShader, "u_trail");
 u_colours   = shader_get_uniform(parryShader, "u_colours");
 u_hue       = shader_get_uniform(parryShader, "u_hue");
 u_saturation = shader_get_uniform(parryShader, "u_saturation");
+
+
+
+//============================================================
+//which art he uses
+//true = the new Adventurer sprites, false = the old skull knight (flip to false to change him back)
+//everything in here only swaps sprites, sizes and the sword reach - the gameplay stays the same
+//============================================================
+use_adventurer_sprites = true;
+
+//run sprite for each direction (used by movement and dash). order matches dir4: [right, up, left, down]
+run_spr = [skull_knight_run_right_spr, skull_knight_run_backward_spr,
+           skull_knight_run_left_spr,  skull_knight_run_forward_spr];
+
+if (use_adventurer_sprites) {
+	//the adventurer art is already about as big as the skull knight at char_scale 2
+	char_scale = 1;
+	image_xscale = char_scale;
+	image_yscale = char_scale;
+
+	sprite_index = adventurer_idle_forward_spr;
+	mask_index = adventurer_mask_spr;   //same size hitbox as the skull knight's
+
+	idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
+	              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+	run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
+	              adventurer_run_left_spr,     adventurer_run_forward_spr];
+	attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
+	              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+
+	//the adventurer pack has no block animation, so he holds his idle pose while guarding
+	parry_block_spr = idle_spr;
+	parry_raise_spr = idle_spr;
+
+	//sword reach, measured off frame 1 (the slash) of each adventurer attack sprite at char_scale 1
+	//order matches dir4:   [right,  up,  left,  down]
+	attack_peak_x =         [  40,    0,   -40,    0 ];
+	attack_peak_y =         [ -14,  -40,   -14,   13 ];
+}
 
 
 

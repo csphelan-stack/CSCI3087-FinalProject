@@ -59,21 +59,12 @@ if (can_move || !global.gameIsPaused) {
     if (moving) {
 		
 		image_speed = 1.2;
-        switch (dir4) {
-            case 0: sprite_index = skull_knight_run_right_spr; break;
-            case 1: sprite_index = skull_knight_run_backward_spr;    break;
-            case 2: sprite_index = skull_knight_run_left_spr;  break;
-            case 3: sprite_index = skull_knight_run_forward_spr;  break;
-        }
+        // run_spr / idle_spr are set in Create (skull knight or adventurer, see use_adventurer_sprites)
+        sprite_index = run_spr[dir4];
     } else {
 		image_speed = 0.5;
-        // the skull knight has an idle for every direction, so he keeps facing the way he last moved
-        switch (dir4) {
-            case 0: sprite_index = skull_knight_idle_right_spr; break;
-            case 1: sprite_index = skull_knight_idle_backward_spr;    break;
-            case 2: sprite_index = skull_knight_idle_left_spr;  break;
-            case 3: sprite_index = skull_knight_idle_forward_spr;  break;
-        }
+        // there's an idle for every direction, so he keeps facing the way he last moved
+        sprite_index = idle_spr[dir4];
     }
 
     // apply movement (runs every step, so it drops to 0 when no keys are held)
