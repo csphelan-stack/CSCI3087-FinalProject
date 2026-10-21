@@ -39,7 +39,8 @@ function Enemy_damage_applying(_damage,_attacker){
 
     // prevent player HP from going below zero and crashing
     hp = max(hp, 0);
-	
+	audio_stop_sound(snd_charge);
+    audio_stop_sound(snd_spin);
 	audio_play_sound(snd_hurt, 30, false);
 
 	invuln = invuln_time;
