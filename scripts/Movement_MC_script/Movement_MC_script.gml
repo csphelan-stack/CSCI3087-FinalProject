@@ -8,6 +8,7 @@ function applyMovement(){
     }
 	
 	if(keyboard_check_pressed(global.dash_button) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
+		audio_play_sound(snd_dash, 15, false);
 		startDashState();
 		return;
 	}
@@ -19,6 +20,7 @@ function applyMovement(){
 
 	// special: hold to charge, let go to spin (see the SPECIAL ATTACK section of attackState)
 	if(keyboard_check_pressed(global.special_button) && can_move && special_cooldown <= 0 && !global.gameIsPaused){
+	    audio_play_sound(snd_charge, 15, true);
 		startSpecialCharge();
 		return;
 	}
