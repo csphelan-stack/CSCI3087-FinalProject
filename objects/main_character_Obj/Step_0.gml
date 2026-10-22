@@ -1,8 +1,17 @@
-if (hp<=0){ 
-	 game_restart();
+// out of hp: play the death animation, then restart (see playerHurtDeath)
+if (hp <= 0 && state != PlayerState.DEAD){
+	startDeath();
+}
+
+// hurt flinch counts down (attacking, dashing etc. cut it short)
+if (hurt_timer > 0) {
+	hurt_timer -= 1;
+	if (state != PlayerState.NORMAL) {
+		hurt_timer = 0;
 	}
-	
-	
+}
+
+
 if(attack_cooldown >0){
 attack_cooldown-=1;	
 }
@@ -74,5 +83,8 @@ switch (state){
 		break;
 	case PlayerState.SPECIAL_SPIN:
 		specialSpinStateMC();
+		break;
+	case PlayerState.DEAD:
+		deathStateMC();
 		break;
 }

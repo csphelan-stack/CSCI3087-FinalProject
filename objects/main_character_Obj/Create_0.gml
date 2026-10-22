@@ -15,6 +15,7 @@ enum PlayerState {
 	STUNNED,
 	SPECIAL_CHARGE,
 	SPECIAL_SPIN,
+	DEAD,
 }
 
 //which state the player is currently in (see PlayerState enum above)
@@ -277,12 +278,26 @@ special_cd_max  = special_cooldown_t;  special_cd_prev = 0;
 //which art he uses
 //true = the new Adventurer sprites, false = the old skull knight (flip to false to change him back)
 //everything in here only swaps sprites, sizes and the sword reach - the gameplay stays the same
+//(the adventurer also gets a hurt flinch and a death animation, which the skull knight has no art for)
 //============================================================
 use_adventurer_sprites = true;
 
 //run sprite for each direction (used by movement and dash). order matches dir4: [right, up, left, down]
 run_spr = [skull_knight_run_right_spr, skull_knight_run_backward_spr,
            skull_knight_run_left_spr,  skull_knight_run_forward_spr];
+
+//dash, hurt and death sprites (see dashStateMC and playerHurtDeath)
+//the skull knight has no art for these, so he dashes frozen on his first run frame,
+//has no hurt flinch, and restarts straight away when he dies
+dash_spr = run_spr;
+dash_play_anim = false;   //true = play the dash sprite through over the dash, false = hold its first frame
+hurt_spr = undefined;
+death_spr = undefined;
+
+hurt_flinch_time = 20;    //steps the hurt animation shows after a hit (4 frames at 12 fps)
+hurt_timer = 0;
+death_hold_time = 60;     //steps he lies on the ground after the death animation before the restart
+death_hold_timer = -1;
 
 if (use_adventurer_sprites) {
 	//the adventurer art is already about as big as the skull knight at char_scale 2
@@ -299,6 +314,13 @@ if (use_adventurer_sprites) {
 	              adventurer_run_left_spr,     adventurer_run_forward_spr];
 	attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
 	              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+	dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
+	              adventurer_dash_left_spr,    adventurer_dash_forward_spr];
+	hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
+	              adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
+	death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
+	              adventurer_death_left_spr,   adventurer_death_forward_spr];
+	dash_play_anim = true;
 
 	//the adventurer pack has no block animation, so he holds his idle pose while guarding
 	parry_block_spr = idle_spr;

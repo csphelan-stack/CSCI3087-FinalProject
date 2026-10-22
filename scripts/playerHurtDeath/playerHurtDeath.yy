@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"playerHurtDeath",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"playerHurtDeath",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Main_character/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
