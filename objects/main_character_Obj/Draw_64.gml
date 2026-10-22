@@ -13,10 +13,14 @@ var _h = sprite_get_height(orb_fill_spr);
 // 1. empty background
 draw_sprite_ext(orb_back_spr, 0, _x, _y, 1, 1, 0, c_white, 0.5);
 
+/*
+// not currently using face, could use new adventurer face
 // 2. face
 var _frame_off_x_face = 6;
 var _frame_off_y_face = 8;
 draw_sprite_ext(face_portrait_spr, 0, _x + _frame_off_x_face, _y + _frame_off_y_face, 1, 1, 0, c_white, 0.25);
+
+*/
 
 // 3. red fill, cropped from the bottom up
 var _fill_h = _h * _pct;
