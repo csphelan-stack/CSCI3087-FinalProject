@@ -58,7 +58,11 @@ if (can_move || !global.gameIsPaused) {
     var dir4 = round(facing / 90) mod 4;
 
     // assign sprites
-    if (moving) {
+    if (hurt_timer > 0) {
+		// just got hit: show the hurt animation (he can still move, see playerHurtDeath)
+		image_speed = 1;
+		sprite_index = hurt_spr[dir4];
+    } else if (moving) {
 		
 		image_speed = 1.2;
         // run_spr / idle_spr are set in Create (skull knight or adventurer, see use_adventurer_sprites)

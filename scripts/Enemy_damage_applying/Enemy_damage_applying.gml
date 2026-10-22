@@ -44,6 +44,7 @@ function Enemy_damage_applying(_damage,_attacker){
 	audio_play_sound(snd_hurt, 30, false);
 
 	invuln = invuln_time;
+	startHurtFlinch();   // plays the hurt animation if he was just walking around (see playerHurtDeath)
 
 	// knocked back, away from whoever hit him
 	if(instance_exists(_attacker)){

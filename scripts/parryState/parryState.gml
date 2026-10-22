@@ -126,7 +126,8 @@ function startStun(){
 	stun_timer = stun_time;
 
 	var dir4 = round(facing / 90) mod 4;
-	sprite_index = idle_spr[dir4];   // no hurt sprite yet, so he stands still (Draw flashes him red)
+	// the hurt animation if he has one, otherwise he stands still (Draw flashes him red either way)
+	sprite_index = is_undefined(hurt_spr) ? idle_spr[dir4] : hurt_spr[dir4];
 	image_index = 0;
 	image_speed = 1;
 }
