@@ -3,7 +3,9 @@ sprite_index = orc_grunt_idle_forward_spr;
 event_inherited();
 
 //need to change attributes
-hp = 8;
+total_hp = 8;
+hp = total_hp; 
+
 movespd = 1.8;
 attack_damage = 3;
 attack_range = 22;

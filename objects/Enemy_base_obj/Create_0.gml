@@ -10,7 +10,8 @@
 //change the cone of view for enemies? perception is too low
 //finish hard coding the waves . . . up to 18 maybe (5 before boss wave)
 // ---------- defaults (children override these after event_inherited) ----------
-hp         = 10;
+total_hp   = 10;
+hp         = total_hp;
 movespd    = 1.6;   // chase speed
 wander_spd = 0.6;
 

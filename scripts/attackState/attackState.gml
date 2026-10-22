@@ -350,14 +350,17 @@ function specialSpinRingDraw(){
 	gpu_set_blendmode(bm_normal);
 }
 
-/// Draw GUI: "Special ready" or the seconds left on the cooldown, above the health bar
+/// Draw GUI: "Special ready" at the bottom center of the screen.
+/// The cooldown countdown is shown by the cooldown orb, so it isn't drawn here
 function specialHudDraw(){
-	var _x = healthbar_x;
-	var _y = healthbar_y - 24;
-	if (special_cooldown > 0) {
-		draw_menu_text(_x, _y, "Special " + string(ceil(special_cooldown / game_get_speed(gamespeed_fps))), c_gray, 1, fa_center);
-	}
-	else {
-		draw_menu_text(_x, _y, "Special ready", make_colour_rgb(230, 190, 90), 1, fa_center);
-	}
+	if (special_cooldown > 0) exit;   // still cooling down, the orb shows the timer
+
+	var _x = display_get_gui_width() / 2;
+	var _y = display_get_gui_height() - 50;
+
+	var _pulse = 0.6 + 0.4 * abs(sin(current_time / 300));
+
+	draw_set_alpha(_pulse);
+	draw_menu_text(_x, _y, "Special ready", make_colour_rgb(230, 190, 90), 1, fa_center);
+	draw_set_alpha(1);   // always reset
 }

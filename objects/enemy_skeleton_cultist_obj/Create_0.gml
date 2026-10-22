@@ -2,7 +2,9 @@ sprite_index = skeleton_cultist_idle_forward_spr;
 
 event_inherited();
 
-hp = 12;
+total_hp = 12;
+hp = total_hp;
+
 movespd = 1.5;
 attack_damage = 3;
 attack_range = 25;

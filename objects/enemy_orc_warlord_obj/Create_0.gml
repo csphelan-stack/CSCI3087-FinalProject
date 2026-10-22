@@ -2,7 +2,9 @@ event_inherited();
 
 sprite_index = orc_warlord_idle_forward_spr;
 
-hp = 25;
+total_hp = 25;
+hp = total_hp;
+
 movespd = 1.2;
 attack_damage = 7;
 attack_range = 28;

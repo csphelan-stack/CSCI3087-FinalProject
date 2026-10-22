@@ -133,6 +133,8 @@ attack_cooldown = 0;
 dash_cooldown_t = 60;
 dash_cooldown = 0;
 
+
+
 // -----damage taking variables
 invuln_time = 30; // steps until he can be hit again
 invuln = 0;
@@ -255,6 +257,18 @@ u_trail     = shader_get_uniform(parryShader, "u_trail");
 u_colours   = shader_get_uniform(parryShader, "u_colours");
 u_hue       = shader_get_uniform(parryShader, "u_hue");
 u_saturation = shader_get_uniform(parryShader, "u_saturation");
+
+// universal cooldowns
+dash_cd_max    = dash_cooldown_t;   dash_cd_prev    = 0;
+parry_cd_max   = parry_cooldown_t;  parry_cd_prev   = 0;
+special_cd_max = special_cooldown_t; special_cd_prev = 0;
+
+//UI cluster dimmer
+orb_surf = -1;
+
+dash_cd_max     = dash_cooldown_t;     dash_cd_prev    = 0;
+parry_cd_max    = parry_cooldown_t;    parry_cd_prev   = 0;
+special_cd_max  = special_cooldown_t;  special_cd_prev = 0;
 
 
 
