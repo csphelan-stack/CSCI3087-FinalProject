@@ -70,6 +70,3 @@ if (state == PlayerState.PARRY || parry_exhaust_timer < parry_exhaust_time) {
     draw_set_colour(c_white);
 }
 
-// draw the hitbox outline in red
-draw_rectangle_colour(bbox_left, bbox_top, bbox_right, bbox_bottom,
-                      c_red, c_red, c_red, c_red, true);
