@@ -20,8 +20,9 @@ function attackStatePlayer(){
 
         // start at the peak of the swing, then step back toward him by half the box,
         // so the far edge of the box sits right on the peak
-        var _hx = x + attack_peak_x[dir4] - lengthdir_x(_half_w, _dir);
-        var _hy = y + attack_peak_y[dir4] - lengthdir_y(_half_h, _dir);
+        // (the peaks are in sprite pixels, so they grow with his size)
+        var _hx = x + attack_peak_x[dir4] * char_scale - lengthdir_x(_half_w, _dir);
+        var _hy = y + attack_peak_y[dir4] * char_scale - lengthdir_y(_half_h, _dir);
 
         var _hb = instance_create_layer(_hx, _hy, layer, main_character_hitbox_obj);
 		
@@ -41,12 +42,7 @@ function startAttackPlayer(_counter = false){
 
     // same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
     var dir4 = round(facing / 90) mod 4;
-    switch (dir4) {
-        case 0: sprite_index = skull_knight_attack_right_spr;    break;
-        case 1: sprite_index = skull_knight_attack_backward_spr; break;
-        case 2: sprite_index = skull_knight_attack_left_spr;     break;
-        case 3: sprite_index = skull_knight_attack_forward_spr;  break;
-    }
+    sprite_index = attack_spr[dir4];   // set in Create (skull knight or adventurer)
     image_index = 0;   // start the swing from the first frame
     image_speed = 1.2;   // play at the sprite's normal speed
 	
@@ -189,7 +185,9 @@ function specialChargeStateMC(){
 	if (global.gameIsPaused) return;
 
 	// let go before it's full: just stop, no cooldown
-	if (!keyboard_check(global.special_button)) {
+	if (!keyboard_check(global.special_button))
+ {
+	    audio_stop_sound(snd_charge);
 		state = PlayerState.NORMAL;
 		image_speed = 1;
 		return;
@@ -206,6 +204,8 @@ function specialChargeStateMC(){
 
 /// runs ONCE the moment the charge is full
 function startSpecialSpin(){
+	audio_stop_sound(snd_charge);
+    audio_play_sound(snd_spin, 20, true);
 	state = PlayerState.SPECIAL_SPIN;
 	special_spin_timer = special_spin_time;
 	special_spin_angle = special_dir4 * 90;   // starts facing the way he was
@@ -286,6 +286,7 @@ function specialSpinStateMC(){
 	// done: back to normal and the heavy cooldown starts
 	special_spin_timer -= 1;
 	if (special_spin_timer <= 0) {
+	    audio_stop_sound(snd_spin);
 		state = PlayerState.NORMAL;
 		image_speed = 1;
 		special_cooldown = special_cooldown_t;

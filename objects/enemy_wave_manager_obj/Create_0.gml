@@ -32,6 +32,32 @@ wave_data = [
      [enemy_skeleton_soldier_obj, 1]]
 ];
 
+//true = the waves use the new Lucifer enemies, false = the original orc/skeleton waves above
+//(flip to false to change them back)
+use_lucifer_enemies = true;
+
+if (use_lucifer_enemies){
+    wave_data = [
+        //one of each so you can see them all straight away
+        [[enemy_lucifer_cultist_obj, 1],
+         [enemy_lucifer_warrior_obj, 1],
+         [enemy_lucifer_necromancer_obj, 1],
+         [enemy_lucifer_ancient_skeleton_obj, 1],
+         [enemy_lucifer_skeleton_king_obj, 1]],
+
+        [[enemy_lucifer_cultist_obj, 3],
+         [enemy_lucifer_warrior_obj, 2]],
+
+        [[enemy_lucifer_warrior_obj, 2],
+         [enemy_lucifer_necromancer_obj, 2],
+         [enemy_lucifer_ancient_skeleton_obj, 1]],
+
+        [[enemy_lucifer_skeleton_king_obj, 1],
+         [enemy_lucifer_ancient_skeleton_obj, 1],
+         [enemy_lucifer_cultist_obj, 2]]
+    ];
+}
+
 //current wave available to UI code.
 global.wave_current = 0;
 

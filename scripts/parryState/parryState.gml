@@ -98,6 +98,9 @@ function parryBlock(_damage, _attacker){
 		parry_exhaust_timer = 0;
 		return false;
 	}
+	
+	audio_play_sound(snd_block, 25, false);
+
 
 	block_flash = block_flash_time;
 

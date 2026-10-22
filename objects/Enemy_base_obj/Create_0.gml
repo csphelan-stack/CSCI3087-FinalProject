@@ -15,7 +15,13 @@ hp         = total_hp;
 movespd    = 1.6;   // chase speed
 wander_spd = 0.6;
 
-//animation and such 
+//how big every enemy is drawn (1 = normal size). change this back to 1 to undo the scale-up
+//(their collision box grows with it, attack ranges stay the same)
+enemy_scale = 1;
+image_xscale = enemy_scale;
+image_yscale = enemy_scale;
+
+//animation and such
 run_anim_spd   = 1.2;
 idle_anim_spd  = 0.5;
 death_anim_spd = 1.2;
