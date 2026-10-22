@@ -116,3 +116,6 @@ state       = ENEMY_STATE.IDLE;
 state_prev  = state;
 state_timer = irandom_range(idle_min, idle_max);
 
+// new enemy healthbar fix 
+hp_initialized = false;
+

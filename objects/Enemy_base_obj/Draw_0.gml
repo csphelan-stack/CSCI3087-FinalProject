@@ -2,6 +2,13 @@
 
 draw_self();
 
+// new enemies healthbar fix 
+// lock in the real max HP once, after the child's Create has run
+if (!hp_initialized) {
+    total_hp = hp;
+    hp_initialized = true;
+}
+
 // only show the bar once the enemy has taken damage
 // (remove this "if" and its closing brace to always show it)
 if (hp < total_hp) {
@@ -32,3 +39,9 @@ if (hp < total_hp) {
 
     draw_set_color(c_white); // reset so nothing drawn afterward is tinted
 }
+
+// USE FOR BUG FIXING INVIS ENEMIES
+// TURN ON ENEMY HEALTH / TOTAL I.E. 10/10
+/*
+draw_text(x, y, string(hp) + "/" + string(total_hp));
+*/
