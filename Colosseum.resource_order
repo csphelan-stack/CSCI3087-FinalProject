@@ -57,6 +57,7 @@
     {"name":"resume_btn_obj","order":1,"path":"objects/resume_btn_obj/resume_btn_obj.yy",},
     {"name":"settings_btn_obj","order":2,"path":"objects/settings_btn_obj/settings_btn_obj.yy",},
     {"name":"Collesium_Child_0","order":1,"path":"rooms/Collesium_Child_0/Collesium_Child_0.yy",},
+    {"name":"interior_room","order":2,"path":"rooms/interior_room/interior_room.yy",},
     {"name":"attackState","order":2,"path":"scripts/attackState/attackState.yy",},
     {"name":"characterPause_script","order":1,"path":"scripts/characterPause_script/characterPause_script.yy",},
     {"name":"dashStateMC","order":3,"path":"scripts/dashStateMC/dashStateMC.yy",},
