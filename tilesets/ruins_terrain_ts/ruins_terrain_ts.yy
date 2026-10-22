@@ -3,9 +3,13 @@
   "%Name":"ruins_terrain_ts",
   "autoTileSets":[],
   "macroPageTiles":{
-    "SerialiseHeight":0,
-    "SerialiseWidth":0,
-    "TileSerialiseData":[],
+    "SerialiseHeight":6,
+    "SerialiseWidth":6,
+    "TileCompressedData":[
+      -12,0,24,418,384,421,355,392,421,307,349,348,393,421,428,425,388,421,387,430,350,414,352,310,307,310,
+      342,
+    ],
+    "TileDataFormat":1,
   },
   "name":"ruins_terrain_ts",
   "out_columns":22,
