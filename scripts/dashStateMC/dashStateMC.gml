@@ -8,12 +8,8 @@ function startDashState(){
 	
 	dash_dir = facing; 
 
-    switch (dash_dir) {
-        case 0: sprite_index = skull_knight_run_right_spr;    break;
-        case 1: sprite_index = skull_knight_run_backward_spr; break;
-        case 2: sprite_index = skull_knight_run_left_spr;     break;
-        case 3: sprite_index = skull_knight_run_forward_spr;  break;
-    }
+    // dash_dir is an angle, so snap it to 0 right, 1 up, 2 left, 3 down to pick the run sprite
+    sprite_index = run_spr[round(dash_dir / 90) mod 4];
     image_index = 0;   // the first frame of the run
     image_speed = 0;   // frozen on that frame for the whole dash
 
