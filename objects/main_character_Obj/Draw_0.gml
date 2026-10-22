@@ -8,7 +8,7 @@ if (state == PlayerState.SPECIAL_CHARGE) {
     fxChargeCircleDraw(_special_charge, special_charged);
 }
 
-// ---- 1. the knight: rainbow sword once the special is charged and all through the spin ----
+// ---- 1. the player: rainbow sword once the special is charged and all through the spin ----
 if ((state == PlayerState.SPECIAL_CHARGE && special_charged) || state == PlayerState.SPECIAL_SPIN) {
     fxRainbowSwordDraw();
 } else {

@@ -9,10 +9,10 @@
     {"name":"inst_5C1D15A2","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_7714680B","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_6A614D23","path":"rooms/Collesium/Collesium.yy",},
-    {"name":"inst_770123B6","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_63BA9B21","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_5E301187","path":"rooms/Collesium/Collesium.yy",},
     {"name":"inst_1C13BC62","path":"rooms/Collesium/Collesium.yy",},
+    {"name":"inst_770123B6","path":"rooms/Collesium/Collesium.yy",},
   ],
   "isDnd":false,
   "layers":[

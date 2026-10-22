@@ -1,5 +1,9 @@
 /// @desc - Health orb + cooldown orbs + HUD
 
+//variable takes off gui hud if inside
+if(global.safeInside == false){
+
+
 // =====================================================
 // HEALTH ORB (top left)
 // =====================================================
@@ -90,4 +94,11 @@ draw_surface_ext(orb_surf, 0, 0, 1, 1, 0, c_white, 0.6);   // 0.6 = overall opac
 if (!global.gameIsPaused) {
 	damagePopupsDraw();
 	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+}
+
+
+
+
+
+
 }

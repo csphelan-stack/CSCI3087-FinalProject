@@ -22,17 +22,35 @@ enum PlayerState {
 state = PlayerState.NORMAL;
 
 
-//(use_adventurer_sprites at the bottom of Create swaps all his sprites for the Adventurer ones)
-sprite_index = skull_knight_idle_forward_spr;
+sprite_index = adventurer_idle_forward_spr;
 image_speed =1;
-//how big he is drawn on screen (1 = normal size). change this to 2 to make him big again
+//how big he is drawn on screen (1 = normal size)
 char_scale = 1;
 image_xscale = char_scale;
 image_yscale = char_scale;
 
 
 //player hitbox
-mask_index = skull_knight_mask_spr;
+mask_index = adventurer_mask_spr;
+
+//---his sprites. every list is in dir4 order: [right, up, left, down]---
+idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
+              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
+              adventurer_run_left_spr,     adventurer_run_forward_spr];
+walk_spr   = [adventurer_walk_right_spr,   adventurer_walk_backward_spr,     //used inside (see characterInside_script)
+              adventurer_walk_left_spr,    adventurer_walk_forward_spr];
+attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
+              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
+              adventurer_dash_left_spr,    adventurer_dash_forward_spr];
+hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
+              adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
+death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
+              adventurer_death_left_spr,   adventurer_death_forward_spr];
+//there's no block animation, so he holds his idle pose while guarding / charging the special
+parry_block_spr = idle_spr;
+parry_raise_spr = idle_spr;
 
 //these two var's are used in the tracking of the character's on screen position and direction
 _hor = 0;
@@ -47,10 +65,16 @@ moving = false;
 //how fast he goes
 fixedmovespd =3;
 movespd = fixedmovespd;
+//how fast he walks inside (characterInside_script slows him to this)
+inside_movespd = 2;
 //whether or not he can move
 can_move = true;
 //start with no attack have some condition to show he can attack.
 can_attack = true;
+//can he dash / parry / use the special? (characterInside_script turns these off, characterOutside_script back on)
+can_dash = true;
+can_parry = true;
+can_special = true;
 
 
 //variable that tracks which way the character is facing
@@ -79,15 +103,12 @@ consumeBtn = ord("A");
 //---attack settings---
 attack_hit_frame = 1;        //which frame of the swing makes the hitbox (0 = first frame)
 //the farthest point the sword's swoosh reaches in each direction, measured from his feet
-//(measured off the slash frame of each attack sprite at char_scale 1 - attackState multiplies it by char_scale)
+//(measured off frame 1, the slash, of each attack sprite at char_scale 1 - attackState multiplies it by char_scale)
 //the hitbox's far edge gets lined up with this point
 //order matches dir4:   [right,  up,  left,  down]
-attack_peak_x =         [  32,   -2,   -32,   -1 ];
-attack_peak_y =         [  -6,  -26,    -6,   17 ];
+attack_peak_x =         [  40,    0,   -40,    0 ];
+attack_peak_y =         [ -14,  -40,   -14,   13 ];
 attack_hit_spawned = false;  //has this swing already made its hitbox?
-//attack sprite for each direction. order matches dir4: [right, up, left, down]
-attack_spr = [skull_knight_attack_right_spr, skull_knight_attack_backward_spr,
-              skull_knight_attack_left_spr,  skull_knight_attack_forward_spr];
 
 //---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
 special_charge_time  = 60;       //steps to fully charge (60 = 1 second)
@@ -198,9 +219,7 @@ attack_is_countered = false;
 //getting your guard broken stuns him
 stun_time = 45;    //steps he can't move or act (60 = 1 second)
 stun_timer = 0;
-//idle sprite for each direction, used while stunned. order matches dir4: [right, up, left, down]
-idle_spr = [skull_knight_idle_right_spr, skull_knight_idle_backward_spr,
-            skull_knight_idle_left_spr,  skull_knight_idle_forward_spr];
+
 
 
 
@@ -222,9 +241,7 @@ dash_ghost_fade        = 16;    //steps each shadow takes to fade out
 dash_ghosts_made       = 0;     //how many shadows this dash has made so far
 
 
-//looping block animation while the guard is up. order matches dir4: [right, up, left, down]
-parry_block_spr = [skull_knight_parry_right_spr, skull_knight_parry_backward_spr,
-                   skull_knight_parry_left_spr,  skull_knight_parry_forward_spr];
+
 parry_dir4 = 3;          //which way this parry faces (0 right, 1 up, 2 left, 3 down)
 parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (and the saved shockwave fx below)
 parry_circle_radius = 44;   //size of the parry ring (and the saved charge circle below)
@@ -235,10 +252,7 @@ parry_circle_radius = 44;   //size of the parry ring (and the saved charge circl
 //the fx functions at the bottom of parryState use these
 //============================================================
 
-//guard-raise animation he plays while charging the special. order matches dir4: [right, up, left, down]
-//(forward one used for every direction - swap in the others when they're made)
-parry_raise_spr = [skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr,
-                   skull_knight_idle_to_parry_f_spr, skull_knight_idle_to_parry_f_spr];
+
 
 //---sword glow (rainbow up the sword once something is fully charged)---
 sword_sweep        = 0;      //where the rainbow is: 0 = bottom of the sprite, 1 = top (moves on its own)
@@ -274,63 +288,12 @@ special_cd_max  = special_cooldown_t;  special_cd_prev = 0;
 
 
 
-//============================================================
-//which art he uses
-//true = the new Adventurer sprites, false = the old skull knight (flip to false to change him back)
-//everything in here only swaps sprites, sizes and the sword reach - the gameplay stays the same
-//(the adventurer also gets a hurt flinch and a death animation, which the skull knight has no art for)
-//============================================================
-use_adventurer_sprites = true;
-
-//run sprite for each direction (used by movement and dash). order matches dir4: [right, up, left, down]
-run_spr = [skull_knight_run_right_spr, skull_knight_run_backward_spr,
-           skull_knight_run_left_spr,  skull_knight_run_forward_spr];
-
-//dash, hurt and death sprites (see dashStateMC and playerHurtDeath)
-//the skull knight has no art for these, so he dashes frozen on his first run frame,
-//has no hurt flinch, and restarts straight away when he dies
-dash_spr = run_spr;
-dash_play_anim = false;   //true = play the dash sprite through over the dash, false = hold its first frame
-hurt_spr = undefined;
-death_spr = undefined;
-
+//---hurt flinch + death (see playerHurtDeath)---
 hurt_flinch_time = 20;    //steps the hurt animation shows after a hit (4 frames at 12 fps)
 hurt_timer = 0;
 death_hold_time = 60;     //steps he lies on the ground after the death animation before the restart
 death_hold_timer = -1;
 
-if (use_adventurer_sprites) {
-	//the adventurer art is already about as big as the skull knight at char_scale 2
-	char_scale = 1;
-	image_xscale = char_scale;
-	image_yscale = char_scale;
-
-	sprite_index = adventurer_idle_forward_spr;
-	mask_index = adventurer_mask_spr;   //same size hitbox as the skull knight's
-
-	idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
-	              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
-	run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
-	              adventurer_run_left_spr,     adventurer_run_forward_spr];
-	attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
-	              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
-	dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
-	              adventurer_dash_left_spr,    adventurer_dash_forward_spr];
-	hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
-	              adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
-	death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
-	              adventurer_death_left_spr,   adventurer_death_forward_spr];
-	dash_play_anim = true;
-
-	//the adventurer pack has no block animation, so he holds his idle pose while guarding
-	parry_block_spr = idle_spr;
-	parry_raise_spr = idle_spr;
-
-	//sword reach, measured off frame 1 (the slash) of each adventurer attack sprite at char_scale 1
-	//order matches dir4:   [right,  up,  left,  down]
-	attack_peak_x =         [  40,    0,   -40,    0 ];
-	attack_peak_y =         [ -14,  -40,   -14,   13 ];
-}
 
 
 

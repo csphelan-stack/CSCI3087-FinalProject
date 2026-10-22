@@ -164,6 +164,7 @@
     {"id":{"name":"adventurer_run_forward_spr","path":"sprites/adventurer_run_forward_spr/adventurer_run_forward_spr.yy",},},
     {"id":{"name":"adventurer_run_left_spr","path":"sprites/adventurer_run_left_spr/adventurer_run_left_spr.yy",},},
     {"id":{"name":"adventurer_run_right_spr","path":"sprites/adventurer_run_right_spr/adventurer_run_right_spr.yy",},},
+    {"id":{"name":"adventurer_special_icon_spr","path":"sprites/adventurer_special_icon_spr/adventurer_special_icon_spr.yy",},},
     {"id":{"name":"adventurer_walk_backward_spr","path":"sprites/adventurer_walk_backward_spr/adventurer_walk_backward_spr.yy",},},
     {"id":{"name":"adventurer_walk_forward_spr","path":"sprites/adventurer_walk_forward_spr/adventurer_walk_forward_spr.yy",},},
     {"id":{"name":"adventurer_walk_left_spr","path":"sprites/adventurer_walk_left_spr/adventurer_walk_left_spr.yy",},},

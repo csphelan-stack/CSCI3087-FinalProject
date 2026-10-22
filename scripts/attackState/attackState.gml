@@ -42,7 +42,7 @@ function startAttackPlayer(_counter = false){
 
     // same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
     var dir4 = round(facing / 90) mod 4;
-    sprite_index = attack_spr[dir4];   // set in Create (skull knight or adventurer)
+    sprite_index = attack_spr[dir4];   // set in Create
     image_index = 0;   // start the swing from the first frame
     image_speed = 1.2;   // play at the sprite's normal speed
 	
@@ -322,7 +322,7 @@ function specialSpinHit(){
 	ds_list_destroy(_list);
 }
 
-/// the wind swirling round him while he spins (Draw, after the knight)
+/// the wind swirling round him while he spins (Draw, after the player)
 function specialSpinRingDraw(){
 	var _r  = special_radius;
 	var _cy = y - 14;   // around his middle

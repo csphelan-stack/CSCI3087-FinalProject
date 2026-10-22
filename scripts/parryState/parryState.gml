@@ -126,8 +126,7 @@ function startStun(){
 	stun_timer = stun_time;
 
 	var dir4 = round(facing / 90) mod 4;
-	// the hurt animation if he has one, otherwise he stands still (Draw flashes him red either way)
-	sprite_index = is_undefined(hurt_spr) ? idle_spr[dir4] : hurt_spr[dir4];
+	sprite_index = hurt_spr[dir4];   // plays his hurt animation (Draw flashes him red too)
 	image_index = 0;
 	image_speed = 1;
 }
@@ -146,13 +145,13 @@ function stunStateMC(){
 // SHOCKWAVE / SPECIAL ATTACK VISUALS
 // ============================================================
 // these were the old charge-up parry's effects - the special spin attack uses them now
-// (see the SPECIAL ATTACK section of attackState, and the knight's Draw event).
+// (see the SPECIAL ATTACK section of attackState, and the player's Draw event).
 // they run as the player (they use his sword_* / u_* / parry_circle_radius variables from Create).
 //
 // how the special uses them:
 //   Step (while charging):  _charge goes 0 -> 1, then fxRainbowSwordStep() once it's full
 //   Draw (before draw_self): fxChargeCircleDraw(_charge, _charge >= 1)
-//   Draw (the knight):       if full fxRainbowSwordDraw() else draw_self(), then fxChargeGlowDraw(_charge)
+//   Draw (the player):       if full fxRainbowSwordDraw() else draw_self(), then fxChargeGlowDraw(_charge)
 //   when full / on release:  fxShockwaveBurst(...)
 // ============================================================
 
@@ -182,7 +181,7 @@ function fxChargeCircleDraw(_charge, _full){
     gpu_set_blendmode(bm_normal);
 }
 
-/// draws the knight with the rainbow sweeping up his sword (use INSTEAD of draw_self)
+/// draws the player with the rainbow sweeping up his sword (use INSTEAD of draw_self)
 function fxRainbowSwordDraw(){
     shader_set(parryShader);
 
