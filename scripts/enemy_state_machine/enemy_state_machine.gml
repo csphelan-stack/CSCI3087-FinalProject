@@ -83,6 +83,11 @@ function enemy_change_state(_new_state) {
             attack_hit_done = false;
             // Set how long this attack lasts.
             state_timer = attack_duration;
+            // Magic users start their spell here (the orb and the magic circle appear).
+            if (magic_enabled)
+            {
+                enemy_magic_begin();
+            }
         break;
         // ====================================================
         // SEARCH

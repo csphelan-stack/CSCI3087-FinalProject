@@ -119,3 +119,16 @@ state_timer = irandom_range(idle_min, idle_max);
 // new enemy healthbar fix 
 hp_initialized = false;
 
+
+// ---------- magic ----------
+// normal enemies fight with weapons. a magic user turns this on in its own
+// Create event (after event_inherited) and uses the enemy_magic script.
+magic_enabled  = false;                  // true = casts spells instead of fighting up close
+magic_elements = [MAGIC_ELEMENT.FIRE];   // the kinds of magic it knows (picks one at random each cast)
+magic_range    = 130;                    // how far away it can cast. never more than sight_range
+magic_radius   = 36;                     // size of the area the spell hits (the circle's size)
+
+// used while a spell is being cast
+magic_element = MAGIC_ELEMENT.FIRE;      // the element of the spell being cast right now
+magic_orb     = noone;                   // the orb on this enemy
+magic_circle  = noone;                   // the magic circle on the ground
