@@ -13,6 +13,18 @@ attack_windup = 12;
 attack_duration = 30;
 knockback_power = 4;
 
+
+// MAGIC ATTACK CONFIGURATION
+magic_enabled = true;
+magic_element = "light";
+magic_color = make_color_rgb(255, 220, 95);
+magic_range = sight_range;
+magic_aoe_radius = 28;
+magic_orb_duration = 10;
+magic_effect_duration = 14;
+attack_duration = 40;
+attack_windup = 18;
+
 spr_idle = [
     skeleton_king_idle_right_spr,
     skeleton_king_idle_backward_spr,

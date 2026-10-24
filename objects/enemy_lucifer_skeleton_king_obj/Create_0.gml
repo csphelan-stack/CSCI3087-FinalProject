@@ -17,6 +17,18 @@ knockback_power = 2;
 // one steady collision box (the attack frames have big weapon swings and effects in them)
 mask_index = lucifer_skeleton_king_idle_forward_spr;
 
+
+// MAGIC ATTACK CONFIGURATION
+magic_enabled = true;
+magic_element = "lightning";
+magic_color = make_color_rgb(65, 150, 255);
+magic_range = sight_range;
+magic_aoe_radius = 30;
+magic_orb_duration = 10;
+magic_effect_duration = 14;
+attack_duration = 40;
+attack_windup = 18;
+
 spr_idle = [
     lucifer_skeleton_king_idle_right_spr,
     lucifer_skeleton_king_idle_backward_spr,

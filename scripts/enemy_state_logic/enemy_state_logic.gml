@@ -79,91 +79,70 @@ function enemy_state_wander()
 
 function enemy_state_chase()
 {
-    // Check whether the target still exists.
+    // If the stored player instance disappeared, try to find the player again.
     if (target == noone || !instance_exists(target))
     {
-        // Try to find the player again.
         if (!enemy_can_see_player(sight_range, false))
         {
-            // No player found, so start searching.
             enemy_change_state(ENEMY_STATE.SEARCH);
-
-            // Stop processing CHASE.
             return;
         }
     }
 
-    // Make sure the player is still within the enemy's
-    // maximum chase range and has line of sight.
+    // Keep the existing chase/leash behavior. A wall or a player farther than
+    // lose_range makes the enemy search the last position it knew.
     if (!enemy_can_see_player(lose_range, false))
     {
-        // Remember where the player was.
         enemy_change_state(ENEMY_STATE.SEARCH);
-
-        // Stop processing CHASE.
         return;
     }
 
-    // Store the player's current X position.
+    // Refresh the last known location while the player is visible.
     last_x = target.x;
-
-    // Store the player's current Y position.
     last_y = target.y;
-
-
-    // Calculate the distance from enemy to player.
     var _distance = point_distance(x, y, target.x, target.y);
 
-
-    // Magic users cast spells from a distance instead of fighting up close.
+    // Magical enemies stop to cast only when the player is visible and inside
+    // the existing awareness radius. The target coordinates are snapshotted
+    // once, so the spell does not home in on a moving player.
     if (magic_enabled)
     {
-        // How far this enemy can cast (never farther than it can see the player).
-        var _cast_range = enemy_magic_range();
-
-        if (_distance <= _cast_range)
+        var _spell_range = min(sight_range, magic_range);
+        if (attack_cooldown <= 0 &&
+            _distance <= _spell_range &&
+            enemy_can_see_player(_spell_range, false))
         {
-            // Face the player.
+            // Re-snapshot the exact last-seen position at the moment of casting.
+            last_x = target.x;
+            last_y = target.y;
+            magic_target_x = last_x;
+            magic_target_y = last_y;
+            magic_orb_timer = magic_orb_duration;
+            magic_effect_timer = 0;
             facing = point_direction(x, y, target.x, target.y);
-
-            // Only cast if the cooldown has finished and the player can really be seen.
-            if (attack_cooldown <= 0 && enemy_magic_can_cast())
-            {
-                // Enter the attack state (the spell starts here).
-                enemy_change_state(ENEMY_STATE.ATTACK);
-            }
-        }
-        else
-        {
-            // Too far away to cast, so move closer.
-            enemy_walk_to(target.x, target.y, movespd);
+            enemy_change_state(ENEMY_STATE.ATTACK);
+            return;
         }
 
-        // Stop processing CHASE (the melee code below is for everyone else).
+        // Keep closing distance until the player is within the allowed spell range.
+        enemy_walk_to(target.x, target.y, movespd);
         return;
     }
 
-
-    // Check whether the enemy is close enough to attack.
+    // Ordinary enemies retain their original close-range melee attack.
     if (_distance <= attack_range)
     {
-        // Face the player.
         facing = point_direction(x, y, target.x, target.y);
-
-        // Only attack if the cooldown has finished.
         if (attack_cooldown <= 0)
         {
-            // Enter the attack state.
             enemy_change_state(ENEMY_STATE.ATTACK);
         }
     }
     else
     {
-        // Continue chasing the player.
         enemy_walk_to(target.x, target.y, movespd);
     }
 }
-
 
 // ============================================================
 // ATTACK
@@ -173,51 +152,41 @@ function enemy_state_chase()
 
 function enemy_state_attack()
 {
-    // Do not move normally while attacking.
+    // Stop normal movement while the enemy is attacking/casting.
     move_spd = 0;
 
-    // Make sure the target still exists.
-    if (target != noone && instance_exists(target))
+    // Melee attackers track the live player. Spellcasters keep the aim point
+    // captured when the cast started, even if the player moves afterward.
+    if (!magic_enabled && target != noone && instance_exists(target))
     {
-        // Keep facing toward the player.
         facing = point_direction(x, y, target.x, target.y);
     }
 
-    // Count the attack timer down.
     state_timer--;
 
-
-    // Determine whether the attack has reached its hit frame.
-    if (!attack_hit_done &&
-        state_timer <= attack_duration - attack_windup)
+    // When the hit frame arrives, melee enemies swing as before; magic users
+    // detonate their spell at the fixed circle-and-star target marker.
+    if (!attack_hit_done && state_timer <= attack_duration - attack_windup)
     {
         if (magic_enabled)
         {
-            // Magic users let the spell go (the magic circle erupts).
-            enemy_magic_release();
+            enemy_magic_attack_hit();
+            magic_effect_timer = magic_effect_duration;
         }
         else
         {
-            // Attempt to damage the player.
             enemy_attack_hit();
         }
-
-        // Mark this attack as already having hit.
         attack_hit_done = true;
     }
 
-
-    // Check whether the attack has finished.
+    // End the attack and restart the usual cooldown.
     if (state_timer <= 0)
     {
-        // Start the attack cooldown.
         attack_cooldown = attack_cooldown_max;
-
-        // Resume chasing.
         enemy_change_state(ENEMY_STATE.CHASE);
     }
 }
-
 
 // ============================================================
 // SEARCH

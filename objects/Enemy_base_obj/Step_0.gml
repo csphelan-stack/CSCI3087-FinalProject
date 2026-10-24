@@ -17,6 +17,10 @@ if (attack_cooldown > 0){
     attack_cooldown--;
 }
 
+// Expire the short-lived spell orb and impact visuals independently of movement.
+if (magic_orb_timer > 0) magic_orb_timer--;
+if (magic_effect_timer > 0) magic_effect_timer--;
+
 // reset normal movement each frame
 // individual states enable movement when necessary
 move_spd = 0;

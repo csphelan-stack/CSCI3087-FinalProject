@@ -17,6 +17,18 @@ knockback_power = 4;
 // one steady collision box (the attack frames have big weapon swings and effects in them)
 mask_index = lucifer_necromancer_idle_forward_spr;
 
+
+// MAGIC ATTACK CONFIGURATION
+magic_enabled = true;
+magic_element = "dark";
+magic_color = make_color_rgb(174, 75, 235);
+magic_range = sight_range;
+magic_aoe_radius = 28;
+magic_orb_duration = 10;
+magic_effect_duration = 14;
+attack_duration = 40;
+attack_windup = 18;
+
 spr_idle = [
     lucifer_necromancer_idle_right_spr,
     lucifer_necromancer_idle_backward_spr,
@@ -51,15 +63,3 @@ spr_death = [
     lucifer_necromancer_death_left_spr,
     lucifer_necromancer_death_forward_spr
 ];
-
-// ---------- magic (see the enemy_magic script) ----------
-// this enemy casts dark magic instead of swinging a weapon.
-magic_enabled  = true;
-magic_elements = [MAGIC_ELEMENT.DARK];
-magic_range    = 140;     // never more than sight_range
-
-// the cast: the orb and circle charge for attack_windup frames, then the spell goes off.
-attack_windup       = 50;
-attack_duration     = 75;     // the whole cast (must be longer than the windup)
-attack_cooldown_max = 110;    // pause between casts
-attack_anim_spd     = 0.5;    // slower attack animation so it lasts the whole cast

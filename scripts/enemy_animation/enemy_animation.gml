@@ -10,15 +10,22 @@ function enemy_dir4() {
 // called every frame 
 // priority: attack > hurt > run > idle.
 function enemy_update_animation() {
-    
+    // Defensive default for older/inherited enemy instances missing this value.
+    if (!variable_instance_exists(id, "attack_anim_spd")) attack_anim_spd = 1.0;
+
     var _d = enemy_dir4();
 
     // if the enemy is attacking...
     if (state == ENEMY_STATE.ATTACK){
-        //selects attack sprite for current direction
-        sprite_index = spr_attack[_d];
-        // plays attack animation
-        image_speed = attack_anim_spd;
+        if (magic_enabled) {
+            // Spellcasters hold their idle pose; the orb and rune show the attack.
+            sprite_index = spr_idle[_d];
+            image_speed = idle_anim_spd;
+        } else {
+            // Select the usual attack sprite for melee enemies.
+            sprite_index = spr_attack[_d];
+            image_speed = attack_anim_spd;
+        }
     }else if (state == ENEMY_STATE.HURT){// if the enemy is hurt...
         // hurt sprite for the current direction
         sprite_index = spr_hurt[_d];

@@ -1,0 +1,12 @@
+MAGIC ENEMY UPDATE
+
+Included changes:
+- Added magic_orb_spr and magic_target_spr (transparent, tintable sprite assets).
+- Lucifer Cultist casts fire; Lucifer Necromancer casts dark/necrotic magic; Lucifer Skeleton King casts blue lightning.
+- Legacy Skeleton Cultist casts earth; legacy Skeleton King casts light.
+- Spell range is clamped to the existing sight_range and requires line of sight to begin a cast.
+- Each cast snapshots the player's last visible position. The circle/star does not chase the player.
+- Magic impact damages the player only if they are in the impact radius and routes through the existing player damage/parry handler.
+- Ordinary Orcs, Warriors, and non-caster skeletons keep their regular melee attacks.
+
+Magic is drawn from reusable sprites plus GameMaker draw primitives; element colors and impact shapes are configured in each magic enemy's Create_0.gml and Enemy_base_obj/Draw_0.gml.

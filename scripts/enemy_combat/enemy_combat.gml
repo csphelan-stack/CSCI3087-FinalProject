@@ -78,3 +78,39 @@ function enemy_attack_hit(){
 
 	return _hurt;
 }
+
+
+// ============================================================
+// ENEMY MAGIC ATTACK
+// ============================================================
+// Damages the player only if they are inside the spell's impact circle.
+// The damage is applied through the player's normal handler, so parrying,
+// invulnerability, hit reactions, knockback, and audio still work.
+function enemy_magic_attack_hit()
+{
+    if (!magic_enabled) return false;
+
+    var _p = instance_nearest(magic_target_x, magic_target_y, main_character_Obj);
+    if (_p == noone || !instance_exists(_p)) return false;
+
+    // A spell is an area strike centered on the marker, not a homing attack.
+    if (point_distance(_p.x, _p.y, magic_target_x, magic_target_y) > magic_aoe_radius)
+    {
+        return false;
+    }
+
+    // Do not damage through a wall between the impact point and the player.
+    if (collision_line(magic_target_x, magic_target_y, _p.x, _p.y, obj_wall, false, true) != noone)
+    {
+        return false;
+    }
+
+    if (!variable_instance_exists(_p, "hp")) return false;
+
+    with (_p)
+    {
+        Enemy_damage_applying(other.attack_damage, other.id);
+    }
+
+    return true;
+}
