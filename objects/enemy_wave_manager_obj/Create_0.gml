@@ -38,14 +38,13 @@ use_lucifer_enemies = true;
 
 if (use_lucifer_enemies){
     wave_data = [
-        //one of each so you can see them all straight away
         [[enemy_lucifer_cultist_obj, 1],
          [enemy_lucifer_warrior_obj, 1],
          [enemy_lucifer_necromancer_obj, 1],
          [enemy_lucifer_ancient_skeleton_obj, 1],
          [enemy_lucifer_skeleton_king_obj, 1]],
 
-        [[enemy_lucifer_cultist_obj, 3],
+        [[enemy_lucifer_cultist_obj, 100],
          [enemy_lucifer_warrior_obj, 2]],
 
         [[enemy_lucifer_warrior_obj, 2],
