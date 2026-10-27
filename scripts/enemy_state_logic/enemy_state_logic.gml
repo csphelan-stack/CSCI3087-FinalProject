@@ -115,6 +115,35 @@ function enemy_state_chase()
     var _distance = point_distance(x, y, target.x, target.y);
 
 
+    // Magic users cast spells from a distance instead of fighting up close.
+    if (magic_enabled)
+    {
+        // How far this enemy can cast (never farther than it can see the player).
+        var _cast_range = enemy_magic_range();
+
+        if (_distance <= _cast_range)
+        {
+            // Face the player.
+            facing = point_direction(x, y, target.x, target.y);
+
+            // Only cast if the cooldown has finished and the player can really be seen.
+            if (attack_cooldown <= 0 && enemy_magic_can_cast())
+            {
+                // Enter the attack state (the spell starts here).
+                enemy_change_state(ENEMY_STATE.ATTACK);
+            }
+        }
+        else
+        {
+            // Too far away to cast, so move closer.
+            enemy_walk_to(target.x, target.y, movespd);
+        }
+
+        // Stop processing CHASE (the melee code below is for everyone else).
+        return;
+    }
+
+
     // Check whether the enemy is close enough to attack.
     if (_distance <= attack_range)
     {
@@ -162,8 +191,16 @@ function enemy_state_attack()
     if (!attack_hit_done &&
         state_timer <= attack_duration - attack_windup)
     {
-        // Attempt to damage the player.
-        enemy_attack_hit();
+        if (magic_enabled)
+        {
+            // Magic users let the spell go (the magic circle erupts).
+            enemy_magic_release();
+        }
+        else
+        {
+            // Attempt to damage the player.
+            enemy_attack_hit();
+        }
 
         // Mark this attack as already having hit.
         attack_hit_done = true;

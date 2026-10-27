@@ -51,3 +51,15 @@ spr_death = [
     lucifer_necromancer_death_left_spr,
     lucifer_necromancer_death_forward_spr
 ];
+
+// ---------- magic (see the enemy_magic script) ----------
+// this enemy casts dark magic instead of swinging a weapon.
+magic_enabled  = true;
+magic_elements = [MAGIC_ELEMENT.DARK];
+magic_range    = 140;     // never more than sight_range
+
+// the cast: the orb and circle charge for attack_windup frames, then the spell goes off.
+attack_windup       = 50;
+attack_duration     = 75;     // the whole cast (must be longer than the windup)
+attack_cooldown_max = 110;    // pause between casts
+attack_anim_spd     = 0.5;    // slower attack animation so it lasts the whole cast
