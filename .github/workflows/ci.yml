@@ -1,14 +1,13 @@
-# This is a basic workflow to help you get started with Actions
+# This workflow runs a linter and a test suite every time code is pushed.
 
 name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # Runs on every push to any branch
   push:
+  # Runs on every pull request
   pull_request:
-  workflow_dispatch:
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -21,24 +20,29 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks out your repository so the job can access your files
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
+      # Installs Python 3.12 on the runner
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # Runs a set of commands using the runners shell
-      - name: name: Install dependencies
+      # Installs the linter (flake8) and the test framework (pytest)
+      - name: Install dependencies
         run: pip install flake8 pytest
 
-        name: Lint (flake8)
+      # Checks the tools and tests folders for style and syntax errors
+      - name: Lint (flake8)
         run: flake8 tools tests --max-line-length=100
 
+      # Runs every test in the tests folder
       - name: Run unit tests
         run: pytest -v
 
+      # Scans your GameMaker .yy and .yyp files for broken JSON
+      - name: Validate GameMaker project files
+        run: python tools/gm_check.py .
       - name: Validate GameMaker project files
         run: python tools/gm_check.py .
