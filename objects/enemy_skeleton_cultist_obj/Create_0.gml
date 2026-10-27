@@ -13,18 +13,6 @@ attack_windup = 12;
 attack_duration = 30;
 knockback_power = 4;
 
-
-// MAGIC ATTACK CONFIGURATION
-magic_enabled = true;
-magic_element = "earth";
-magic_color = make_color_rgb(120, 190, 85);
-magic_range = sight_range;
-magic_aoe_radius = 24;
-magic_orb_duration = 10;
-magic_effect_duration = 14;
-attack_duration = 40;
-attack_windup = 18;
-
 spr_idle = [
     skeleton_cultist_idle_right_spr,
     skeleton_cultist_idle_backward_spr,
@@ -59,3 +47,15 @@ spr_death = [
     skeleton_cultist_idle_left_spr,
     skeleton_cultist_idle_forward_spr
 ];
+
+// ---------- magic (see the enemy_magic script) ----------
+// this enemy casts fire magic instead of swinging a weapon.
+magic_enabled  = true;
+magic_elements = [MAGIC_ELEMENT.FIRE];
+magic_range    = 120;     // never more than sight_range
+
+// the cast: the orb and circle charge for attack_windup frames, then the spell goes off.
+attack_windup       = 45;
+attack_duration     = 70;     // the whole cast (must be longer than the windup)
+attack_cooldown_max = 100;    // pause between casts
+attack_anim_spd     = 0.5;    // slower attack animation so it lasts the whole cast

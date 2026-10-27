@@ -58,7 +58,7 @@ spr_hurt = [-1, -1, -1, -1];
 attack_damage = 3;
 
 // set how long the entire attack state lasts
-attack_duration = 30;
+attack_duration = 30
 
 // set how many frames pass before the attack actually hits
 attack_windup = 12;
@@ -71,23 +71,6 @@ attack_cooldown = 0;
 
 // track whether current attack already dealt damage
 attack_hit_done = false;
-
-// ------------------------------------------------------------
-// MAGIC ATTACK DEFAULTS
-// Ordinary enemies stay melee. Child enemies with magical names
-// enable these variables in their own Create event.
-// ------------------------------------------------------------
-magic_enabled = false;
-magic_element = "fire";
-magic_color = make_color_rgb(255, 90, 35);
-magic_range = sight_range;       // spell reach is also clamped to sight_range
-magic_aoe_radius = 22;           // radius around the circle that can be hit
-magic_orb_duration = 10;         // frames the caster's colored orb is visible
-magic_orb_timer = 0;
-magic_effect_duration = 14;      // frames the elemental burst remains visible
-magic_effect_timer = 0;
-magic_target_x = x;              // fixed point captured when the cast begins
-magic_target_y = y;
 
 knockback_power = 4;// when he gets hit btw
 
@@ -136,3 +119,16 @@ state_timer = irandom_range(idle_min, idle_max);
 // new enemy healthbar fix 
 hp_initialized = false;
 
+
+// ---------- magic ----------
+// normal enemies fight with weapons. a magic user turns this on in its own
+// Create event (after event_inherited) and uses the enemy_magic script.
+magic_enabled  = false;                  // true = casts spells instead of fighting up close
+magic_elements = [MAGIC_ELEMENT.FIRE];   // the kinds of magic it knows (picks one at random each cast)
+magic_range    = 130;                    // how far away it can cast. never more than sight_range
+magic_radius   = 36;                     // size of the area the spell hits (the circle's size)
+
+// used while a spell is being cast
+magic_element = MAGIC_ELEMENT.FIRE;      // the element of the spell being cast right now
+magic_orb     = noone;                   // the orb on this enemy
+magic_circle  = noone;                   // the magic circle on the ground
