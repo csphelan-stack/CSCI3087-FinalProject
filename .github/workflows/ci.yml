@@ -1,0 +1,139 @@
+# Team 1 CI pipeline.
+#
+# Runs on every push to any branch, on every pull request into main, and by
+# hand from the Actions tab. Two jobs run in order:
+#
+#   checks      (Ubuntu, about 1 minute)
+#               tests the checkers themselves, then runs the CREDITS check,
+#               JSON data validation and style check
+#   game-tests  (Windows, runs only if "checks" passed)
+#               builds the game with GameMaker's command-line builder (Igor),
+#               launches it with --run-tests, and fails if any GML test failed
+#
+# Branch protection on main requires both jobs to pass before a merge.
+#
+# One-time setup: add a repository secret named ACCESS_KEY containing a
+# GameMaker access key (Settings > Secrets and variables > Actions).
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore: ["**.md"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# A newer push to the same branch cancels the older, still-running pipeline.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Style and data checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test tools
+        run: pip install -r tools/requirements-dev.txt
+
+      # If the checkers below were broken they could pass bad code, so their
+      # own tests run first.
+      - name: Test the checkers
+        run: python -m pytest tools/tests -q
+
+      - name: Check that a CREDITS file exists
+        run: |
+          if [ -z "$(find . -maxdepth 2 -iname 'credits*' -not -path './.git/*' -print -quit)" ]; then
+            echo "::error title=Missing CREDITS file::Add a CREDITS file listing every third-party asset and its license."
+            exit 1
+          fi
+
+      - name: Validate JSON data files
+        run: python tools/validate_data.py
+
+      - name: Check style rules
+        run: python tools/check_style.py
+
+  game-tests:
+    name: Build game and run GML tests
+    needs: checks
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Check that the ACCESS_KEY secret is set
+        shell: pwsh
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+        run: |
+          if (-not $env:ACCESS_KEY) {
+            Write-Output "::error title=Missing secret::Add a GameMaker access key as the repository secret ACCESS_KEY."
+            exit 1
+          }
+
+      - name: Find the GameMaker project file
+        id: find_yyp
+        shell: pwsh
+        run: |
+          $yyp = @(Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.yyp |
+            Where-Object { $_.FullName -notmatch '[\\/](tools|\.git)[\\/]' })
+          if ($yyp.Count -ne 1) { throw "Expected one .yyp file, found $($yyp.Count)" }
+          Write-Output "Project: $($yyp[0].FullName)"
+          "yyp-path=$($yyp[0].FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      # Installs the GameMaker runtime version saved in our .yyp, so CI builds
+      # with the same version we use in the IDE. Cached between runs.
+      - name: Install GameMaker build tools (Igor)
+        id: igor
+        uses: bscotch/igor-setup@v1
+        with:
+          access-key: ${{ secrets.ACCESS_KEY }}
+          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+          cache: true
+
+      # yyc: false builds with the VM, like the Run button in the IDE. It is
+      # faster than the YoYo Compiler and needs no C++ toolchain.
+      - name: Build Windows game
+        id: build
+        uses: bscotch/igor-build@v1
+        with:
+          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+          user-dir: ${{ steps.igor.outputs.user-dir }}
+          yyc: false
+
+      - name: Run the game in test mode
+        shell: pwsh
+        run: ./tools/ci/run-gml-tests.ps1 -BuildDir "${{ steps.build.outputs.out-dir }}" -OutDir test-output -TimeoutSeconds 300
+
+      - name: Check test results
+        run: python tools/ci/check_test_results.py test-output/test_results.json
+
+      # Runs even when a step above failed, so the log is there to diagnose it.
+      - name: Upload test results and game log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output
+          path: |
+            test-output/test_results.json
+            test-output/game-log.txt
+          if-no-files-found: warn
+          retention-days: 14
