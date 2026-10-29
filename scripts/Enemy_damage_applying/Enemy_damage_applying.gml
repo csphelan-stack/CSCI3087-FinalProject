@@ -8,9 +8,10 @@ function Enemy_damage_applying(_damage,_attacker){
 		return false;
 	}
 
-	// ---- hit while charging the special: the charge is lost (and the hit lands below) ----
+	// ---- hit while charging the whirlwind special: the charge is lost (and the hit lands below) ----
 	// (while SPINNING he keeps going - he still gets hurt, but it doesn't stop the tornado)
-	if(state == PlayerState.SPECIAL_CHARGE){
+	if(state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND && !special_charged){
+		audio_stop_sound(snd_charge);   // the charge-up sound loops, so stop it too
 		state = PlayerState.NORMAL;
 		special_charged = false;
 		image_speed = 1;

@@ -1,7 +1,44 @@
 
 
 // ============================================================
-// SPECIAL ATTACK: hold S to charge, and the moment it's full he spins like a tornado
+// SPECIAL ATTACKS: which one runs depends on special_equipped (see the SpecialState enum in the player's Create)
+// the player only has ONE special state (PlayerState.SPECIAL). these two functions pick the equipped special
+// to add a new special: give it a name in SpecialState, then add a case to both switches below
+// ============================================================
+
+/// runs ONCE when the special key is pressed: starts whichever special is equipped
+function startSpecial(){
+	state = PlayerState.SPECIAL;
+
+	switch (special_equipped) {
+		case SpecialState.WHIRLWIND:
+			startSpecialCharge();
+			break;
+
+		default:   // no special equipped (or one without code yet): back to normal
+			state = PlayerState.NORMAL;
+			break;
+	}
+}
+
+/// runs EVERY step while state == PlayerState.SPECIAL
+function specialStateMC(){
+	switch (special_equipped) {
+		case SpecialState.WHIRLWIND:
+			// charging until it's full, then spinning
+			if (special_charged) specialSpinStateMC();
+			else specialChargeStateMC();
+			break;
+
+		default:
+			state = PlayerState.NORMAL;
+			break;
+	}
+}
+
+
+// ============================================================
+// WHIRLWIND (SpecialState.WHIRLWIND): hold S to charge, and the moment it's full he spins like a tornado
 // ============================================================
 // hold the special key -> charges for special_charge_time steps (charge circle + glow, he raises his guard)
 // fully charged -> shockwave bursts out and he goes STRAIGHT into the SPIN (no need to let go):
@@ -11,12 +48,12 @@
 // hit while charging -> the charge is lost (short cooldown, see Enemy_damage_applying)
 // after the spin -> the heavy cooldown (special_cooldown_t)
 // the visuals are the fx functions at the bottom of parryState
-// locked until the player picks the Acrobatic Tsunami card (special_attack_whirlwind_unlock, checked in applyMovement)
+// picking the Acrobatic Tsunami card equips it (special_equipped = SpecialState.WHIRLWIND)
 // ============================================================
 
-/// runs ONCE when the special key is pressed
+/// runs ONCE when the special key is pressed (called by startSpecial)
 function startSpecialCharge(){
-	state = PlayerState.SPECIAL_CHARGE;
+	audio_play_sound(snd_charge, 15, true);
 
 	special_dir4 = round(facing / 90) mod 4;
 	special_charge_timer = 0;
@@ -56,7 +93,6 @@ function specialChargeStateMC(){
 function startSpecialSpin(){
 	audio_stop_sound(snd_charge);
     audio_play_sound(snd_spin, 20, true);
-	state = PlayerState.SPECIAL_SPIN;
 	special_spin_timer = special_spin_time;
 	special_spin_angle = special_dir4 * 90;   // starts facing the way he was
 	special_tick_timer = 0;                   // the first hit lands straight away
@@ -204,7 +240,7 @@ function specialSpinRingDraw(){
 /// Draw GUI: "Special ready" at the bottom center of the screen.
 /// The cooldown countdown is shown by the cooldown orb, so it isn't drawn here
 function specialHudDraw(){
-	if (!special_attack_whirlwind_unlock) exit;   // no special yet, nothing to be ready
+	if (special_equipped == SpecialState.NONE) exit;   // no special yet, nothing to be ready
 	if (special_cooldown > 0) exit;   // still cooling down, the orb shows the timer
 
 	var _x = display_get_gui_width() / 2;

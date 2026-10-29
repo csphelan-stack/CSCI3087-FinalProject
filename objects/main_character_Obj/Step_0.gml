@@ -100,11 +100,8 @@ switch (state){
 	case PlayerState.STUNNED:
 		stunStateMC();
 		break;
-	case PlayerState.SPECIAL_CHARGE:
-		specialChargeStateMC();
-		break;
-	case PlayerState.SPECIAL_SPIN:
-		specialSpinStateMC();
+	case PlayerState.SPECIAL:
+		specialStateMC();   //runs whichever special is equipped
 		break;
 	case PlayerState.DEAD:
 		deathStateMC();

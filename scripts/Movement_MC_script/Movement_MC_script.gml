@@ -21,10 +21,9 @@ function applyMovement(){
 		return;
 	}
 
-	// special: hold to charge, let go to spin (see the SPECIAL ATTACK section of attackState)
-	if(keyboard_check_pressed(global.special_button) && special_attack_whirlwind_unlock && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
-	    audio_play_sound(snd_charge, 15, true);
-		startSpecialCharge();
+	// special: starts whichever special is equipped (see special_attack_tornado_script)
+	if(keyboard_check_pressed(global.special_button) && special_equipped != SpecialState.NONE && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
+		startSpecial();
 		return;
 	}
 	

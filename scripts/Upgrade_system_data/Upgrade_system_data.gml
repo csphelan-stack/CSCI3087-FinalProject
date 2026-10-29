@@ -144,7 +144,7 @@ function Upgrade_system_data(){
 			special: true,
 			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional (Hold {global.special_button} to activate attack)",
 			effects: [
-				{ stat: "special_attack_whirlwind_unlock", op: "set"   ,     value: true},
+				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.WHIRLWIND},
 			],
 			spriteF: card_nautical_joker_spr,
 			indexF: 2,

@@ -15,9 +15,15 @@ enum PlayerState {
     DASH,
 	PARRY,
 	STUNNED,
-	SPECIAL_CHARGE,
-	SPECIAL_SPIN,
+	SPECIAL,   //using whichever special is equipped (special_equipped, see SpecialState below)
 	DEAD,
+}
+
+//which special attack he has. each one gets its own case in startSpecial() and specialStateMC()
+//(top of special_attack_tornado_script). to add a new special: add a name here, then add its cases there
+enum SpecialState {
+	NONE,        //no special yet: the special key does nothing
+	WHIRLWIND,   //Acrobatic Tsunami: hold to charge, then spin like a tornado
 }
 
 //which state the player is currently in (see PlayerState enum above)
@@ -114,8 +120,9 @@ attack_peak_y =         [ -14,  -40,   -14,   13 ];
 attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 
-//has he picked the Acrobatic Tsunami card? (the card's effect sets this, so it lives on the player, not in global)
-special_attack_whirlwind_unlock = true;
+//which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
+//SpecialState.NONE = locked, no special yet
+special_equipped = SpecialState.WHIRLWIND;
 
 
 //---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
@@ -233,9 +240,9 @@ stun_timer = 0;
 dash_double_unlock = false;
 //counts if a dash has happen more than once.
 dash_double_counter = 0;
-//gives 1.5 secs to hit the next dash
+//gives .5 secs to hit the next dash
 dash_double_wait_time = 0;
-dash_double_w_time_set = 90;
+dash_double_w_time_set = 30;
 
 dash_length = 80;  //total pixels one dash travels
 
