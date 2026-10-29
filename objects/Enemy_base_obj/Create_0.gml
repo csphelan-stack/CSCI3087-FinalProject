@@ -83,7 +83,7 @@ knockback_power = 4;// when he gets hit btw
 wander_radius = 64;
 
 // set how long a wander attempt may last
-wander_give_up = 180;
+wander_give_up = 180
 
 // set minimum idle duration
 idle_min = 40;
