@@ -1,3 +1,6 @@
+// enemy_helper_scripts: shared enemy AI. Defines the ENEMY_STATE enum and helpers that
+// enemy events call: enemy_change_state(new_state), enemy_dir4() (facing as 0-3),
+// enemy_can_see_player(range, use_cone) and enemy_walk_to(target_x, target_y, speed).
 enum ENEMY_STATE {
     IDLE,    // standing around
     WANDER,  // strolling to a random spot near home
@@ -69,7 +72,7 @@ function enemy_can_see_player(_range, _use_cone) {
         if (abs(angle_difference(facing, _pdir)) > view_angle * 0.5) return false;
     }
 
-    if (collision_line(x, y, _p.x, _p.y, obj_wall, false, true) != noone) return false;
+    if (collision_line(x, y, _p.x, _p.y, wall_obj, false, true) != noone) return false;
 
     target = _p;
     return true;

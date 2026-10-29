@@ -6,30 +6,41 @@ Every push to any branch, and every pull request into `main`, runs `.github/work
 | --- | --- | --- | --- |
 | Style and data checks | Ubuntu | Tests the checkers themselves (pytest), checks for a CREDITS file, validates the JSON data, checks style rules | A checker test fails, CREDITS is missing, a data file is broken, or a style rule is broken |
 | Build game and run GML tests | Windows, only after the first job passes | Builds the game with Igor (GameMaker's command-line builder), starts it with `--run-tests`, reads `test_results.json` | The build fails, any GML test fails or crashes, no tests ran, or the game does not close within 5 minutes |
+| Lint, unit tests and project files | Ubuntu, alongside the first job | flake8 on `tools/` and `tests/`, the pytest tests in `tests/`, and `tools/gm_check.py` on the `.yy`/`.yyp` files | A lint error, a failing test in `tests/`, or an unreadable project file |
 
 ## What is in this folder
 
 | Path | Purpose |
 | --- | --- |
 | `.github/workflows/ci.yml` | The pipeline: triggers, jobs and steps |
-| `tools/gml/scr_test_framework.gml` | GML test framework: `test_case()`, assertions, the runner |
-| `tools/gml/scr_tests_framework_selftest.gml` | 29 tests proving every assertion fails on bad input |
+| `scripts/scr_test_framework` | GML test framework: `test_case()`, assertions, the runner (in the IDE's Tests folder) |
+| `scripts/scr_tests_framework_selftest` | 29 tests proving every assertion fails on bad input (in the IDE's Tests folder) |
+| `scripts/player_attack_config` | Default damage and knockback for the player's sword hitbox |
 | `tools/check_style.py` | Our style rules (naming, headers, hardcoded stats, debug output, test rooms, whitespace, indentation) |
+| `tools/gm_check.py`, `tests/` | The first CI workflow's `.yy`/`.yyp` checker and its unit tests, including enemy default values |
+| `.flake8` | flake8 settings for the lint step |
+| `CREDITS` | Third-party assets and their licenses |
 | `tools/validate_data.py` | JSON data checks (strict JSON, duplicate keys, stat ranges, unknown enemy types) |
 | `tools/ci/run-gml-tests.ps1` | Unzips the build, runs the game in test mode, collects the results |
 | `tools/ci/check_test_results.py` | Turns `test_results.json` into pass or fail, with annotations and a summary table |
-| `tools/tests/` | 109 pytest tests for the three Python checkers, plus 13 intentionally broken JSON files |
+| `tools/tests/` | 114 pytest tests for the three Python checkers, plus 13 intentionally broken JSON files |
+
+## Naming rule
+
+Objects end in `_obj` or `_object`, sprites in `_spr`, rooms in `_room`, and sounds start with `snd_`. Case is ignored, so `main_character_Obj` passes. Scripts have no naming rule because they are named after the functions inside them. Test assets (`scr_test*`, `obj_test*`, `rm_test*`) are exempt. To change a rule, edit `ASSET_NAMING` at the top of `tools/check_style.py`.
 
 ## One-time setup
 
-1. **Copy these files into the repo root** (the folder with `.github`, next to or above the `.yyp`).
-2. **Add the two GML scripts to the GameMaker project.** GameMaker only loads scripts listed in the `.yyp`, so a `.gml` file dropped into a folder is ignored. In the IDE, create two Script assets named `scr_test_framework` and `scr_tests_framework_selftest`, replace each one's contents with the matching file from `tools/gml/`, save, and then delete `tools/gml/`.
-3. **Add the GameMaker access key.** One teammate signs in at gamemaker.io, opens Account > Access Keys, and generates a key. In GitHub, open Settings > Secrets and variables > Actions, add a secret named `ACCESS_KEY`, and paste in the key. Never commit the key.
-4. **Add a `CREDITS` file** listing every third-party asset and its license.
-5. **Turn on branch protection** for `main` (Settings > Branches): require a pull request, require one approval, and require the status checks "Style and data checks" and "Build game and run GML tests".
-6. **Fill in the enemy-ref settings** at the top of `tools/validate_data.py` so waves can only use enemy types that exist.
+Done: the files are in the repo, the two GML scripts are registered in the project, `CREDITS` exists, and the existing code passes the style check.
 
-The first run will probably flag existing code (default names like `Room1`, scripts without a header comment, stray `show_debug_message` calls). Fix those in one commit. `python tools/check_style.py --fix-whitespace` strips trailing whitespace automatically.
+Still to do:
+
+1. **Add the GameMaker access key.** One teammate signs in at gamemaker.io, opens Account > Access Keys, and generates a key. In GitHub, open Settings > Secrets and variables > Actions, add a secret named `ACCESS_KEY`, and paste in the key. Never commit the key.
+2. **Fill in the TODOs in `CREDITS`**: author, source and license for each asset pack.
+3. **Turn on branch protection** for `main` (Settings > Branches): require a pull request, require one approval, and require the status checks "Style and data checks", "Build game and run GML tests" and "Lint, unit tests and project files".
+4. **When the game gets JSON data files**, put them in `datafiles/` and fill in the enemy-ref settings at the top of `tools/validate_data.py` so waves can only use enemy types that exist. Until then the validator has nothing to check and passes with a warning.
+
+`python tools/check_style.py --fix-whitespace` strips trailing whitespace automatically.
 
 ## Writing a GML test
 

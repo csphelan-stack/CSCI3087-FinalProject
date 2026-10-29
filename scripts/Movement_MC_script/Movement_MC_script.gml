@@ -1,38 +1,41 @@
+// Movement_MC_script: applyMovement() runs every step on main_character_Obj in the normal
+// state. It reads input, starts attacks and dashes, moves the player and stops at wall_obj.
+// No arguments.
 function applyMovement(){
-	
-	
+
+
        if (keyboard_check_pressed(attackBtn) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
         startAttackPlayer();
         return;
     }
-	
-	if(keyboard_check_pressed(dashBtn) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
-		startDashState();
-		return;
-	}
-	
-	
+
+    if(keyboard_check_pressed(dashBtn) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
+        startDashState();
+        return;
+    }
+
+
 if(global.gameIsPaused){
-	movespd = 0;
-	can_move = false;
-	// clear the last movement so x += kb_x below can't keep sliding him while paused
-	kb_x = 0;
-	kb_y = 0;
-	image_speed = 0; // freeze the run animation too
-	exit;
+    movespd = 0;
+    can_move = false;
+    // clear the last movement so x += kb_x below can't keep sliding him while paused
+    kb_x = 0;
+    kb_y = 0;
+    image_speed = 0; // freeze the run animation too
+    exit;
 }
 else{
 movespd = fixedmovespd;
 }
 
-	
+
 
 if (can_move || !global.gameIsPaused) {
 
     _hor = keyboard_check(global.right_button) - keyboard_check(global.left_button);
     _ver = keyboard_check(global.down_button)  - keyboard_check(global.up_button);
 
-	
+
     moving = (_hor != 0) || (_ver != 0);
 
     if (moving) {
@@ -45,8 +48,8 @@ if (can_move || !global.gameIsPaused) {
 
     // assign sprites
     if (moving) {
-		
-		image_speed = 1.2;
+
+        image_speed = 1.2;
         switch (dir4) {
             case 0: sprite_index = skull_knight_run_right_spr; break;
             case 1: sprite_index = skull_knight_run_backward_spr;    break;
@@ -54,7 +57,7 @@ if (can_move || !global.gameIsPaused) {
             case 3: sprite_index = skull_knight_run_forward_spr;  break;
         }
     } else {
-		image_speed = 0.5;
+        image_speed = 0.5;
         // the skull knight has an idle for every direction, so he keeps facing the way he last moved
         switch (dir4) {
             case 0: sprite_index = skull_knight_idle_right_spr; break;
@@ -77,9 +80,9 @@ if (can_move || !global.gameIsPaused) {
 
 // --- horizontal ---
 // would moving sideways put my hitbox inside a wall?
-if (place_meeting(x + kb_x, y, obj_wall)) {
+if (place_meeting(x + kb_x, y, wall_obj)) {
     // yes: creep forward 1 pixel at a time until I'm touching it
-    while (!place_meeting(x + sign(kb_x), y, obj_wall)) {
+    while (!place_meeting(x + sign(kb_x), y, wall_obj)) {
         x += sign(kb_x);
     }
     kb_x = 0; // then stop moving sideways
@@ -87,15 +90,15 @@ if (place_meeting(x + kb_x, y, obj_wall)) {
 x += kb_x;
 
 // --- vertical --- (same idea, up/down)
-if (place_meeting(x, y + kb_y, obj_wall)) {
-    while (!place_meeting(x, y + sign(kb_y), obj_wall)) {
+if (place_meeting(x, y + kb_y, wall_obj)) {
+    while (!place_meeting(x, y + sign(kb_y), wall_obj)) {
         y += sign(kb_y);
     }
     kb_y = 0;
 }
 y += kb_y;
-	
-	
-	
-	
+
+
+
+
 }

@@ -1,0 +1,57 @@
+CREDITS
+=======
+
+Third-party assets used in Colosseum (CSCI3087 final project), grouped by the
+asset-browser folder they live in. Fill in every TODO before the project is
+submitted or shared: who made the pack, where it was downloaded, and its
+license (for example "CC0", "CC-BY 4.0", or "Craftpix free license").
+
+Characters
+----------
+- Knight (4-direction)                Sprites/Knight
+    Sprites: knight_*
+    Author: TODO   Source: TODO   License: TODO
+
+- Skull Knight                        Sprites/Skull_Knight
+    Sprites: skull_knight_*
+    Author: TODO   Source: TODO   License: TODO
+
+- Orcs (Berserker, Grunt, Warlord)    Sprites/Orcs
+    Sprites: orc_berserker_*, orc_grunt_*, orc_warlord_*
+    Author: Craftpix   Source: TODO (craftpix.net page URL)   License: TODO
+
+- Skeletons (Cultist, King, Minion, Soldier, weapons)   Sprites/Skeletons
+    Sprites: skeleton_*
+    Author: TODO   Source: TODO   License: TODO
+
+Environments
+------------
+- Ancient Ruins (terrain, walls, water, props, characters)   Sprites/Ancient_Ruins
+    Sprites/tilesets: ruins_*, luck_creature_*
+    Author: TODO   Source: TODO   License: TODO
+
+- Village Interiors (furniture, windows, doors, chests, lights, pots)
+                                      Sprites/Village_Interiors
+    Sprites/tilesets: village_*
+    Author: TODO   Source: TODO   License: TODO
+
+User interface
+--------------
+- Dark Ages UI                        Gui Sprites/Dark_Ages_UI
+    Author: TODO   Source: TODO   License: TODO
+
+- Medieval UI (framed icons, item icons, menu buttons, wood and stone)
+                                      Gui Sprites/Medieval_UI
+    Author: TODO   Source: TODO   License: TODO
+
+- Pixel UI Kit                        Gui Sprites/Pixel_UI_Kit
+    Author: TODO   Source: TODO   License: TODO
+
+- Sky backgrounds                     Gui Sprites/Sky_Backgrounds
+    Author: TODO   Source: TODO   License: TODO
+
+Made by the team
+----------------
+- All GML code, objects and rooms.
+- parryShader (sword recolour shader).
+- Test framework and CI tools (tools/, scr_test_framework).

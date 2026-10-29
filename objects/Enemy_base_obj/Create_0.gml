@@ -1,6 +1,7 @@
 
 // ---------- defaults (children override these after event_inherited) ----------
-hp         = 10;
+total_hp   = 10;
+hp         = total_hp;
 movespd    = 1.6;   // chase speed
 wander_spd = 0.6;
 

@@ -17,8 +17,8 @@ settingsA[3] = {label:" Exit? ",obj: exit_btn_obj ,spr: gui_menu_exit_spr};
 
 startx= x-200;
 starty=y-210;
-	
+
 startwidth = 0;
 startheight = 0;
-	
+
 spaced= 100;

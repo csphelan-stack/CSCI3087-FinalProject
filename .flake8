@@ -1,0 +1,6 @@
+# flake8 settings for the CI lint step (python -m flake8 tools tests).
+# Team 1's checkers have lines up to 140 characters; everything else in them
+# passes flake8's default rules.
+[flake8]
+max-line-length = 140
+exclude = .git,__pycache__

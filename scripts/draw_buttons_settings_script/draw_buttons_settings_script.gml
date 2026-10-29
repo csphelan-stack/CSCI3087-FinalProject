@@ -1,26 +1,29 @@
+// draw_buttons_settings_script: draw_buttons_settings() runs on Settings_Obj when the game
+// pauses or unpauses. Paused: freezes every other instance's speed and alarms and creates
+// the pause menu buttons. Unpaused: restores them and removes the buttons. No arguments.
 function draw_buttons_settings(){
 
 if(!global.gameIsPaused){
-	
-	window_set_cursor(cr_none);
-	
-	main_character_Obj.can_move=true;
-	
-	for(var r =0; r< btn_num; r++){
 
-		var inst = instance_destroy(settingsA[r].obj);
-		
-	}
-	
-	
-	
+    window_set_cursor(cr_none);
+
+    main_character_Obj.can_move=true;
+
+    for(var r =0; r< btn_num; r++){
+
+        var inst = instance_destroy(settingsA[r].obj);
+
+    }
+
+
+
 }
 else{
-	
-	
-	if (global.gameIsPaused)
+
+
+    if (global.gameIsPaused)
     {
-		
+
         with (all)
         {
             if (object_index == Settings_Obj) continue;
@@ -54,26 +57,26 @@ else{
             for (var i = 0; i < 12; i++) alarm[i] = p_alarm[i];
         }
     }
-	
-	
-	for(var r =0; r< btn_num; r++){
-		
-		var bx = startx+spaced;
-		var by = starty+r*spaced;
-		
-		var inst = instance_create_depth(bx,by,-200,settingsA[r].obj);
-		
-		
-		inst.sprite_index = settingsA[r].spr;
-		inst.button_w = sprite_get_width(settingsA[r].spr)*2;
-		inst.button_h = sprite_get_height(settingsA[r].spr)*2;
-		inst.label = settingsA[r].label;
-		
-		
-		
-	}
-	
-	
+
+
+    for(var r =0; r< btn_num; r++){
+
+        var bx = startx+spaced;
+        var by = starty+r*spaced;
+
+        var inst = instance_create_depth(bx,by,-200,settingsA[r].obj);
+
+
+        inst.sprite_index = settingsA[r].spr;
+        inst.button_w = sprite_get_width(settingsA[r].spr)*2;
+        inst.button_h = sprite_get_height(settingsA[r].spr)*2;
+        inst.label = settingsA[r].label;
+
+
+
+    }
+
+
 }
 
 

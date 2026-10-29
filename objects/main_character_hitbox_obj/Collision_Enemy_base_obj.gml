@@ -11,7 +11,7 @@ other.kb_x = lengthdir_x(knockback,_kb_dir);
 other.kb_y = lengthdir_y(knockback,_kb_dir);
 
 with(other){
-	
-enemy_change_state(ENEMY_STATE.HURT);	
-	
+
+enemy_change_state(ENEMY_STATE.HURT);
+
 }

@@ -1,3 +1,7 @@
+// attackState: the player's sword attack.
+// startAttackPlayer() starts a swing (once, when the attack button is pressed).
+// attackStatePlayer() runs every step of the swing and spawns the hitbox on the hit frame.
+// Both run on main_character_Obj and take no arguments.
 function attackStatePlayer(){
 
     // has the swing reached the hit frame, and have we NOT made a hitbox yet this swing?
@@ -7,7 +11,7 @@ function attackStatePlayer(){
 
         // which way is he facing? snapped to exactly 0, 90, 180 or 270
         var dir4 = round(facing / 90) mod 4;
-       
+
         var _dir = dir4 * 90;
 
         // half the hitbox's size, so we can line up its EDGE instead of its centre
@@ -21,7 +25,7 @@ function attackStatePlayer(){
 
         var _hb = instance_create_layer(_hx, _hy, layer, main_character_hitbox_obj);
         _hb.owner = id;   //telling the hitbox who made it
-		}
+        }
 }
 
 function startAttackPlayer(){
@@ -38,6 +42,6 @@ function startAttackPlayer(){
     }
     image_index = 0;   // start the swing from the first frame
     image_speed = 1;   // play at the sprite's normal speed
-	
-	attack_hit_spawned = false;  //new swing, so it hasn't made a hitbox yet
+
+    attack_hit_spawned = false;  //new swing, so it hasn't made a hitbox yet
 }

@@ -1,7 +1,8 @@
 sprite_index = orc_berserker_idle_forward_spr; // before event_inherited: this fixes the sprite_get_height crash
 event_inherited();
 
-hp      = 10;
+total_hp = 10;
+hp       = total_hp;
 movespd = 1.6;
 
 // order: right, backward, left, forward

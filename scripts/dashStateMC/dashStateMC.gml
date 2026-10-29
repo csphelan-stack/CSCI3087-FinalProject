@@ -1,21 +1,25 @@
+// dashStateMC: the player's dash.
+// startDashState() begins a dash (once, when the dash button is pressed).
+// dashStateMC() moves the player a slice of the dash each step and stops at walls.
+// Both run on main_character_Obj and take no arguments.
 function startDashState(){
 
 
-    // runs ONCE when the dash button (space) is pressed
-    state = PlayerState.DASH;
+	// runs ONCE when the dash button (space) is pressed
+	state = PlayerState.DASH;
 
 	image_blend = c_orange;
 
-    // same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
-    var dir4 = round(facing / 90) mod 4;
-    switch (dir4) {
-        case 0: sprite_index = skull_knight_idle_right_spr;    break;
-        case 1: sprite_index = skull_knight_idle_backward_spr; break;
-        case 2: sprite_index = skull_knight_idle_left_spr;     break;
-        case 3: sprite_index = skull_knight_idle_forward_spr;  break;
-    }
-    image_index = 0;   // start the animation from the first frame
-    image_speed = 1;   // play at the sprite's normal speed
+	// same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
+	var dir4 = round(facing / 90) mod 4;
+	switch (dir4) {
+		case 0: sprite_index = skull_knight_idle_right_spr;    break;
+		case 1: sprite_index = skull_knight_idle_backward_spr; break;
+		case 2: sprite_index = skull_knight_idle_left_spr;     break;
+		case 3: sprite_index = skull_knight_idle_forward_spr;  break;
+	}
+	image_index = 0;   // start the animation from the first frame
+	image_speed = 1;   // play at the sprite's normal speed
 
 	dash_timer = dash_time;  // how many steps the dash lasts
 	dash_dir = facing;       // lock the direction now so he can't steer mid-dash
@@ -35,7 +39,7 @@ function dashStateMC(){
 	var _dx = lengthdir_x(_dash_spd, dash_dir);
 	var _dy = lengthdir_y(_dash_spd, dash_dir);
 
-	move_and_collide(_dx, _dy, obj_wall);
+	move_and_collide(_dx, _dy, wall_obj);
 
 	// count the dash down, and finish when time runs out
 	dash_timer -= 1;

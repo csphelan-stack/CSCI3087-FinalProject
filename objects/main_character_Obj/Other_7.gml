@@ -1,5 +1,5 @@
 if (state == PlayerState.ATTACK){
-	
-	state = PlayerState.NORMAL;	
+
+	state = PlayerState.NORMAL;
 	attack_cooldown = attack_cooldown_time; //starts cooldown
 }

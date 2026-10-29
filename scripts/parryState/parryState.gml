@@ -1,8 +1,13 @@
+// parryState: the player's parry.
+// startParryState() begins it (once, when the parry button is pressed).
+// parryStateMC() runs each step while the button is held and fills the charge.
+// parryChargeComplete() runs when the charge is full and sends out the shockwave.
+// All run on main_character_Obj and take no arguments.
 function startParryState(){
 
 
-    // runs ONCE when the parry button (X) is pressed
-    state = PlayerState.PARRY;
+	// runs ONCE when the parry button (X) is pressed
+	state = PlayerState.PARRY;
 
 	parry_dir = facing;
 	parry_dir4 = round(parry_dir/90) mod 4;   // kept for later: the block sprite needs it when the guard is up

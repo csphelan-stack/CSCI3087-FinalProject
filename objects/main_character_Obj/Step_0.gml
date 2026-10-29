@@ -1,22 +1,22 @@
-if (hp<=0){ 
+if (hp<=0){
 	 game_restart();
 	}
-	
-	
+
+
 if(attack_cooldown >0){
-attack_cooldown-=1;	
+attack_cooldown-=1;
 }
-	
+
 if(dash_cooldown>0){
-dash_cooldown-=1;	
+dash_cooldown-=1;
 }
 
 if(parry_cooldown>0){
-parry_cooldown-=1;	
+parry_cooldown-=1;
 }
-	
+
 switch (state){
-	
+
 	case PlayerState.NORMAL:
 		applyMovement();
 		break;

@@ -1,16 +1,16 @@
 {
   "$GMRoom":"v1",
-  "%Name":"Collesium",
+  "%Name":"Collesium_room",
   "creationCodeFile":"",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_5C1D15A2","path":"rooms/Collesium/Collesium.yy",},
-    {"name":"inst_7714680B","path":"rooms/Collesium/Collesium.yy",},
-    {"name":"inst_6A614D23","path":"rooms/Collesium/Collesium.yy",},
-    {"name":"inst_770123B6","path":"rooms/Collesium/Collesium.yy",},
-    {"name":"inst_23881C5D","path":"rooms/Collesium/Collesium.yy",},
+    {"name":"inst_5C1D15A2","path":"rooms/Collesium_room/Collesium_room.yy",},
+    {"name":"inst_7714680B","path":"rooms/Collesium_room/Collesium_room.yy",},
+    {"name":"inst_6A614D23","path":"rooms/Collesium_room/Collesium_room.yy",},
+    {"name":"inst_770123B6","path":"rooms/Collesium_room/Collesium_room.yy",},
+    {"name":"inst_23881C5D","path":"rooms/Collesium_room/Collesium_room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -41,7 +41,7 @@
           174,-7,205,1,206,-1102,29,
         ],"TileDataFormat":1,},"tilesetId":{"name":"ruins_water_ts","path":"tilesets/ruins_water_ts/ruins_water_ts.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
   ],
-  "name":"Collesium",
+  "name":"Collesium_room",
   "parent":{
     "name":"Room's",
     "path":"folders/Room's.yy",

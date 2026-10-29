@@ -11,4 +11,3 @@ hovered = point_in_rectangle(
 if (hovered && mouse_check_button_pressed(mb_left)) {
    global.gameIsPaused = false;
 }
-  
