@@ -7,7 +7,7 @@ from pathlib import Path
 
 def parse_gm_json(text):
     """Parse GameMaker JSON, which allows trailing commas."""
-    cleaned = re.sub(r",(\s*[}\]])", r"\1", text)
+    cleaned = re.sub(r",(\s*})", r"\1", text)  # INTENTIONAL CI BUG: misses trailing commas before ]
     return json.loads(cleaned)
 
 
