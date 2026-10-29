@@ -23,7 +23,6 @@ def check_project(root):
             errors.append(f"{path}: {exc}")
     return errors
 
-"""   """
 
 def read_gml_assignments(path):
     """Return {name: [values]} for simple 'name = value;' statements."""
@@ -43,7 +42,7 @@ def gml_number(assignments, name):
         return float(assignments[name][-1])
     except (KeyError, ValueError):
         return None
-"""   """
+
 
 if __name__ == "__main__":
     problems = check_project(sys.argv[1] if len(sys.argv) > 1 else ".")
