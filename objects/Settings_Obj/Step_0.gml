@@ -4,7 +4,10 @@
 if(keyboard_check_pressed(global.pauseGameBtn)){
 	if (waiting_for_key != -1) waiting_for_key = -1;		// Esc cancels picking a new key
 	else if (menu_page != "main") open_page("main");		// Esc backs out of Settings / Options
-	else global.gameIsPaused= !global.gameIsPaused;
+	else {
+		global.gameIsPaused= !global.gameIsPaused;
+		if (global.gameIsPaused) layout_menu();		// centre the menu on the screen (see Create)
+	}
 }
 else if (global.gameIsPaused) {
 	pause_menu_step();

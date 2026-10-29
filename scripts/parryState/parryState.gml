@@ -160,7 +160,7 @@ function fxChargeCircleDraw(_charge, _full){
     var _R = parry_circle_radius;
 
     gpu_set_blendmode(bm_add);
-    draw_set_colour(parry_fx_colour);
+    draw_set_colour(special_fx_colour);
 
     // the outline: full size from the start, so you can see what's being filled
     draw_set_alpha(0.5);
@@ -181,7 +181,7 @@ function fxChargeCircleDraw(_charge, _full){
     gpu_set_blendmode(bm_normal);
 }
 
-/// draws the player with the rainbow sweeping up his sword (use INSTEAD of draw_self)
+/// draws the player with the palette colours sweeping up his sword (use INSTEAD of draw_self)
 function fxRainbowSwordDraw(){
     shader_set(parryShader);
 
@@ -197,24 +197,35 @@ function fxRainbowSwordDraw(){
         colour_get_red(sword_trail_colour)   / 255,
         colour_get_green(sword_trail_colour) / 255,
         colour_get_blue(sword_trail_colour)  / 255);
+    sword_palette_set(u_pal0, sword_palette[0]);
+    sword_palette_set(u_pal1, sword_palette[1]);
+    sword_palette_set(u_pal2, sword_palette[2]);
 
     draw_self();
     shader_reset();
 }
 
-/// moves the rainbow up the sword - call every step while it's showing
-/// (set sword_sweep = 0 and sword_hue = 0 when it starts so it begins at the bottom on red + yellow)
+/// hands one colour to the sword shader as red, green, blue from 0 to 1
+function sword_palette_set(_uniform, _colour){
+    shader_set_uniform_f(_uniform,
+        colour_get_red(_colour)   / 255,
+        colour_get_green(_colour) / 255,
+        colour_get_blue(_colour)  / 255);
+}
+
+/// moves the colour band up the sword - call every step while it's showing
+/// (set sword_sweep = 0 and sword_hue = 0 when it starts so it begins at the bottom on the first colours)
 function fxRainbowSwordStep(){
 	sword_sweep += sword_sweep_speed;
 	if (sword_sweep > 1 + sword_band + sword_trail_len) {
 		sword_sweep = 0;
-		sword_hue = frac(sword_hue + sword_colours / 6);   // next pass = the next colours round the rainbow
+		sword_hue = (sword_hue + sword_colours) mod array_length(sword_palette);   // next pass = the next colours in sword_palette
 	}
 }
 
 /// he glows in the fx colour while charging, stronger as _charge goes 0 -> 1 (draw AFTER him)
 function fxChargeGlowDraw(_charge){
-    gpu_set_fog(true, parry_fx_colour, 0, 0);
+    gpu_set_fog(true, special_fx_colour, 0, 0);
     draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6 * _charge);
     gpu_set_fog(false, c_white, 0, 0);
 }

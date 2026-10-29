@@ -31,6 +31,8 @@ global.special_button = ord("S");   // hold to charge the special spin attack
 
 global.safeInside = false;
 
+
+
 // swap in whatever keys the player picked on the pause menu's Settings page last time
 controls_load();
 

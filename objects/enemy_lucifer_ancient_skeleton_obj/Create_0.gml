@@ -3,16 +3,18 @@ sprite_index = lucifer_ancient_skeleton_idle_forward_spr;
 event_inherited();
 
 // ancient skeleton: big slow brute with a greatsword (7 frame attack, the swing lands on frame 5)
-hp = 25;
-movespd = 1.1;
-attack_damage = 6;
-attack_range = 34;
+hp = 80;
+movespd = 1.8;
+attack_damage = 10;
+attack_range = 30;
 stop_range = 20;
-attack_cooldown_max = 70;
+attack_cooldown_max = 90;
+
+attack_anim_spd = 1.2;
 // timed to the attack sprite (12 fps = 5 steps a frame): it hits on the frame the weapon/spell lands
-attack_windup = 25;
-attack_duration = 35;
-knockback_power = 2;
+attack_windup = 20;
+attack_duration = 25;
+knockback_power = 20;
 
 // one steady collision box (the attack frames have big weapon swings and effects in them)
 mask_index = lucifer_ancient_skeleton_idle_forward_spr;

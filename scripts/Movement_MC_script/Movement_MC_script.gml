@@ -1,5 +1,8 @@
 function applyMovement(){
 	
+		if(dash_double_counter == 1){
+			double_dash_wait_state();
+		}
 	
        if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
        audio_play_sound(snd_sword, 20, false);
@@ -19,7 +22,7 @@ function applyMovement(){
 	}
 
 	// special: hold to charge, let go to spin (see the SPECIAL ATTACK section of attackState)
-	if(keyboard_check_pressed(global.special_button) && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
+	if(keyboard_check_pressed(global.special_button) && special_attack_whirlwind_unlock && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
 	    audio_play_sound(snd_charge, 15, true);
 		startSpecialCharge();
 		return;

@@ -15,7 +15,9 @@ if (hurt_timer > 0) {
 if(attack_cooldown >0){
 attack_cooldown-=1;	
 }
-	
+if(	dash_double_wait_time>0){
+	dash_double_wait_time-=1;	
+}
 if(dash_cooldown>0){
 dash_cooldown-=1;	
 }
@@ -57,6 +59,26 @@ else {
 	push_y = 0;
 }
 
+///////////////////////////////////////////////////
+//
+//UPGRADE SYSTEM START: RN IT IS JUST A BUTTON PRESS NEEDS TO BE AN EVENT TRIGGER
+//
+//////////////////////////////////////////////////
+if(keyboard_check_pressed(global.temp_upgrade_btn)){
+	event_go_upgrade = !event_go_upgrade
+}
+if(event_go_upgrade){
+	//only make one (this runs every step)
+	if(!instance_exists(Upgrade_system_obj)){
+		instance_create_depth(x,y,-100,Upgrade_system_obj);
+	}
+}
+else{
+	if(instance_exists(Upgrade_system_obj)){
+		instance_destroy(Upgrade_system_obj);	
+		instance_destroy(upgrade_card_obj);
+	}
+}
 		
 
 

@@ -22,7 +22,7 @@ function startHurtFlinch(){
 function startDeath(){
 	state = PlayerState.DEAD;
 	hurt_timer = 0;
-	image_blend = c_white;   // in case he died mid-dash (the dash tints him orange)
+	image_blend = c_white;   // in case he died mid-dash (the dash tints him gold)
 	invuln = 999999;         // enemies can't keep hitting the body
 
 	sprite_index = death_spr[round(facing / 90) mod 4];

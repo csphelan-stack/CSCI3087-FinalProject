@@ -19,6 +19,8 @@ function enemy_update_animation() {
         sprite_index = spr_attack[_d];
         // plays attack animation
         image_speed = attack_anim_spd;
+	
+		
     }else if (state == ENEMY_STATE.HURT){// if the enemy is hurt...
         // hurt sprite for the current direction
         sprite_index = spr_hurt[_d];

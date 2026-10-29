@@ -4,7 +4,7 @@ function startDashState(){
     // runs ONCE when the dash button (space) is pressed
     state = PlayerState.DASH;
 
-	image_blend = c_orange;
+	image_blend = dash_tint;
 	
 	dash_dir = facing; 
 
@@ -17,6 +17,9 @@ function startDashState(){
 
 	dash_timer = dash_time;  // how many steps the dash lasts
 	      // lock the direction now so he can't steer mid-dash
+	if(dash_double_counter == 0){
+	dash_double_wait_time = dash_double_w_time_set;
+	}
 
 
 }
@@ -82,9 +85,45 @@ function dashStateMC(){
 	// count the dash down, and finish when time runs out
 	dash_timer -= 1;
 
-	if (dash_timer <= 0) {
-		dash_cooldown = dash_cooldown_t;
-		image_blend = c_white;
-		state = PlayerState.NORMAL;
+	//adds a second dash that needs to be down consecutively.
+	if(!dash_double_unlock || dash_double_wait_time <0){
+
+		if (dash_timer <= 0) {
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+		}
+	
 	}
+	else if (dash_timer <= 0 && dash_double_unlock){
+		dash_double_counter +=1;
+		double_dash_wait_state();
+	}	
+	
+}
+//This entire function is just to allow the user to dash twice once it has been unlocked.
+function double_dash_wait_state(){
+	state = PlayerState.NORMAL;
+	
+	if(dash_double_wait_time >0){
+		if(dash_double_counter >1 || dash_double_wait_time < 0){
+			if (dash_timer <= 0) {
+			dash_double_counter = 0;
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+			}
+		}
+		else if(dash_double_counter == 1 && keyboard_check_pressed(global.dash_button)){
+			state = PlayerState.DASH;	
+		}
+	}
+	else{
+			if (dash_timer <= 0) {
+			dash_double_counter = 0;
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+		}
+	}	
 }

@@ -5,7 +5,9 @@
 //check movement_MC_script for an example
 //this makes writing code for a character much more efficient and also more sperated so it is easier to keep control of
 
-
+//TEMPORARY
+global.temp_upgrade_btn = ord("U");
+event_go_upgrade = false;
 //optional
 enum PlayerState {
     NORMAL,
@@ -72,6 +74,7 @@ can_move = true;
 //start with no attack have some condition to show he can attack.
 can_attack = true;
 //can he dash / parry / use the special? (characterInside_script turns these off, characterOutside_script back on)
+dash_unlock = false;
 can_dash = true;
 can_parry = true;
 can_special = true;
@@ -109,6 +112,11 @@ attack_hit_frame = 1;        //which frame of the swing makes the hitbox (0 = fi
 attack_peak_x =         [  40,    0,   -40,    0 ];
 attack_peak_y =         [ -14,  -40,   -14,   13 ];
 attack_hit_spawned = false;  //has this swing already made its hitbox?
+
+
+//has he picked the Acrobatic Tsunami card? (the card's effect sets this, so it lives on the player, not in global)
+special_attack_whirlwind_unlock = true;
+
 
 //---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
 special_charge_time  = 60;       //steps to fully charge (60 = 1 second)
@@ -183,11 +191,11 @@ dmg_crit_time = 45;    //how long "Crit!" stays on screen after a counter hit
 parry_success = false;
 parry_was_hit = false;
 
-
+perfect_p_unlocked = false;
 
 //---parry: block + perfect parry (see the top of parryState for how it all fits together)---
 //perfect parry: a hit this many steps after pressing parry is parried perfectly (no damage + auto counter)
-parry_perfect_window = 10;
+parry_perfect_window = 6;
 parry_perfect_timer = 0;
 
 //parry cooldowns
@@ -221,9 +229,15 @@ stun_time = 45;    //steps he can't move or act (60 = 1 second)
 stun_timer = 0;
 
 
+//adds a double dashing ability
+dash_double_unlock = false;
+//counts if a dash has happen more than once.
+dash_double_counter = 0;
+//gives 1.5 secs to hit the next dash
+dash_double_wait_time = 0;
+dash_double_w_time_set = 90;
 
-
-dash_length = 120;  //total pixels one dash travels
+dash_length = 80;  //total pixels one dash travels
 
 dash_timer = 0;
 dash_time = 5;
@@ -231,20 +245,35 @@ dash_time = 5;
 dash_dir = 0;
 
 //---dash afterimages---
-dash_ghost_count       = 6;     //how many shadows each dash leaves
+dash_ghost_count       = 3;     //how many shadows each dash leaves
 dash_ghost_alpha_first = 0.7;   //opacity of the first shadow
 dash_ghost_alpha_last  = 0.3;   //opacity of the last shadow (the ones between are spread evenly)
-dash_ghost_colour      = [c_orange, c_fuchsia, c_aqua, c_yellow, c_maroon,c_lime,c_purple]; //colours in order (repeats if there are more shadows than colours)
-dash_ghost_hold        = 2;     //steps before the FIRST shadow starts fading
-dash_ghost_stagger     = 3;     //steps between each shadow starting to fade
+//rainbow colours in order, each one taken from a card pack (repeats if there are more shadows than colours)
+dash_ghost_colour      = [
+	make_colour_rgb(249, 83, 97),    //red      #f95361 (fantasy)
+	make_colour_rgb(224, 93, 0),     //orange   #e05d00 (fire)
+	make_colour_rgb(244, 186, 11),   //yellow   #f4ba0b (fire)
+	make_colour_rgb(218, 246, 80),   //lime     #daf650 (deco)
+	make_colour_rgb(27, 224, 0),     //green    #1be000 (nautical)
+	make_colour_rgb(0, 224, 150),    //teal     #00e096 (forest)
+	make_colour_rgb(0, 152, 219),    //blue     #0098db (space)
+	make_colour_rgb(154, 29, 123)    //purple   #9a1d7b (fantasy)
+];
+dash_tint              = c_orange;   //what he's tinted while dashing
+dash_ghost_hold        = 4;     //steps before the FIRST shadow starts fading
+dash_ghost_stagger     = 5;     //steps between each shadow starting to fade
 dash_ghost_fade        = 16;    //steps each shadow takes to fade out
 dash_ghosts_made       = 0;     //how many shadows this dash has made so far
 
 
 
 parry_dir4 = 3;          //which way this parry faces (0 right, 1 up, 2 left, 3 down)
-parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (and the saved shockwave fx below)
+parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (the special has its own colours, special_fx_colour)
 parry_circle_radius = 44;   //size of the parry ring (and the saved charge circle below)
+
+//---special attack colours (Deco card palette)---
+special_fx_colour    = make_colour_rgb(224, 187, 0);   //gold: charge circle, charge glow, burst ring and the wind swirl
+special_ghost_colour = [c_white, make_colour_rgb(218, 246, 80), make_colour_rgb(224, 187, 0)];   //the spin's afterimages: white, highlight, gold
 
 
 //============================================================
@@ -254,15 +283,20 @@ parry_circle_radius = 44;   //size of the parry ring (and the saved charge circl
 
 
 
-//---sword glow (rainbow up the sword once something is fully charged)---
-sword_sweep        = 0;      //where the rainbow is: 0 = bottom of the sprite, 1 = top (moves on its own)
-sword_sweep_speed  = 0.02;   //how fast the rainbow climbs
-sword_band         = 0.4;    //how tall the rainbow band is
-sword_trail_len    = 0.4;    //how long the trail behind the rainbow is
-sword_trail_colour = c_aqua; //colour of the trail
+
+
+
+
+//---sword glow (palette colours up the sword once something is fully charged)---
+sword_sweep        = 0;      //where the colour band is: 0 = bottom of the sprite, 1 = top (moves on its own)
+sword_sweep_speed  = 0.02;   //how fast the band climbs
+sword_band         = 0.4;    //how tall the colour band is
+sword_trail_len    = 0.4;    //how long the trail behind the band is
+sword_trail_colour = make_colour_rgb(129, 77, 24); //colour of the trail (bronze)
+sword_palette      = [make_colour_rgb(224, 187, 0), make_colour_rgb(218, 246, 80), c_white]; //the band's colours, in order (exactly 3: gold, highlight, white)
 sword_colours      = 2;      //how many colours pass up the sword at once
-sword_hue          = 0;      //which colour the current pass starts on (moves on by itself)
-sword_saturation   = 0.5;    //how strong the sword colours are (1 = full rainbow, 0 = plain sword)
+sword_hue          = 0;      //which sword_palette colour the current pass starts on (moves on by itself)
+sword_saturation   = 0.5;    //how strong the sword colours are (1 = full colour, 0 = plain sword)
 
 //shader inputs: look them up once here, use them in Draw
 u_uvs       = shader_get_uniform(parryShader, "u_uvs");
@@ -272,6 +306,9 @@ u_trail_len = shader_get_uniform(parryShader, "u_trail_len");
 u_trail     = shader_get_uniform(parryShader, "u_trail");
 u_colours   = shader_get_uniform(parryShader, "u_colours");
 u_hue       = shader_get_uniform(parryShader, "u_hue");
+u_pal0      = shader_get_uniform(parryShader, "u_pal0");
+u_pal1      = shader_get_uniform(parryShader, "u_pal1");
+u_pal2      = shader_get_uniform(parryShader, "u_pal2");
 u_saturation = shader_get_uniform(parryShader, "u_saturation");
 
 // universal cooldowns
@@ -282,9 +319,6 @@ special_cd_max = special_cooldown_t; special_cd_prev = 0;
 //UI cluster dimmer
 orb_surf = -1;
 
-dash_cd_max     = dash_cooldown_t;     dash_cd_prev    = 0;
-parry_cd_max    = parry_cooldown_t;    parry_cd_prev   = 0;
-special_cd_max  = special_cooldown_t;  special_cd_prev = 0;
 
 
 
@@ -294,7 +328,7 @@ hurt_timer = 0;
 death_hold_time = 60;     //steps he lies on the ground after the death animation before the restart
 death_hold_timer = -1;
 
-
+sword_damage = 4;
 
 
 

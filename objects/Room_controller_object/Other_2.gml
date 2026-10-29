@@ -15,3 +15,5 @@ view_yport[0] = 0;
 if (application_surface != -1) {
     surface_resize(application_surface, global.BASE_W, global.BASE_H);
 }
+
+

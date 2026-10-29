@@ -20,7 +20,7 @@ function Enemy_damage_applying(_damage,_attacker){
 	if(state == PlayerState.PARRY){
 
 		// ---- right as the guard went up: perfect parry, no damage, auto counter ----
-		if(parry_perfect_timer > 0){
+		if(parry_perfect_timer > 0 && perfect_p_unlocked){
 			parrySuccess(_attacker);
 			return false;
 		}

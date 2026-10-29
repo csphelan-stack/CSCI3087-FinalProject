@@ -10,8 +10,8 @@
   "name":"main_character_hitbox_obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Main_character",
-    "path":"folders/Main_character.yy",
+    "name":"hurtbox_hitbox",
+    "path":"folders/Main_character/hurtbox_hitbox.yy",
   },
   "parentObjectId":null,
   "persistent":false,

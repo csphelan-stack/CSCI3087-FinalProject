@@ -1,4 +1,4 @@
-// (the charge circle / rainbow sword / charge glow are fx functions at the bottom of parryState)
+// (the charge circle / palette sword glow / charge glow are fx functions at the bottom of parryState)
 
 // how full the special's charge is: 0 = just started, 1 = full
 var _special_charge = special_charged ? 1 : min(1, special_charge_timer / special_charge_time);
@@ -8,7 +8,7 @@ if (state == PlayerState.SPECIAL_CHARGE) {
     fxChargeCircleDraw(_special_charge, special_charged);
 }
 
-// ---- 1. the player: rainbow sword once the special is charged and all through the spin ----
+// ---- 1. the player: palette colours up the sword once the special is charged and all through the spin ----
 if ((state == PlayerState.SPECIAL_CHARGE && special_charged) || state == PlayerState.SPECIAL_SPIN) {
     fxRainbowSwordDraw();
 } else {
