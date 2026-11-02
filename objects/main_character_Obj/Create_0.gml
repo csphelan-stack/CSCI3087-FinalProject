@@ -23,7 +23,8 @@ enum PlayerState {
 //(top of special_attack_tornado_script). to add a new special: add a name here, then add its cases there
 enum SpecialState {
 	NONE,        //no special yet: the special key does nothing
-	WHIRLWIND,   //Acrobatic Tsunami: hold to charge, then spin like a tornado
+	WHIRLWIND,     //Acrobatic Tsunami: hold to charge, then spin like a tornado
+	ACCELERATED,   //Accelerated Condition: not built yet (equipping it does nothing)
 }
 
 //which state the player is currently in (see PlayerState enum above)
