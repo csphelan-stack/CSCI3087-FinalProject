@@ -22,9 +22,9 @@ function startHurtFlinch(){
 
 /// runs ONCE when his hp hits 0
 function startDeath(){
-	// no death animation: restart straight away
+	// no death animation: go straight to the death screen
 	if (is_undefined(death_spr)) {
-		game_restart();
+		room_goto(rm_death);
 		return;
 	}
 
@@ -45,11 +45,11 @@ function deathStateMC(){
 	kb_x = 0;
 	kb_y = 0;
 
-	// the animation is over and he's lying there: count down to the restart
+	// the animation is over and he's lying there: count down to the death screen
 	if (death_hold_timer > 0) {
 		death_hold_timer -= 1;
 		if (death_hold_timer <= 0) {
-			game_restart();
+			room_goto(rm_death);
 		}
 	}
 }
