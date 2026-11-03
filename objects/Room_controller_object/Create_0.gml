@@ -37,12 +37,13 @@ controls_load();
 
 
 
-
+/* NOTE: fullscreen commented out for switch to rm_start as first room (title screen)
 // Default to fullscreen (also set as the project's Windows "start fullscreen"
 // option, but forcing it here too so it's honored during IDE test-runs as well)
 if (!window_get_fullscreen()) {
     window_set_fullscreen(true);
 }
+*/
 
 // Crisp pixels
 gpu_set_texfilter(false);
