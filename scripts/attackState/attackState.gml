@@ -14,21 +14,36 @@ function attackStatePlayer(){
 		//tracks the opposite of the swing direction so we can apply knockback
 		opp_swing_dir = dir4*90+180;
 
+        // Butterfly Effect: a bigger hitbox that reaches further (1 = normal)
+        var _range = butterflyOn() ? butterfly_range_mult : 1;
+
         // half the hitbox's size, so we can line up its EDGE instead of its centre
-        var _half_w = sprite_get_width(main_character_hitbox_spr) / 2;
-        var _half_h = sprite_get_height(main_character_hitbox_spr) / 2;
+        var _half_w = sprite_get_width(main_character_hitbox_spr) / 2 * _range;
+        var _half_h = sprite_get_height(main_character_hitbox_spr) / 2 * _range;
 
         // start at the peak of the swing, then step back toward him by half the box,
         // so the far edge of the box sits right on the peak
         // (the peaks are in sprite pixels, so they grow with his size)
-        var _hx = x + attack_peak_x[dir4] * char_scale - lengthdir_x(_half_w, _dir);
-        var _hy = y + attack_peak_y[dir4] * char_scale - lengthdir_y(_half_h, _dir);
+        var _hx = x + attack_peak_x[dir4] * char_scale * _range - lengthdir_x(_half_w, _dir);
+        var _hy = y + attack_peak_y[dir4] * char_scale * _range - lengthdir_y(_half_h, _dir);
 
         var _hb = instance_create_layer(_hx, _hy, layer, main_character_hitbox_obj);
-		
+		_hb.image_xscale = _range;
+		_hb.image_yscale = _range;
+
 		// counters (from a parry) hit harder than a normal swing
 		_hb.damage = attack_is_countered ? counter_damage : player_damage;
 		_hb.is_crit = attack_is_countered;   // counters show "Crit!" above the enemy they hit
+
+		// Butterfly Effect: the hit is stored on the enemy instead of doing damage, and knocks back half as hard
+		if (butterflyOn()) {
+			_hb.bf_store = true;
+			_hb.knockback *= butterfly_kb_mult;
+
+			// and the swing shows as a big glowing butterfly instead of the hitbox square
+			_hb.image_alpha = 0;
+			butterflySlash(_hx, _hy, _range);
+		}
 
 		
         _hb.owner = id;   //telling the hitbox who made it
@@ -45,7 +60,8 @@ function startAttackPlayer(_counter = false){
     sprite_index = attack_spr[dir4];   // set in Create
     image_index = 0;   // start the swing from the first frame
     image_speed = 1.2;   // play at the sprite's normal speed
-	
+	if (butterflyOn()) image_speed *= butterfly_attack_mult;   // Butterfly Effect: much faster swings
+
 	attack_is_countered = _counter;   // reset every swing, so only the parry's swing is a counter
 	
 	

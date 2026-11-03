@@ -40,6 +40,7 @@ if(global.gameIsPaused){
 else{
 // slower walk inside (global.safeInside is set by characterInside_script / characterOutside_script)
 movespd = global.safeInside ? inside_movespd : fixedmovespd;
+if (butterflyOn()) movespd *= butterfly_move_mult;   // Butterfly Effect: runs 1.5x faster
 }
 
 	

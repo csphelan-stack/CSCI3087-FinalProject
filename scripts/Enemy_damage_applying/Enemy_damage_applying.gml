@@ -18,6 +18,15 @@ function Enemy_damage_applying(_damage,_attacker){
 		special_cooldown = special_interrupt_cd;
 	}
 
+	// ---- hit during the Dance of Dragons wind-up: the dance is cancelled (and the hit lands below) ----
+	// (once he's dancing he can't be hurt, see special_dance_attack_script)
+	if(state == PlayerState.SPECIAL && special_equipped == SpecialState.DANCE && dance_phase == "windup"){
+		state = PlayerState.NORMAL;
+		image_speed = 1;
+		special_cooldown = dance_interrupt_cd;
+		global.enemy_time_scale = 1;   // the slow motion stops too
+	}
+
 	if(state == PlayerState.PARRY){
 
 		// ---- right as the guard went up: perfect parry, no damage, auto counter ----

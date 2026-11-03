@@ -24,7 +24,8 @@ enum PlayerState {
 enum SpecialState {
 	NONE,        //no special yet: the special key does nothing
 	WHIRLWIND,     //Acrobatic Tsunami: hold to charge, then spin like a tornado
-	ACCELERATED,   //Accelerated Condition: not built yet (equipping it does nothing)
+	DANCE,         //Dance of Dragons: a 1 second wind-up, then he dashes enemy to enemy striking each one, and they burn
+	BUTTERFLY,     //Butterfly Effect: 10 seconds of harmless fast hits, then they all land at once and butterflies fly out
 }
 
 //which state the player is currently in (see PlayerState enum above)
@@ -123,8 +124,155 @@ attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 //which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
 //SpecialState.NONE = locked, no special yet
-special_equipped = SpecialState.WHIRLWIND;
+special_equipped = SpecialState.BUTTERFLY;   //TESTING: switch between BUTTERFLY, DANCE and WHIRLWIND here
 
+//---Butterfly Effect (special_attack_butterfly_script)---
+//for 10 seconds his hits do no damage, they're stored on each enemy instead. he swings faster, reaches further,
+//knocks back half as hard and runs faster. when it ends every stored hit lands at once (most of them crits)
+//and butterflies fly out of the enemies to hit the ones around them
+butterfly_time        = 60 * 10;  //how long the window lasts (10 seconds)
+butterfly_timer       = 0;        //counts down while it's on (0 = off)
+butterfly_cooldown_t  = 60 * 30;  //cooldown after the window ends (30 seconds)
+butterfly_attack_mult = 2.5;      //swings play this many times faster
+butterfly_cd_mult     = 3;        //the attack cooldown is this many times shorter
+butterfly_range_mult  = 1.5;      //hitboxes are this many times bigger and reach this much further
+butterfly_kb_mult     = 0.5;      //knockback is halved
+butterfly_move_mult   = 1.5;      //he runs 1.5x faster
+butterfly_crit_chance = 0.75;     //chance each stored hit lands as a crit
+butterfly_crit_mult   = 2;        //a crit does this many times the damage
+butterfly_cap_mult    = 3;        //an enemy takes at most this many times its max health in one payoff
+//the butterflies that fly out at the end
+butterfly_hits_each   = 5;        //one butterfly for every this many hits an enemy took (at least 1)
+butterfly_max_each    = 4;        //at most this many butterflies out of one enemy
+butterfly_hit_others  = true;     //true = they fly to OTHER enemies nearby, false = back at the one they came out of
+butterfly_seek_range  = 150;      //how far away (room pixels) they look for another enemy to hit
+butterfly_damage      = 2;        //damage each butterfly does when it reaches its target
+butterfly_speed       = 3;        //how fast they fly (pixels per step)
+butterfly_life        = 60 * 3;   //they fly off after 3 seconds if they can't reach anyone
+butterfly_scale       = 1;        //how big they're drawn (the sprite is butterfly_gif_spr)
+butterflies           = [];       //the butterflies in the air (structs, see butterfliesStep)
+//the look
+butterfly_colours     = [make_colour_rgb(255, 140, 200), make_colour_rgb(180, 130, 255), make_colour_rgb(90, 220, 210), make_colour_rgb(80, 246, 135), make_colour_rgb(255, 210, 100)];   //pink, violet, teal, green, gold (the first one is the screen glow and the hit counters)
+butterfly_burst_count = 24;       //butterflies that fly out of him when it starts
+butterfly_slash_scale = 2.6;      //how big the butterfly shape each sword swing makes is (it grows with the bigger hitbox too)
+butterfly_screen_count = 36;      //butterflies drifting round the edges of the screen during the window
+butterfly_screen_band = 40;       //how far in from the edge of the screen they stay (screen pixels)
+//runtime (the script sets these)
+butterfly_fx          = [];       //the little butterflies and the sword's butterfly shapes (structs, see butterflyFxStep)
+butterfly_screen      = [];       //the butterflies round the screen edges (structs, see butterflyScreenStep)
+butterfly_screen_alpha = 0;       //they fade in when the window starts and out when it ends
+butterfly_trail_timer = 0;        //lets a little butterfly loose behind him every few steps during the window
+
+//---Dance of Dragons (special_dance_attack_script)---
+//press S: he goes straight away, dashing to the nearest enemy without stopping while enemies slow right down.
+//a QTE: press Z as he arrives (when the closing ring meets the small ring) to strike: PERFECT, GOOD or MISS.
+//then on to the next nearest enemy, up to 5 in a row (+1 for every PERFECT, the 2nd MISS ends it).
+//an orange and red trail follows him and burns what it touches
+dance_windup_time    = 0;         //steps he stands still before it goes (0 = goes the moment you press S, 60 = 1 second)
+dance_range          = 220;       //how far from where he is (room pixels) it looks for the next enemy
+dance_targets_max    = 5;         //most enemies he goes to in a row (before PERFECT bonuses)
+dance_dash_speed     = 9;         //how fast he dashes between them (pixels per step)
+dance_leg_time_max   = 45;        //skips an enemy he can't reach in this many steps (a wall in the way)
+dance_hit_radius     = 56;        //reach of each strike, round the enemy (much bigger than the sword's)
+dance_damage_mult    = 1.5;       //each strike does player_damage times this
+dance_knockback      = 5;
+dance_orbit_radius   = 28;        //how far from the enemy he circles while striking
+dance_orbit_time     = 24;        //steps he spends circling each enemy (a late press still counts during this)
+dance_orbit_turn     = 200;       //degrees he goes round each enemy
+dance_colour         = make_colour_rgb(255, 90, 20);   //orange-red: the strikes, rings and the wind-up circle
+dance_ghost_colour   = [make_colour_rgb(255, 90, 20), make_colour_rgb(224, 93, 0), make_colour_rgb(244, 186, 11), make_colour_rgb(154, 40, 29)];   //his afterimages (orange-red, orange, gold, ember)
+dance_burn_time      = 60 * 4;    //how long each struck enemy burns (4 seconds)
+dance_burn_tick      = 30;        //steps between burn damage (2 a second)
+dance_burn_damage    = 1;         //damage each burn tick does
+dance_cooldown_t     = 60 * 10;   //cooldown after a dance (10 seconds)
+dance_interrupt_cd   = 60 * 8;    //shorter cooldown if he gets hit during the wind-up
+dance_enemy_scale    = 0.25;      //slow motion: enemies run at this speed while he dances (0.25 = a quarter speed, 1 = off)
+//timed strikes: press Z as he arrives
+dance_perfect_frames = 8;         //within this many frames of arriving (early or late) = PERFECT
+dance_good_frames    = 20;        //within this many = GOOD. further off, or never = MISS
+dance_perfect_mult   = 2;         //a PERFECT strike does this many times the damage (it's a crit)
+dance_perfect_radius = 1.3;       //and reaches this much further
+dance_miss_mult      = 0.5;       //a MISS still hits, but this weakly
+dance_miss_limit     = 2;         //the dance ends on this many MISSes (so the first one is forgiven)
+dance_chain_cap      = 10;        //every PERFECT lets the chain go 1 further, up to this many
+dance_ring_size      = 14;        //the small ring round the enemy you time against
+dance_ring_px        = 1.5;       //how fast the big ring closes in (pixels per frame, lower = it starts further out)
+dance_perfect_hitstop = 4;        //a PERFECT freezes him for this many frames, so the hit lands with a punch (0 = off)
+dance_grade_time     = 36;        //how long "PERFECT!" / "GOOD" / "MISS" stays up (frames)
+//the finisher at the end of the dance
+dance_finale_time    = 54;        //how long the finisher lasts (frames)
+dance_finale_hit_at  = 16;        //the blast goes off this many frames before the end (the rest is slow-mo knockback)
+dance_finale_scale   = 0.05;      //enemies slow even further during it (0.05 = a twentieth of normal speed)
+dance_finale_radius  = 70;        //reach of the blast, all round him (small enough to stay on screen)
+dance_finale_mult    = 3;         //the blast does player_damage times this (shown as a crit)
+dance_finale_knockback = 14;      //how hard it flings enemies
+//the trail that follows him
+dance_trail_len      = 28;        //how long it is (how many of his recent positions it covers)
+dance_trail_width    = 7;         //how thick it is at the front (it thins toward the end)
+dance_trail_head     = make_colour_rgb(255, 150, 30);   //orange at the front
+dance_trail_tail     = make_colour_rgb(210, 30, 20);    //red toward the end
+dance_trail_damage   = 1;         //damage when it touches an enemy (once per enemy per dance), and that enemy will burn
+//runtime (the script sets these)
+dance_phase          = "windup";  //"windup" -> "dash" (to the next enemy) -> "strike" (circling it) -> "dash" ...
+dance_timer          = 0;
+dance_route          = [];        //the enemies he's gone to so far this dance (the last one is where he's headed)
+dance_index          = 0;         //which one he's on (always the last one in dance_route)
+dance_hit_list       = [];        //every enemy a strike or the trail touched (they all burn at the end)
+dance_chain_max      = 5;         //how many he can go to this dance (dance_targets_max + PERFECT bonuses)
+dance_pressed        = false;     //was Z pressed on the way in to this enemy?
+dance_press_grade    = "";        //and how well timed it was
+dance_resolved       = false;     //has the strike on this enemy landed yet?
+dance_late           = 0;         //frames since he arrived (for a late press)
+dance_end_after      = false;     //too many MISSes: the dance ends once he's done circling
+dance_misses         = 0;         //MISSes so far this dance
+dance_hitstop        = 0;         //frames left of a PERFECT's freeze
+dance_sparks         = [];        //sparks flying out of the strikes
+dance_fx_age         = 0;         //counts up, turns the ticks round the QTE ring
+dance_grade_text     = "";        //"PERFECT!" / "GOOD" / "MISS" floating above the enemy
+dance_grade_timer    = 0;
+dance_grade_x        = 0;
+dance_grade_y        = 0;
+dance_cx             = 0;         //the middle of the circle he's going round
+dance_cy             = 0;
+dance_orbit_start    = 0;
+dance_orbit_dir      = 1;         //1 or -1: which way round he circles
+dance_angle          = 0;
+dance_ghost_timer    = 0;
+dance_trail          = [];        //the trail: his recent positions, newest first
+dance_trail_hits     = [];        //enemies the trail has already hurt this dance
+
+//---the dragon companion (comes with the Dance of Dragons, bottom of special_dance_attack_script)---
+//while the Dance is equipped a small dragon circles him, follows him when he dances, and when he isn't dancing
+//bites enemies it touches, setting them on fire. in the finisher it dives into the ground and explodes into flames,
+//and comes back once the special is ready again
+dragon_on            = true;      //false = no dragon
+dragon_len           = 22;        //how long its body is (how many of its recent positions)
+dragon_width         = 5;         //how thick its body is at the neck (it tapers to the tail)
+dragon_wave          = 4;         //how far its body swings from side to side as it flies
+dragon_orbit_radius  = 44;        //how far from him it circles
+dragon_orbit_speed   = 2.5;       //how fast it circles (degrees per step)
+dragon_follow        = 0.18;      //how quickly its head glides to where it wants to be (0 to 1)
+dragon_hit_radius    = 10;        //how close an enemy has to be to its head to get bitten
+dragon_hit_cooldown  = 45;        //steps before it can bite the same enemy again
+dragon_burn_time     = 60 * 2;    //a bite sets the enemy burning this long (2 seconds)
+dragon_burn_tick     = 30;        //steps between burn damage
+dragon_burn_min      = 1;         //each burn tick does from this much...
+dragon_burn_max      = 3;         //...up to this much (picked at random)
+dragon_rise          = 70;        //in the finisher: how high above him it climbs before it dives
+dragon_head_col      = make_colour_rgb(255, 90, 20);    //orange-red at the head
+dragon_tail_col      = make_colour_rgb(244, 186, 11);   //fading to gold at the tail
+dragon_trim_col      = make_colour_rgb(255, 230, 120);  //horns, whiskers and the ridge down its back
+dragon_flame_core    = make_colour_rgb(255, 240, 150);  //flames: yellow-white when they're new...
+dragon_flame_mid     = make_colour_rgb(255, 140, 20);   //...orange...
+dragon_flame_outer   = make_colour_rgb(200, 30, 10);    //...and red as they burn out
+//runtime (the script sets these)
+dragon_x             = x;         //where its head is
+dragon_y             = y - 20;
+dragon_angle         = 0;         //where it is on its circle round him
+dragon_body          = [];        //its body: its head's recent positions, newest first
+dragon_age           = 0;         //counts up: its flowing wave, and when each enemy can be bitten again
+dragon_gone          = false;     //exploded in the finisher (it comes back when the special's ready)
+dragon_flames        = [];        //the flames in the air (structs, see dragonFlamesStep)
 
 //---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
 special_charge_time  = 60;       //steps to fully charge (60 = 1 second)
@@ -155,6 +303,8 @@ special_ghost_timer  = 0;
 special_cooldown_t   = 60*15;    //the HEAVY cooldown after a spin (15 seconds)
 special_interrupt_cd = 60*8;     //shorter cooldown if you get hit while charging
 special_cooldown     = 0;
+
+
 
 //tracks opp of swing
 opp_swing_dir = 0;

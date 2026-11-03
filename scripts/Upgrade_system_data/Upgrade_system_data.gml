@@ -17,7 +17,7 @@ function Upgrade_system_data(){
 			indexF: 0,
 			spriteB: card_fantasy_back_spr,
 			indexB: 3,
-			upgrades_possible: 1
+			upgrades_possible: 4
 		}
 	,		
 		health_upgrade:
@@ -33,14 +33,14 @@ function Upgrade_system_data(){
 			indexF: 0,
 			spriteB: card_space_back_spr,
 			indexB: 8,
-			upgrades_possible: 1
+			upgrades_possible: 3
 			
 		}
 	,		
 		dash_unlock:
 		{
 			
-			name: "Shadows of a Rainbow",
+			name: "Shadows of a Promise",
 			special: false,
 			desc: $"The flooding of the world allowed the formation of a promise in the sky: Using the essence of a rainbow allows a user to teleport instantaneously leaving only a couple of fleeting shadows in their wake (Hit {global.dash_button} to dash)",
 			upgrades_possible: 1,
@@ -77,9 +77,9 @@ function Upgrade_system_data(){
 				dash_upgrade_double:
 		{
 			
-			name: "Another One",
+			name: "Double Rainbow",
 			special: false,
-			desc: "One dash is nice. What about 2?",
+			desc: "Double rainbows are a sign of good fortune in many cultures: allows a second dash shortly following the first.",
 			    effects: [
         { stat: "dash_double_unlock",   op: "set"   ,  value: true },
 		{stat: "dash_ghost_count", op: "add", value:3} 
@@ -128,9 +128,95 @@ function Upgrade_system_data(){
 			indexF: 10,
 			spriteB: card_fantasy_back_spr,
 			indexB: 4,
-			upgrades_possible : 2
+			upgrades_possible : 3
 			
 		}
+		
+		//this should allow the unlocking of a string of combo attacks: once this is unlocked the chance of getting the othert attacks is higher.
+,
+		
+			combo_attack:
+		{
+			
+			name: "Foundational Swordplay",
+			special: false,
+			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card allows the ability to combo attack",
+			
+			effects: [
+			{ stat: "combo_attack_unlock",     op: "set"   , value: true },
+			],
+			spriteF: card_fantasy_sword_spr,
+			indexF: 12,
+			spriteB: card_fantasy_back_spr,
+			indexB: 0,
+			upgrades_possible : 1
+			
+		}				
+		
+		
+		// these next upgrades all have to do with changing the attacks the the player does:
+		,
+		
+			house_of_cards_attack:
+		{
+			
+			name: "Sword art 1st form: House of Cards",
+			special: false,
+			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them.",
+			
+			effects: [
+			{ stat: "house_of_cards_unlock",     op: "set"   , value: true },
+			],
+			spriteF: card_deco_building_spr,
+			indexF: 12,
+			spriteB: card_deco_back_spr,
+			indexB: 9,
+			upgrades_possible : 1
+			
+		}		
+		
+		,
+					life_steal_attack:
+		{
+			
+			name: "Sword art 2nd form: Soul Snatcher",
+			special: false,
+			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives these knives heal you and damage the enemy.",
+			
+			effects: [
+			//greater defense: blocked hits drain 20% less of the guard meter
+			{ stat: "soul_snatched_unlock",     op: "set"   , value: true },
+			],
+			spriteF: card_fantasy_shield_spr,
+			indexF: 10,
+			spriteB: card_fantasy_back_spr,
+			indexB: 4,
+			upgrades_possible : 1
+			
+		}	
+		
+				
+		,
+					flood_attack:
+		{
+			
+			name: "Sword art 3rd Form: Flash Flood",
+			special: false,
+			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.",
+			
+			effects: [
+			//greater defense: blocked hits drain 20% less of the guard meter
+			{ stat: "flood_formation_unlock",     op: "set"   , value: true },
+			],
+			spriteF: card_nautical_anchor_spr,
+			indexF: 11,
+			spriteB: card_nautical_back_spr,
+			indexB: 9,
+			upgrades_possible : 1
+			
+		}	
+
+		
 		
 		//These next couple are the specials abilities 
 		//Only one can be used at a time and maybe we should make them all appear at once with only one being allowed to be picked
@@ -140,7 +226,7 @@ function Upgrade_system_data(){
 			Special_attack_whirlwind:
 		{
 			
-			name: "Acrobatic Tsunami",
+			name: "Bladed Tsunami",
 			special: true,
 			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional (Hold {global.special_button} to activate attack)",
 			effects: [
@@ -154,38 +240,42 @@ function Upgrade_system_data(){
 			
 		}
 		,
-					Special_attack_accelerated:
-		{
+					special_dance_of_dragons_unlock:
+		{ //This attack should do the following: slow down time and the player should dash to each enemy
+			//one by one giving us a second to click attack then to the next
+			//once it has hit up to n enemies we will stop and all the attacks will register 
 			
-			name: "Accelerated Condition",
+			name: "The Dance of Dragons",
 			special: true,
-			desc: $"Blink and you'll miss it: This special ability alows the user to control his own speed and accelerate to heights never seen before, unleashing a barrage of attacks and dashes (Hold {global.special_button} to activate attack)",
+			desc: $"It is considered a great honor to be able to dance with a dragon as the power it gives is monumentous: the user is allowed to 'dance' around to enemies and is given a second to attack each one the breath of a dragon lingers on each enemy (Hold {global.special_button} to activate attack).",
+			
 			effects: [
-				{ stat: "special_attack_accelerated_unlock", op: "set",  value: true},
+			//greater defense: blocked hits drain 20% less of the guard meter
+			{ stat: "dance_of_dragons_unlock", op:"set",value: true} 
 			],
-			spriteF: card_deco_joker_spr,
-			indexF: 0,
-			spriteB: card_deco_back_spr,
-			indexB: 7,
+			spriteF: card_fantasy_sword_spr,
+			indexF: 12,
+			spriteB: card_fantasy_back_spr,
+			indexB: 3,
 			upgrades_possible : 1
 			
-		}
+		}	
 		
 				,
 					Special_attack_tornado:
 		{
 
-			name: "Parry Parade",
+			name: "The Butterfly Effect",
 			special: true,
-			desc: $" (Hold {global.special_button} to activate attack)",
+			desc: $"One small change compounds over time: this ability decreases the user's damage and knockback and increases attack speed and run speed for 60 seconds once the times is up several changes take effect (Hold {global.special_button} to activate attack)",
 			
 			effects: [
-				{ stat: "special_attack_tornado_unlock", op: "set",  value: true},
+				{ stat: "special_attack_butterfly_unlock", op: "set",  value: true},
 			],
-			spriteF: card_fantasy_joker_spr,
-			indexF: 2,
-			spriteB: card_fantasy_back_spr,
-			indexB: 7,
+			spriteF: card_forest_joker_spr,
+			indexF: 1,
+			spriteB: card_forest_back_spr,
+			indexB: 3,
 			upgrades_possible : 1,
 		
 			

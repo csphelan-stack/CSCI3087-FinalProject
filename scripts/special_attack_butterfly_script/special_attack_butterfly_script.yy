@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"special_attack_butterfly_script",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"special_attack_butterfly_script",
+  "parent":{
+    "name":"special_attacks",
+    "path":"folders/Main_character/special_attacks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -3,6 +3,9 @@
 //variable takes off gui hud if inside
 if(global.safeInside == false){
 
+// Butterfly Effect: the glow and butterflies round the edges of the screen (drawn first, so the HUD sits on top)
+butterflyScreenDraw();
+
 
 // =====================================================
 // HEALTH ORB (top left)

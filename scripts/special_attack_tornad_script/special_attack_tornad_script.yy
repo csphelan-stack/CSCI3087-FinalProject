@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"special_attack_tornado_script",
+  "%Name":"special_attack_tornad_script",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"special_attack_tornado_script",
+  "name":"special_attack_tornad_script",
   "parent":{
     "name":"special_attacks",
     "path":"folders/Main_character/special_attacks.yy",

@@ -13,6 +13,10 @@ if (_whirl_charging) {
     fxChargeCircleDraw(_special_charge, special_charged);
 }
 
+// ---- 0b. Dance of Dragons: the orange-red trail, then the timing rings, aim line, swoosh and grade (all under him) ----
+danceTrailDraw();
+danceDraw();
+
 // ---- 1. the player: palette colours up the sword all through the spin ----
 if (_whirl_spinning) {
     fxRainbowSwordDraw();
@@ -74,4 +78,10 @@ if (state == PlayerState.PARRY || parry_exhaust_timer < parry_exhaust_time) {
     if (_pct > 0) draw_rectangle(_bx, _by, _bx + (_w - 1) * _pct, _by + 1, false);
     draw_set_colour(c_white);
 }
+
+// ---- 7. Butterfly Effect: "x12" stored-hit counters on the enemies, and the butterflies in the air ----
+butterfliesDraw();
+
+// ---- 8. the Dance of Dragons' dragon companion (drawn last so it flies over him) ----
+dragonDraw();
 

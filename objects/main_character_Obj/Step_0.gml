@@ -34,6 +34,15 @@ if (special_cooldown > 0 && !global.gameIsPaused) {
 	special_cooldown -= 1;
 }
 
+// Butterfly Effect: the 10 second window and the butterflies (runs whatever state he's in)
+butterflyStep();
+
+// Dance of Dragons: the trail following his path (keeps running after the dance so it can shrink away)
+danceTrailStep();
+
+// the dragon companion: circles him while the Dance is equipped, follows him when he dances, bites enemies otherwise
+dragonStep();
+
 // guard meter refills while he isn't guarding
 if (state != PlayerState.PARRY && !global.gameIsPaused) {
 	parry_exhaust_timer = min(parry_exhaust_time, parry_exhaust_timer + parry_guard_regen);

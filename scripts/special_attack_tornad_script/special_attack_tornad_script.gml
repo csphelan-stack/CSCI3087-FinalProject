@@ -15,6 +15,14 @@ function startSpecial(){
 			startSpecialCharge();
 			break;
 
+		case SpecialState.BUTTERFLY:   // special_attack_butterfly_script
+			startButterfly();
+			break;
+
+		case SpecialState.DANCE:       // special_dance_attack_script
+			startDance();
+			break;
+
 		default:   // no special equipped (or one without code yet): back to normal
 			state = PlayerState.NORMAL;
 			break;
@@ -29,7 +37,14 @@ function specialStateMC(){
 			if (special_charged) specialSpinStateMC();
 			else specialChargeStateMC();
 			break;
-
+		case SpecialState.BUTTERFLY:
+			// the window runs in the background (butterflyStep), he should never stay in this state
+			state = PlayerState.NORMAL;
+			break;
+		case SpecialState.DANCE:
+			// wind-up, then dashing and striking enemy to enemy
+			danceStateMC();
+			break;
 		default:
 			state = PlayerState.NORMAL;
 			break;
