@@ -20,8 +20,8 @@ CLEAN_SCRIPT = (
 
 CLEAN_YYP = (
     '{\n  "RoomOrderNodes":[\n'
-    '    {"roomId":{"name":"title_room","path":"rooms/title_room/title_room.yy",},},\n'
-    '    {"roomId":{"name":"arena_room","path":"rooms/arena_room/arena_room.yy",},},\n'
+    '    {"roomId":{"name":"rm_title","path":"rooms/rm_title/rm_title.yy",},},\n'
+    '    {"roomId":{"name":"rm_arena","path":"rooms/rm_arena/rm_arena.yy",},},\n'
     '  ],\n}\n'
 )
 
@@ -37,10 +37,10 @@ def project(tmp_path: Path) -> Path:
     root = tmp_path / "game"
     write(root / "Game.yyp", CLEAN_YYP)
     write(root / "scripts/scr_player_damage/scr_player_damage.gml", CLEAN_SCRIPT)
-    write(root / "objects/player_obj/Create_0.gml",
+    write(root / "objects/obj_player/Create_0.gml",
           "/// Player setup: stats come from the loaded JSON.\n"
           "hp = 0;\n"
           "max_hp = global.stats.player.max_hp;\n")
-    for folder in ("sprites/player_spr", "rooms/title_room", "rooms/arena_room", "sounds/snd_swing"):
+    for folder in ("sprites/spr_player", "rooms/rm_title", "rooms/rm_arena", "sounds/snd_swing"):
         (root / folder).mkdir(parents=True)
     return root

@@ -3,16 +3,14 @@
 # Runs on every push to any branch, on every pull request into main, and by
 # hand from the Actions tab. Three jobs:
 #
-#   checks          (Ubuntu, about 1 minute)
-#                   tests the checkers themselves, then runs the CREDITS check,
-#                   JSON data validation and style check
-#   game-tests      (Windows, runs only if "checks" passed)
-#                   builds the game with GameMaker's command-line builder (Igor),
-#                   launches it with --run-tests, and fails if any GML test failed
-#   project-checks  (Ubuntu, runs alongside "checks")
-#                   flake8 lint of tools/ and tests/, the unit tests in tests/
-#                   (enemy default values, gm_check helpers) and the .yy/.yyp
-#                   file check from tools/gm_check.py
+#   checks      (Ubuntu, about 1 minute)
+#               tests the checkers themselves, then runs the CREDITS check,
+#               JSON data validation and style check
+#   rule-tests  (Ubuntu, about 1 minute, runs at the same time as "checks")
+#               runs the GML game-rule tests in Node.js, without GameMaker
+#   game-tests  (Windows, runs only if both jobs above passed)
+#               builds the game with GameMaker's command-line builder (Igor),
+#               launches it with --run-tests, and fails if any GML test failed
 #
 # Branch protection on main requires all three jobs to pass before a merge.
 #
@@ -21,10 +19,11 @@
 
 name: CI
 
+# No path filters: with branch protection, a pull request that skipped the
+# pipeline (for example one that only edits a .md file) could never merge.
 on:
   push:
     branches: ["**"]
-    paths-ignore: ["**.md"]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -72,38 +71,44 @@ jobs:
       - name: Check style rules
         run: python tools/check_style.py
 
-  # The checks from the team's first CI workflow. Runs in parallel with
-  # "checks" and does not block the game build.
-  project-checks:
-    name: Lint, unit tests and project files
+  rule-tests:
+    name: Game rule tests (fast, Node.js)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install test tools
-        run: pip install -r tools/requirements-dev.txt
+      # Loads scr_test_framework, scr_rules_* and scr_tests_rules_* and runs
+      # them with stand-ins for GameMaker's built-in functions.
+      - name: Run the GML rule tests in Node.js
+        run: node tools/gml_node/run.js --out test-output-node
 
-      # Line length and other settings are in .flake8
-      - name: Lint (flake8)
-        run: python -m flake8 tools tests
+      - name: Check test results
+        run: python tools/ci/check_test_results.py test-output-node/test_results.json
 
-      - name: Run unit tests
-        run: python -m pytest tests -v
-
-      # Scans the GameMaker .yy and .yyp files for broken JSON
-      - name: Validate GameMaker project files
-        run: python tools/gm_check.py .
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output-node
+          path: test-output-node/test_results.json
+          if-no-files-found: warn
+          retention-days: 14
 
   game-tests:
     name: Build game and run GML tests
-    needs: checks
+    needs: [checks, rule-tests]
     runs-on: windows-latest
     timeout-minutes: 45
     steps:

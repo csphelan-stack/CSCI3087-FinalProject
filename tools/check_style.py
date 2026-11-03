@@ -2,9 +2,7 @@
 """Checks Team 1's GML style rules and exits with code 1 if any are broken.
 
 Rules (Section 2 of the testing plan):
-  naming          asset folders follow our naming: objects end in _obj, sprites
-                  in _spr, rooms in _room, sounds start with snd_ (scripts are
-                  named after the functions they hold, so they have no rule)
+  naming          asset folders start with their prefix (obj_, scr_, spr_, rm_, snd_)
   header          every script starts with a comment saying what it does
   hardcoded-stat  stat variables are not set to number literals in GML;
                   stat values come from the JSON data files
@@ -15,7 +13,7 @@ Rules (Section 2 of the testing plan):
   indentation     each file indents with tabs or with spaces, not both
 
 Test assets (names starting with scr_test, obj_test or rm_test) may use debug
-output, refer to test rooms and set stats directly, and skip the naming rule.
+output, refer to test rooms and set stats directly.
 
 Usage:
   python tools/check_style.py
@@ -35,14 +33,12 @@ from gm_project import Problem, find_project_dir, is_skipped, report  # noqa: E4
 
 # --- Settings the team can change ---------------------------------------------
 
-# Each asset folder maps to the endings its names may use ("suffixes") or the
-# starts they may use ("prefixes"). Matching ignores case, so main_character_Obj
-# counts as ending in _obj. A folder left out here (scripts) is not checked.
-ASSET_NAMING = {
-    "objects": {"suffixes": ("_obj", "_object")},
-    "sprites": {"suffixes": ("_spr",)},
-    "rooms": {"suffixes": ("_room",)},
-    "sounds": {"prefixes": ("snd_",)},
+ASSET_PREFIXES = {
+    "objects": "obj_",
+    "scripts": "scr_",
+    "sprites": "spr_",
+    "rooms": "rm_",
+    "sounds": "snd_",
 }
 
 TEST_ASSET_PREFIXES = ("scr_test", "obj_test", "rm_test")
@@ -141,21 +137,14 @@ def gml_files(project_dir: Path) -> list[Path]:
 
 def check_naming(project_dir: Path) -> list[Problem]:
     problems = []
-    for folder, rule in ASSET_NAMING.items():
+    for folder, prefix in ASSET_PREFIXES.items():
         base = project_dir / folder
         if not base.is_dir():
             continue
-        suffixes = rule.get("suffixes", ())
-        prefixes = rule.get("prefixes", ())
         for asset in sorted(d for d in base.iterdir() if d.is_dir()):
-            name = asset.name.lower()
-            if is_test_asset(asset.name):
-                continue
-            if name.endswith(suffixes) or name.startswith(prefixes):
-                continue
-            wanted = [f"end with '{s}'" for s in suffixes] + [f"start with '{p}'" for p in prefixes]
-            problems.append(Problem(asset, None, "naming",
-                                    f"{folder[:-1]} '{asset.name}' should {' or '.join(wanted)}"))
+            if not asset.name.startswith(prefix):
+                problems.append(Problem(asset, None, "naming",
+                                        f"{folder[:-1]} '{asset.name}' should start with '{prefix}'"))
     return problems
 
 

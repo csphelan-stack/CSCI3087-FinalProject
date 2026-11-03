@@ -106,11 +106,28 @@ def cross_ref(monkeypatch):
     monkeypatch.setattr(validate_data, "WAVE_ENEMY_KEY", "enemy")
 
 
-def test_cross_ref_is_off_until_configured(tmp_path):
+def test_cross_ref_can_be_turned_off(tmp_path, monkeypatch):
+    monkeypatch.setattr(validate_data, "WAVE_ENEMY_KEY", None)
     enemies = write(tmp_path / "enemies.json", json.dumps(GOOD_ENEMIES))
-    waves = write(tmp_path / "waves.json", json.dumps({"waves": [{"enemy": "dragon", "count": 1}]}))
+    waves = write(tmp_path / "waves.json", json.dumps({"waves": [{"spawns": [{"type": "dragon", "count": 1}]}]}))
     results = validate_data.check_files([enemies, waves])
     assert results[waves] == []
+
+
+def test_default_settings_match_the_game_loader_layout(tmp_path):
+    """The defaults check the same layout scr_rules_data reads, with no monkeypatching."""
+    enemies = write(tmp_path / "enemies.json", json.dumps(GOOD_ENEMIES))
+    good = write(tmp_path / "waves.json", json.dumps({"waves": [{"spawns": [{"type": "slime", "count": 3}]}]}))
+    bad = write(tmp_path / "waves_hard.json", json.dumps({"waves": [{"spawns": [{"type": "dragon", "count": 1}]}]}))
+    results = validate_data.check_files([enemies, good, bad])
+    assert results[good] == []
+    assert [p.rule for p in results[bad]] == ["enemy-ref"]
+
+
+def test_enemy_ids_come_only_from_enemy_files(tmp_path):
+    """A "type" key in a wave file must not count as defining an enemy."""
+    waves = write(tmp_path / "waves.json", json.dumps({"waves": [{"spawns": [{"type": "slime", "count": 1}]}]}))
+    assert [p.rule for p in validate_data.check_files([waves])[waves]] == ["enemy-ref"]
 
 
 def test_known_enemies_pass(tmp_path, cross_ref):

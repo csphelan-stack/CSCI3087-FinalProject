@@ -45,16 +45,18 @@ NON_NEGATIVE_WORDS = {
     "range", "radius", "knockback", "interval", "heal", "weight", "time",
 }
 
-# Cross-reference between wave files and enemy files. Leave as None until the
-# team fills these in to match our JSON layout. Example:
-#   ENEMY_FILE_PATTERN = "enemies*.json"; ENEMY_ID_KEY = "type"
-#   WAVE_FILE_PATTERN  = "waves*.json";   WAVE_ENEMY_KEY = "enemy"
+# Cross-reference between wave files and enemy files. These match the layout
+# the game's loader (scr_rules_data) reads:
+#   enemies.json  { "enemies": [ { "type": "slime", "hp": 10, ... } ] }
+#   waves.json    { "waves": [ { "spawns": [ { "type": "slime", "count": 3 } ] } ] }
+# If our files use other names or keys, change both this and scr_rules_data.
 # Set ENEMY_ID_KEY = "__keys__" if the enemy file is an object keyed by type,
-# e.g. {"slime": {...}, "skeleton": {...}}.
-ENEMY_FILE_PATTERN: str | None = None
-ENEMY_ID_KEY: str | None = None
-WAVE_FILE_PATTERN: str | None = None
-WAVE_ENEMY_KEY: str | None = None
+# e.g. {"slime": {...}, "skeleton": {...}}. Set any of these to None to turn
+# the check off.
+ENEMY_FILE_PATTERN: str | None = "enemies*.json"
+ENEMY_ID_KEY: str | None = "type"
+WAVE_FILE_PATTERN: str | None = "waves*.json"
+WAVE_ENEMY_KEY: str | None = "type"
 
 # --- Implementation ----------------------------------------------------------------
 
@@ -237,7 +239,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if not cross_ref_configured():
-        print("Note: the enemy-ref check is off until the settings at the top of validate_data.py are filled in.")
+        print("Note: the enemy-ref check is off (a setting at the top of validate_data.py is None).")
 
     problems = [p for file_problems in check_files(files).values() for p in file_problems]
     if problems:
