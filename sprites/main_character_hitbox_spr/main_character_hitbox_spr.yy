@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"Main_character",
-    "path":"folders/Main_character.yy",
+    "name":"hurtbox_hitbox",
+    "path":"folders/Main_character/hurtbox_hitbox.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

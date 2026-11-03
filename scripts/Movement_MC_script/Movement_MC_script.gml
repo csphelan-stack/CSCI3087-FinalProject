@@ -1,5 +1,8 @@
 function applyMovement(){
 	
+		if(dash_double_counter == 1){
+			double_dash_wait_state();
+		}
 	
        if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
        audio_play_sound(snd_sword, 20, false);
@@ -7,21 +10,20 @@ function applyMovement(){
         return;
     }
 	
-	if(keyboard_check_pressed(global.dash_button) && can_move && dash_cooldown <=0 && !global.gameIsPaused){
+	if(keyboard_check_pressed(global.dash_button) && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
 		audio_play_sound(snd_dash, 15, false);
 		startDashState();
 		return;
 	}
 	
-		if(keyboard_check_pressed(global.parry_button) && can_move && parry_cooldown <=0 && !global.gameIsPaused){
+		if(keyboard_check_pressed(global.parry_button) && can_move && can_parry && parry_cooldown <=0 && !global.gameIsPaused){
 		startParryState();
 		return;
 	}
 
-	// special: hold to charge, let go to spin (see the SPECIAL ATTACK section of attackState)
-	if(keyboard_check_pressed(global.special_button) && can_move && special_cooldown <= 0 && !global.gameIsPaused){
-	    audio_play_sound(snd_charge, 15, true);
-		startSpecialCharge();
+	// special: starts whichever special is equipped (see special_attack_tornado_script)
+	if(keyboard_check_pressed(global.special_button) && special_equipped != SpecialState.NONE && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
+		startSpecial();
 		return;
 	}
 	
@@ -36,7 +38,8 @@ if(global.gameIsPaused){
 	exit;
 }
 else{
-movespd = fixedmovespd;
+// slower walk inside (global.safeInside is set by characterInside_script / characterOutside_script)
+movespd = global.safeInside ? inside_movespd : fixedmovespd;
 }
 
 	
@@ -62,10 +65,14 @@ if (can_move || !global.gameIsPaused) {
 		// just got hit: show the hurt animation (he can still move, see playerHurtDeath)
 		image_speed = 1;
 		sprite_index = hurt_spr[dir4];
+    } else if (moving && global.safeInside) {
+		// inside he walks instead of running
+		image_speed = 1;
+        sprite_index = walk_spr[dir4];
     } else if (moving) {
-		
+
 		image_speed = 1.2;
-        // run_spr / idle_spr are set in Create (skull knight or adventurer, see use_adventurer_sprites)
+        // run_spr / walk_spr / idle_spr are set in Create
         sprite_index = run_spr[dir4];
     } else {
 		image_speed = 0.5;

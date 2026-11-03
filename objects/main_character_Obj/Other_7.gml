@@ -13,8 +13,9 @@ if (state == PlayerState.DEAD && death_hold_timer < 0){
 	death_hold_timer = death_hold_time;
 }
 
-// special wind-up animation finished a hair before the charge timer: hold the guard pose
-if (state == PlayerState.SPECIAL_CHARGE && sprite_index == parry_raise_spr[special_dir4]){
+// whirlwind wind-up animation finished a hair before the charge timer: hold the guard pose
+if (state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND && !special_charged
+	&& sprite_index == parry_raise_spr[special_dir4]){
 	sprite_index = parry_block_spr[special_dir4];
 	image_index = 0;
 	image_speed = 1;

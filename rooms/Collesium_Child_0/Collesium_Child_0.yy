@@ -11,7 +11,16 @@
   ],
   "isDnd":false,
   "layers":[
-    {"$GMRTileLayer":"","%Name":"Tiles_1","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Tiles_1","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":29,"SerialiseWidth":47,"TileCompressedData":[
+    {"$GMRTileLayer":"","%Name":"Tiles_2","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Tiles_2","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":29,"SerialiseWidth":47,"TileCompressedData":[
+          -340,-2147483648,-3,110,-33,-2147483648,1,37,-16,38,1,39,-29,-2147483648,-17,110,2,75,76,-28,-2147483648,
+          -18,110,1,112,-28,-2147483648,-18,110,1,112,-28,-2147483648,-18,110,1,112,-28,-2147483648,-18,110,1,
+          75,-4,38,1,76,-23,-2147483648,-18,110,-5,-2147483648,1,112,-23,-2147483648,-18,110,-5,-2147483648,1,
+          112,-23,-2147483648,-18,110,-5,-2147483648,1,112,-23,-2147483648,-18,110,-5,-2147483648,1,112,-23,-2147483648,
+          -18,110,-5,-2147483648,1,112,-23,-2147483648,-18,110,-5,-2147483648,1,112,-23,-2147483648,-18,110,-29,
+          -2147483648,-18,110,-29,-2147483648,-18,110,-29,-2147483648,-18,110,-29,-2147483648,-18,110,-29,-2147483648,
+          -6,182,-4,110,-8,182,-29,-2147483648,-6,218,-4,-2147483648,-8,218,-123,-2147483648,
+        ],"TileDataFormat":1,},"tilesetId":{"name":"ruins_terrain_ts","path":"tilesets/ruins_terrain_ts/ruins_terrain_ts.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
+    {"$GMRTileLayer":"","%Name":"Tiles_1","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Tiles_1","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":29,"SerialiseWidth":47,"TileCompressedData":[
           -376,-2147483648,1,64,-46,-2147483648,1,64,-46,-2147483648,1,64,-46,-2147483648,1,128,-46,-2147483648,
           1,192,-46,-2147483648,1,256,-46,-2147483648,1,320,-46,-2147483648,1,384,-46,-2147483648,1,448,-610,-2147483648,
         ],"TileDataFormat":1,},"tilesetId":{"name":"village_interior_ts","path":"tilesets/village_interior_ts/village_interior_ts.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},

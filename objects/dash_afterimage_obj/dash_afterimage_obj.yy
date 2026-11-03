@@ -10,8 +10,8 @@
   "name":"dash_afterimage_obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Main_character",
-    "path":"folders/Main_character.yy",
+    "name":"Upgrade_system",
+    "path":"folders/Main_character/Upgrade_system.yy",
   },
   "parentObjectId":null,
   "persistent":false,

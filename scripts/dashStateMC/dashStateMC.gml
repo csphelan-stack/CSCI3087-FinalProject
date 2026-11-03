@@ -4,19 +4,22 @@ function startDashState(){
     // runs ONCE when the dash button (space) is pressed
     state = PlayerState.DASH;
 
-	image_blend = c_orange;
+	image_blend = dash_tint;
 	
 	dash_dir = facing; 
 
     // dash_dir is an angle, so snap it to 0 right, 1 up, 2 left, 3 down to pick the dash sprite
     sprite_index = dash_spr[round(dash_dir / 90) mod 4];
     image_index = 0;   // the first frame of the dash
-    image_speed = 0;   // the code moves the frames (dashStateMC), or holds this one if dash_play_anim is false
+    image_speed = 0;   // the code moves the frames instead (dashStateMC)
 
 	dash_ghosts_made = 0;  // new dash, no shadows yet
 
 	dash_timer = dash_time;  // how many steps the dash lasts
 	      // lock the direction now so he can't steer mid-dash
+	if(dash_double_counter == 0){
+	dash_double_wait_time = dash_double_w_time_set;
+	}
 
 
 }
@@ -38,9 +41,7 @@ function dashStateMC(){
 	move_and_collide(_dx, _dy, obj_wall);
 
 	// play the dash animation through over the dash, first frame to last (the shadows copy these frames)
-	if (dash_play_anim) {
-		image_index = floor(_elapsed * (image_number - 1) / max(1, dash_time - 1));
-	}
+	image_index = floor(_elapsed * (image_number - 1) / max(1, dash_time - 1));
 
 	// ---- drop every shadow that's due during this step ----
 	while (dash_ghosts_made < dash_ghost_count) {
@@ -84,9 +85,45 @@ function dashStateMC(){
 	// count the dash down, and finish when time runs out
 	dash_timer -= 1;
 
-	if (dash_timer <= 0) {
-		dash_cooldown = dash_cooldown_t;
-		image_blend = c_white;
-		state = PlayerState.NORMAL;
+	//adds a second dash that needs to be down consecutively.
+	if(!dash_double_unlock || dash_double_wait_time <0){
+
+		if (dash_timer <= 0) {
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+		}
+	
 	}
+	else if (dash_timer <= 0 && dash_double_unlock){
+		dash_double_counter +=1;
+		double_dash_wait_state();
+	}	
+	
+}
+//This entire function is just to allow the user to dash twice once it has been unlocked.
+function double_dash_wait_state(){
+	state = PlayerState.NORMAL;
+	
+	if(dash_double_wait_time >0){
+		if(dash_double_counter >1 || dash_double_wait_time < 0){
+			if (dash_timer <= 0) {
+			dash_double_counter = 0;
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+			}
+		}
+		else if(dash_double_counter == 1 && keyboard_check_pressed(global.dash_button)){
+			state = PlayerState.DASH;	
+		}
+	}
+	else{
+			if (dash_timer <= 0) {
+			dash_double_counter = 0;
+			dash_cooldown = dash_cooldown_t;
+			image_blend = c_white;
+			state = PlayerState.NORMAL;
+		}
+	}	
 }

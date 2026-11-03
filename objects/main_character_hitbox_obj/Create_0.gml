@@ -1,4 +1,4 @@
-damage = 4;
+damage = main_character_Obj.sword_damage;
 
 knockback = 10;
 

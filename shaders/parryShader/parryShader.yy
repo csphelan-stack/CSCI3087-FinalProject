@@ -3,8 +3,8 @@
   "%Name":"parryShader",
   "name":"parryShader",
   "parent":{
-    "name":"Main_character",
-    "path":"folders/Main_character.yy",
+    "name":"Upgrade_system",
+    "path":"folders/Main_character/Upgrade_system.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

@@ -4,15 +4,13 @@
 // hurt: getting hit while walking around plays the hurt animation for hurt_flinch_time steps.
 //       it's only a look - he can still move, and attacking/dashing/parrying cuts it short.
 // death: when his hp hits 0 he plays the death animation, lies there for death_hold_time steps,
-//        then the game restarts.
-// if the character has no hurt / death art (hurt_spr / death_spr are undefined in Create, like the
-// skull knight), there's no flinch and he restarts straight away like before.
+//        then the game goes to the death screen (rm_death)
 // these run as the player.
 // ============================================================
 
 /// runs ONCE when an enemy's hit lands (called from Enemy_damage_applying)
 function startHurtFlinch(){
-	if (is_undefined(hurt_spr) || state != PlayerState.NORMAL) return;
+	if (state != PlayerState.NORMAL) return;
 
 	hurt_timer = hurt_flinch_time;
 	sprite_index = hurt_spr[round(facing / 90) mod 4];
@@ -30,7 +28,7 @@ function startDeath(){
 
 	state = PlayerState.DEAD;
 	hurt_timer = 0;
-	image_blend = c_white;   // in case he died mid-dash (the dash tints him orange)
+	image_blend = c_white;   // in case he died mid-dash (the dash tints him gold)
 	invuln = 999999;         // enemies can't keep hitting the body
 
 	sprite_index = death_spr[round(facing / 90) mod 4];

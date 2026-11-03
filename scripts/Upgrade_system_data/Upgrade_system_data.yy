@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Upgrade_system_data",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Upgrade_system_data",
+  "parent":{
+    "name":"Upgrade_system",
+    "path":"folders/Main_character/Upgrade_system.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

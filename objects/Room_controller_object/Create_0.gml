@@ -29,6 +29,10 @@ global.dash_button = ord("C");
 global.parry_button = ord("X");
 global.special_button = ord("S");   // hold to charge the special spin attack
 
+global.safeInside = false;
+
+
+
 // swap in whatever keys the player picked on the pause menu's Settings page last time
 controls_load();
 
@@ -81,3 +85,6 @@ for (var i = 0; i < array_length(sky_sprites); i++) {
     layer_background_yscale(bg, sky_scale);
     sky_layers[i] = lay;
 }
+
+
+

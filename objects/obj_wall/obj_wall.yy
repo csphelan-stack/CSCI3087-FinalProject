@@ -9,8 +9,8 @@
   "name":"obj_wall",
   "overriddenProperties":[],
   "parent":{
-    "name":"Main_character",
-    "path":"folders/Main_character.yy",
+    "name":"Colosseum",
+    "path":"Colosseum.yyp",
   },
   "parentObjectId":null,
   "persistent":false,
