@@ -20,6 +20,10 @@ function startHurtFlinch(){
 
 /// runs ONCE when his hp hits 0
 function startDeath(){
+	audio_stop_sound(snd_charge);
+	audio_stop_sound(snd_spin);
+	audio_stop_sound(snd_game_music);
+	audio_play_sound(snd_death, 30, false);
 	// no death animation: go straight to the death screen
 	if (is_undefined(death_spr)) {
 		room_goto(rm_death);
