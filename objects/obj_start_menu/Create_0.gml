@@ -1,3 +1,11 @@
+if (!audio_is_playing(snd_menu_music)) {
+    audio_stop_sound(snd_game_music);
+    audio_play_sound(snd_menu_music, 10, true);
+}
+
+
+
+
 // ---------- Window ----------
 // If fullscreen only worked for you using the alarm fix, replace this line
 // with: alarm[0] = 1;  (and keep your Alarm 0 event)
@@ -37,6 +45,7 @@ prev_my = device_mouse_y_to_gui(0);
 activate_item = function(_index) {
     switch (_index) {
         case 0: // Play
+		    audio_stop_sound(snd_menu_music);
             room_goto(Collesium);
             break;
         case 1: // Toggle fullscreen

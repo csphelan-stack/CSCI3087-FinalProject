@@ -1,3 +1,9 @@
+if (!audio_is_playing(snd_death_music)) {
+    audio_stop_sound(snd_game_music);
+    audio_stop_sound(snd_menu_music);
+    audio_play_sound(snd_death_music, 10, true);
+}
+
 // GUI size matches the arena and start screen
 display_set_gui_size(768, 432);
 
@@ -26,15 +32,21 @@ prev_my = device_mouse_y_to_gui(0);
 
 activate_item = function(_index) {
     switch (_index) {
-        case 0: // Restart
-            if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
-            room_goto(Collesium);
-            break;
-        case 1: // Main Menu
-            if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
-            room_goto(rm_start);
-            break;
-        case 2: // Exit
+       case 0: // Restart
+    audio_stop_sound(snd_death_music);
+    if (!audio_is_playing(snd_game_music)) {
+        audio_play_sound(snd_game_music, 10, true);
+    }
+    if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
+    room_goto(Collesium);
+    break;
+case 1: // Main Menu
+    audio_stop_sound(snd_death_music);
+    if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
+    room_goto(rm_start);
+    break;
+	
+	 case 2: // Exit
             game_end();
             break;
     }
