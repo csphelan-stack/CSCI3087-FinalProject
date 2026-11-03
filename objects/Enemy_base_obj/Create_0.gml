@@ -132,3 +132,9 @@ magic_radius   = 36;                     // size of the area the spell hits (the
 magic_element = MAGIC_ELEMENT.FIRE;      // the element of the spell being cast right now
 magic_orb     = noone;                   // the orb on this enemy
 magic_circle  = noone;                   // the magic circle on the ground
+
+// ---------- boss ----------
+// a boss turns boss_enabled on in enemy_boss_base_obj. normal enemies never use these.
+boss_enabled    = false;
+boss_flash      = 0;       // white flash when a boss takes a hit
+boss_force_hurt = false;   // only true for the moment a parry staggers a boss

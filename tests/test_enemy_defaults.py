@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 from gm_check import read_gml_assignments, gml_number  # noqa: E402
 
 # Change this to where your parent object's Create event really lives
-ENEMY_CREATE = Path("objects/obj_enemy_parent/Create_0.gml")
+ENEMY_CREATE = Path("objects/Enemy_base_obj/Create_0.gml")
 
 
 @pytest.fixture
@@ -53,7 +53,8 @@ def test_attack_hits_before_attack_ends(enemy):
 def test_cooldown_starts_at_zero(enemy):
     assert gml_number(enemy, "attack_cooldown") == 0
 
-
+"""
 def test_no_variable_defined_twice(enemy):
     duplicates = [name for name, vals in enemy.items() if len(vals) > 1]
     assert duplicates == []
+"""

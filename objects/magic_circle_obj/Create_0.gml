@@ -19,6 +19,17 @@ if (!variable_instance_exists(id, "damage"))        damage        = 1;
 if (!variable_instance_exists(id, "hit_radius"))    hit_radius    = 36;
 if (!variable_instance_exists(id, "charge_time"))   charge_time   = 45;
 
+// extras used by the bosses' big attacks (normal enemies leave these alone):
+//   circle_sprite / circle_base_radius - a bigger circle picture and how wide it is
+//   burst_count / burst_spread         - how many effects come out, over how many frames
+//   hit_ticks / tick_gap               - how many times it hurts, and the frames between
+if (!variable_instance_exists(id, "circle_sprite"))      circle_sprite      = magic_circle_spr;
+if (!variable_instance_exists(id, "circle_base_radius")) circle_base_radius = 39;
+if (!variable_instance_exists(id, "burst_count"))        burst_count        = 1;
+if (!variable_instance_exists(id, "burst_spread"))       burst_spread       = 0;
+if (!variable_instance_exists(id, "hit_ticks"))          hit_ticks          = 1;
+if (!variable_instance_exists(id, "tick_gap"))           tick_gap           = 30;
+
 // ---------- phases ----------
 // 0 = charging  (circle fades in and spins faster and faster)
 // 1 = erupting  (the spell comes out and hurts the player)
@@ -34,8 +45,8 @@ total_time = 0;
 // the caster sets this to true when the spell should go off
 released = false;
 
-// so the player is only hurt once per spell
-hit_done = false;
+// how many times the player has been hurt by this spell so far
+hits_done = 0;
 
 // true if the caster was hurt before the release and the spell fell apart
 fizzled = false;
@@ -46,10 +57,11 @@ life_limit = 300;
 // ---------- looks ----------
 appear_time = 14;     // frames the circle takes to grow in
 fade_time   = 18;     // frames the circle takes to fade out
-erupt_time  = sprite_get_number(effect_sprite) * frame_time;   // how long the effect plays
+// how long the spell lasts: the effect, plus the time it spreads out and the time of its last hit
+erupt_time  = max(sprite_get_number(effect_sprite) * frame_time + burst_spread, hit_delay + (hit_ticks - 1) * tick_gap + 8);
 
-// the circle sprite is 80 pixels wide. this keeps its size matched to the hit area.
-circle_scale = (hit_radius + 3) / 39;
+// this keeps the circle picture matched to the hit area (the normal one is 80 pixels wide).
+circle_scale = (hit_radius + 3) / circle_base_radius;
 
 spin   = random(360);   // current rotation
 scale  = 0;             // current size (1 = full size)

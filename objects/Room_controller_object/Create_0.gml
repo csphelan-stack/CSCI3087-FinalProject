@@ -29,6 +29,10 @@ global.dash_button = ord("C");
 global.parry_button = ord("X");
 global.special_button = ord("S");   // hold to charge the special spin attack
 
+global.safeInside = false;
+
+
+
 // swap in whatever keys the player picked on the pause menu's Settings page last time
 controls_load();
 
@@ -37,12 +41,13 @@ controls_load();
 
 
 
-
+/* NOTE: fullscreen commented out for switch to rm_start as first room (title screen)
 // Default to fullscreen (also set as the project's Windows "start fullscreen"
 // option, but forcing it here too so it's honored during IDE test-runs as well)
 if (!window_get_fullscreen()) {
     window_set_fullscreen(true);
 }
+*/
 
 // Crisp pixels
 gpu_set_texfilter(false);
@@ -80,3 +85,6 @@ for (var i = 0; i < array_length(sky_sprites); i++) {
     layer_background_yscale(bg, sky_scale);
     sky_layers[i] = lay;
 }
+
+
+

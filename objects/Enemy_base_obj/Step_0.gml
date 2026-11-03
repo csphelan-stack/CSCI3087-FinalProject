@@ -17,6 +17,17 @@ if (attack_cooldown > 0){
     attack_cooldown--;
 }
 
+
+// ============================================================
+// BOSS
+// ============================================================
+
+// Bosses count their attack cooldowns and watch their health here.
+if (boss_enabled)
+{
+    enemy_boss_tick();
+}
+
 // reset normal movement each frame
 // individual states enable movement when necessary
 move_spd = 0;

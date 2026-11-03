@@ -1,25 +1,30 @@
-// (the charge circle / rainbow sword / charge glow are fx functions at the bottom of parryState)
+// (the charge circle / palette sword glow / charge glow are fx functions at the bottom of parryState)
 
 // how full the special's charge is: 0 = just started, 1 = full
 var _special_charge = special_charged ? 1 : min(1, special_charge_timer / special_charge_time);
 
+// the whirlwind special has two halves: charging (not full yet), then spinning (full)
+var _whirlwind      = (state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND);
+var _whirl_charging = _whirlwind && !special_charged;
+var _whirl_spinning = _whirlwind && special_charged;
+
 // ---- 0. special charge circle on the ground (drawn BEFORE him, so it's underneath) ----
-if (state == PlayerState.SPECIAL_CHARGE) {
+if (_whirl_charging) {
     fxChargeCircleDraw(_special_charge, special_charged);
 }
 
-// ---- 1. the knight: rainbow sword once the special is charged and all through the spin ----
-if ((state == PlayerState.SPECIAL_CHARGE && special_charged) || state == PlayerState.SPECIAL_SPIN) {
+// ---- 1. the player: palette colours up the sword all through the spin ----
+if (_whirl_spinning) {
     fxRainbowSwordDraw();
 } else {
     draw_self();
 }
 
 // ---- 1b. special: glows while charging, wind swirls round him while spinning ----
-if (state == PlayerState.SPECIAL_CHARGE && !special_charged) {
+if (_whirl_charging) {
     fxChargeGlowDraw(_special_charge);
 }
-if (state == PlayerState.SPECIAL_SPIN) {
+if (_whirl_spinning) {
     specialSpinRingDraw();
 }
 

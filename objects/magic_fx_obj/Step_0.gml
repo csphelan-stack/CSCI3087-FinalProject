@@ -8,6 +8,13 @@ if (global.gameIsPaused)
     exit;
 }
 
+// A burst can be told to wait before it starts (so a big spell erupts bit by bit).
+if (start_delay > 0)
+{
+    start_delay--;
+    exit;
+}
+
 timer++;
 
 if (kind == "orb")

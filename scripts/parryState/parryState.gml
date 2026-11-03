@@ -126,8 +126,7 @@ function startStun(){
 	stun_timer = stun_time;
 
 	var dir4 = round(facing / 90) mod 4;
-	// the hurt animation if he has one, otherwise he stands still (Draw flashes him red either way)
-	sprite_index = is_undefined(hurt_spr) ? idle_spr[dir4] : hurt_spr[dir4];
+	sprite_index = hurt_spr[dir4];   // plays his hurt animation (Draw flashes him red too)
 	image_index = 0;
 	image_speed = 1;
 }
@@ -146,13 +145,13 @@ function stunStateMC(){
 // SHOCKWAVE / SPECIAL ATTACK VISUALS
 // ============================================================
 // these were the old charge-up parry's effects - the special spin attack uses them now
-// (see the SPECIAL ATTACK section of attackState, and the knight's Draw event).
+// (see the SPECIAL ATTACK section of attackState, and the player's Draw event).
 // they run as the player (they use his sword_* / u_* / parry_circle_radius variables from Create).
 //
 // how the special uses them:
 //   Step (while charging):  _charge goes 0 -> 1, then fxRainbowSwordStep() once it's full
 //   Draw (before draw_self): fxChargeCircleDraw(_charge, _charge >= 1)
-//   Draw (the knight):       if full fxRainbowSwordDraw() else draw_self(), then fxChargeGlowDraw(_charge)
+//   Draw (the player):       if full fxRainbowSwordDraw() else draw_self(), then fxChargeGlowDraw(_charge)
 //   when full / on release:  fxShockwaveBurst(...)
 // ============================================================
 
@@ -161,7 +160,7 @@ function fxChargeCircleDraw(_charge, _full){
     var _R = parry_circle_radius;
 
     gpu_set_blendmode(bm_add);
-    draw_set_colour(parry_fx_colour);
+    draw_set_colour(special_fx_colour);
 
     // the outline: full size from the start, so you can see what's being filled
     draw_set_alpha(0.5);
@@ -182,7 +181,7 @@ function fxChargeCircleDraw(_charge, _full){
     gpu_set_blendmode(bm_normal);
 }
 
-/// draws the knight with the rainbow sweeping up his sword (use INSTEAD of draw_self)
+/// draws the player with the palette colours sweeping up his sword (use INSTEAD of draw_self)
 function fxRainbowSwordDraw(){
     shader_set(parryShader);
 
@@ -198,24 +197,35 @@ function fxRainbowSwordDraw(){
         colour_get_red(sword_trail_colour)   / 255,
         colour_get_green(sword_trail_colour) / 255,
         colour_get_blue(sword_trail_colour)  / 255);
+    sword_palette_set(u_pal0, sword_palette[0]);
+    sword_palette_set(u_pal1, sword_palette[1]);
+    sword_palette_set(u_pal2, sword_palette[2]);
 
     draw_self();
     shader_reset();
 }
 
-/// moves the rainbow up the sword - call every step while it's showing
-/// (set sword_sweep = 0 and sword_hue = 0 when it starts so it begins at the bottom on red + yellow)
+/// hands one colour to the sword shader as red, green, blue from 0 to 1
+function sword_palette_set(_uniform, _colour){
+    shader_set_uniform_f(_uniform,
+        colour_get_red(_colour)   / 255,
+        colour_get_green(_colour) / 255,
+        colour_get_blue(_colour)  / 255);
+}
+
+/// moves the colour band up the sword - call every step while it's showing
+/// (set sword_sweep = 0 and sword_hue = 0 when it starts so it begins at the bottom on the first colours)
 function fxRainbowSwordStep(){
 	sword_sweep += sword_sweep_speed;
 	if (sword_sweep > 1 + sword_band + sword_trail_len) {
 		sword_sweep = 0;
-		sword_hue = frac(sword_hue + sword_colours / 6);   // next pass = the next colours round the rainbow
+		sword_hue = (sword_hue + sword_colours) mod array_length(sword_palette);   // next pass = the next colours in sword_palette
 	}
 }
 
 /// he glows in the fx colour while charging, stronger as _charge goes 0 -> 1 (draw AFTER him)
 function fxChargeGlowDraw(_charge){
-    gpu_set_fog(true, parry_fx_colour, 0, 0);
+    gpu_set_fog(true, special_fx_colour, 0, 0);
     draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6 * _charge);
     gpu_set_fog(false, c_white, 0, 0);
 }

@@ -1,3 +1,3 @@
-sprite_index = skull_knight_mask_spr;
+sprite_index = adventurer_mask_spr;
 
 

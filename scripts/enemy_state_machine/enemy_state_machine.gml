@@ -27,6 +27,15 @@ function enemy_change_state(_new_state) {
     if (state == ENEMY_STATE.DEAD){
         return;
     }
+
+    // Bosses have super armor: a normal hit (sword, spin attack) does not stun
+    // them, it only makes them flash white. A perfect parry still staggers them
+    // (enemy_boss_stagger lets that one through with boss_force_hurt).
+    if (_new_state == ENEMY_STATE.HURT && boss_enabled && !boss_force_hurt)
+    {
+        boss_flash = 6;
+        return;
+    }
     // Remember what state the enemy was previously in.
     state_prev = state;
     // Change to the new state.
@@ -88,6 +97,11 @@ function enemy_change_state(_new_state) {
             {
                 enemy_magic_begin();
             }
+            // Bosses start the attack they chose (see the enemy_boss script).
+            if (boss_enabled)
+            {
+                enemy_boss_begin();
+            }
         break;
         // ====================================================
         // SEARCH
@@ -133,6 +147,11 @@ function enemy_change_state(_new_state) {
             sprite_index = spr_death[enemy_dir4()];
             // Start the death animation.
             image_speed = death_anim_spd;
+            // A boss cleans up its warning lane when it dies.
+            if (boss_enabled)
+            {
+                enemy_boss_cleanup();
+            }
         break;
     }
 }
