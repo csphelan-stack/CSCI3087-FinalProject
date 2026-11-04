@@ -8,14 +8,23 @@ function Enemy_damage_applying(_damage,_attacker){
 		return false;
 	}
 
-	// ---- hit while charging the whirlwind special: the charge is lost (and the hit lands below) ----
-	// (while SPINNING he keeps going - he still gets hurt, but it doesn't stop the tornado)
-	if(state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND && !special_charged){
+	// ---- hit while charging the Bladed Tsunami: the charge is lost (and the hit lands below) ----
+	// (once the tsunami's going he keeps going - he still gets hurt, but it doesn't stop it)
+	if(state == PlayerState.SPECIAL && special_equipped == SpecialState.TSUNAMI && !tsunami_charged){
 		audio_stop_sound(snd_charge);   // the charge-up sound loops, so stop it too
 		state = PlayerState.NORMAL;
-		special_charged = false;
+		tsunami_charged = false;
 		image_speed = 1;
-		special_cooldown = special_interrupt_cd;
+		special_cooldown = tsunami_interrupt_cd;
+	}
+
+	// ---- hit during the Dance of Dragons wind-up: the dance is cancelled (and the hit lands below) ----
+	// (once he's dancing he can't be hurt, see special_dance_attack_script)
+	if(state == PlayerState.SPECIAL && special_equipped == SpecialState.DANCE && dance_phase == "windup"){
+		state = PlayerState.NORMAL;
+		image_speed = 1;
+		special_cooldown = dance_interrupt_cd;
+		global.enemy_time_scale = 1;   // the slow motion stops too
 	}
 
 	if(state == PlayerState.PARRY){

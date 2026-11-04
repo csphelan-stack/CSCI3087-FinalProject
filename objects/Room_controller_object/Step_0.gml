@@ -19,6 +19,13 @@ if (instance_exists(main_character_Obj)) {
     var target_x = main_character_Obj.x - vw * 0.5;
     var target_y = visual_center_y - vh * 0.5;
 
+    // something else to look at instead of him (the Butterfly Effect's choice pans to the enemy being picked)
+    var focus = main_character_Obj.cam_target;
+    if (instance_exists(focus)) {
+        target_x = focus.x - vw * 0.5;
+        target_y = focus.y - 20 - vh * 0.5;
+    }
+
     // Smooth follow
     var cx = camera_get_view_x(cam);
     var cy = camera_get_view_y(cam);

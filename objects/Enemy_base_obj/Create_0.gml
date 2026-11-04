@@ -12,6 +12,14 @@
 // ---------- defaults (children override these after event_inherited) ----------
 total_hp   = 10;
 hp         = total_hp;
+bf_hits    = 0;     // Butterfly Effect: hits stored on him during the window
+bf_stored  = 0;     // and the damage they'd have done (it all lands when the window ends)
+burn_timer      = 0;   // burning (the Dance of Dragons sets these): steps left on fire, 0 = not burning
+burn_tick_time  = 30;  // steps between burn damage
+burn_tick_timer = 0;
+burn_damage     = 0;   // damage each tick (at least this much...)
+burn_damage_max = 0;   // (...and at most this much, picked at random each tick)
+dragon_hit_time = 0;   // the dragon companion can't bite him again until its clock reaches this
 movespd    = 1.6;   // chase speed
 wander_spd = 0.6;
 
@@ -106,6 +114,7 @@ kb_x = 0;
 kb_y     = 0;
 move_spd = 0;
 move_dir = 0;
+slow_acc = 0;   // slow motion: collects a fraction of a step each frame (see Step, the Dance of Dragons)
 
 target = noone;
 last_x = x;  last_y = y;

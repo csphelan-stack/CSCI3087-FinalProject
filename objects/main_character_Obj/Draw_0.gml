@@ -1,7 +1,12 @@
 // (the charge circle / palette sword glow / charge glow are fx functions at the bottom of parryState)
 
 // how full the special's charge is: 0 = just started, 1 = full
-var _special_charge = special_charged ? 1 : min(1, special_charge_timer / special_charge_time);
+var _special_charge = tsunami_charged ? 1 : min(1, tsunami_charge_timer / tsunami_charge_time);
+
+// the Bladed Tsunami has two halves: charging (not full yet), then the tsunami itself (full)
+var _tsunami          = (state == PlayerState.SPECIAL && special_equipped == SpecialState.TSUNAMI);
+var _tsunami_charging = _tsunami && !tsunami_charged;
+var _tsunami_going    = _tsunami && tsunami_charged;
 
 // the whirlwind special has two halves: charging (not full yet), then spinning (full)
 var _whirlwind      = (state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND);
@@ -9,23 +14,30 @@ var _whirl_charging = _whirlwind && !special_charged;
 var _whirl_spinning = _whirlwind && special_charged;
 
 // ---- 0. special charge circle on the ground (drawn BEFORE him, so it's underneath) ----
-if (_whirl_charging) {
-    fxChargeCircleDraw(_special_charge, special_charged);
+if (_tsunami_charging) {
+    fxChargeCircleDraw(_special_charge, tsunami_charged);
 }
 
-// ---- 1. the player: palette colours up the sword all through the spin ----
-if (_whirl_spinning) {
+// ---- 0b. Dance of Dragons: the orange-red trail, then the timing rings, aim line, swoosh and grade (all under him) ----
+danceTrailDraw();
+danceDraw();
+
+// ---- 0c. Bladed Tsunami: the water droplets (they finish falling after it ends) ----
+tsunamiDropsDraw();
+
+// ---- 1. the player: blue and green up the sword all through the tsunami ----
+if (_tsunami_going) {
     fxRainbowSwordDraw();
 } else {
     draw_self();
 }
 
-// ---- 1b. special: glows while charging, wind swirls round him while spinning ----
-if (_whirl_charging) {
+// ---- 1b. special: glows while charging, the waves swirl round him during the tsunami ----
+if (_tsunami_charging) {
     fxChargeGlowDraw(_special_charge);
 }
-if (_whirl_spinning) {
-    specialSpinRingDraw();
+if (_tsunami_going) {
+    tsunamiRingDraw();
 }
 
 // ---- 2. perfect-parry window: a bright white flash right as the guard goes up, fading as the window closes ----
@@ -74,4 +86,10 @@ if (state == PlayerState.PARRY || parry_exhaust_timer < parry_exhaust_time) {
     if (_pct > 0) draw_rectangle(_bx, _by, _bx + (_w - 1) * _pct, _by + 1, false);
     draw_set_colour(c_white);
 }
+
+// ---- 7. Butterfly Effect: "x12" stored-hit counters on the enemies, and the butterflies in the air ----
+butterfliesDraw();
+
+// ---- 8. the Dance of Dragons' dragon companion (drawn last so it flies over him) ----
+dragonDraw();
 
