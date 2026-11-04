@@ -54,10 +54,6 @@ def test_cooldown_starts_at_zero(enemy):
     assert gml_number(enemy, "attack_cooldown") == 0
 
 
-# Enemy_base_obj Create sets wander_radius, wander_give_up, idle_min, idle_max,
-# search_time, hurt_time and kb_friction twice (same values). Remove one copy
-# of each, then delete this skip marker to turn the test back on.
-@pytest.mark.skip(reason="Enemy_base_obj Create still sets 7 variables twice")
 def test_no_variable_defined_twice(enemy):
     duplicates = [name for name, vals in enemy.items() if len(vals) > 1]
     assert duplicates == []
