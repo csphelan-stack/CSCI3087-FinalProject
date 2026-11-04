@@ -50,8 +50,14 @@ shuffled_upgrades = array_shuffle(available_upgrades);
 card_number = irandom_range(3,5);   //whole number of cards
 card_number = min(card_number, array_length(shuffled_upgrades));   //can't show more cards than there are upgrades left
 
+//how many cards the player takes each time the cards come out
+picks_per_event = 2;
+picks_left = min(picks_per_event, card_number);   //can't take more cards than were dealt
+cards_left = card_number;                         //cards still on the table
+
 
 //the event goes "choose" -> "confirm" -> "burn" (or "back" to "choose" if you say No)
+//after a burn, if there are picks left: "regroup" (the rest of the cards slide together) -> "choose" again
 phase  = "choose";
 chosen = noone;      //the card that was clicked
 bg_alpha = 0;        //how dark the background is
@@ -91,4 +97,25 @@ for (var i = 0; i < card_number; i++) {
 	_c.home_y = card_start_y;
 	_c.home_w = card_width;
 	_c.home_h = card_height;
+}
+
+
+//after a card is taken: works out new centred spots for the cards that are left
+//(_skip = the burnt card, so it doesn't get a spot). they slide there in the "regroup" phase
+regroup_row = function(_skip) {
+	//the cards that are left, in left-to-right order
+	var _cards = [];
+	with (upgrade_card_obj) {
+		if (id != _skip) array_push(_cards, id);
+	}
+	array_sort(_cards, function(_a, _b) { return _a.home_x - _b.home_x; });
+
+	//same centring maths as the deal above
+	var _n = array_length(_cards);
+	var _row_w = _n * card_width + (_n - 1) * card_gap;
+	var _row_x = floor((display_get_gui_width() - _row_w) / 2);
+
+	for (var i = 0; i < _n; i++) {
+		_cards[i].home_x = _row_x + i * (card_width + card_gap);
+	}
 }

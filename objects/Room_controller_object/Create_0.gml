@@ -27,7 +27,11 @@ global.down_button = vk_down;
 global.attack_button = ord("Z");
 global.dash_button = ord("C");
 global.parry_button = ord("X");
-global.special_button = ord("S");   // hold to charge the special spin attack
+global.special_button = ord("S");   // press for the equipped special (hold it to charge the Bladed Tsunami)
+
+// how fast enemies run: 1 = normal, 0.25 = a quarter speed (the Dance of Dragons slows them while he dances)
+// set here so every restart begins at normal speed
+global.enemy_time_scale = 1;
 
 global.safeInside = false;
 
