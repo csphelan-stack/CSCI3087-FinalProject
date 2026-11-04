@@ -140,6 +140,7 @@
     {"id":{"name":"Collesium_Child_0","path":"rooms/Collesium_Child_0/Collesium_Child_0.yy",},},
     {"id":{"name":"Collesium","path":"rooms/Collesium/Collesium.yy",},},
     {"id":{"name":"interior_room","path":"rooms/interior_room/interior_room.yy",},},
+    {"id":{"name":"outside_dungeon_first_level","path":"rooms/outside_dungeon_first_level/outside_dungeon_first_level.yy",},},
     {"id":{"name":"rm_death","path":"rooms/rm_death/rm_death.yy",},},
     {"id":{"name":"rm_dungeon_basic","path":"rooms/rm_dungeon_basic/rm_dungeon_basic.yy",},},
     {"id":{"name":"rm_dungeon_large","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},},
@@ -1397,6 +1398,7 @@
     {"roomId":{"name":"rm_dungeon_large","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},},
     {"roomId":{"name":"rm_death","path":"rooms/rm_death/rm_death.yy",},},
     {"roomId":{"name":"testing_room_for_louis","path":"rooms/testing_room_for_louis/testing_room_for_louis.yy",},},
+    {"roomId":{"name":"outside_dungeon_first_level","path":"rooms/outside_dungeon_first_level/outside_dungeon_first_level.yy",},},
   ],
   "templateType":null,
   "TextureGroups":[
