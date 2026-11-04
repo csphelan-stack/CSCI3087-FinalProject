@@ -17,7 +17,7 @@ wave_timer = wave_delay;
 wave_active = false;
 
 wave_data = [
-    [[enemy_orc_grunt_obj, 20]],
+    [[enemy_orc_grunt_obj, 1]],
 
     [[enemy_orc_grunt_obj, 1], 
      [enemy_orc_beserker_obj, 1]],
@@ -39,10 +39,10 @@ use_lucifer_enemies = true;
 if (use_lucifer_enemies){
     wave_data = [
         //one of each so you can see them all straight away
-        [[enemy_lucifer_cultist_obj, 20],
-         [enemy_lucifer_warrior_obj, 20],
-         [enemy_lucifer_necromancer_obj,20],
-         [enemy_lucifer_ancient_skeleton_obj, 30],
+        [[enemy_lucifer_cultist_obj, 5],
+         [enemy_lucifer_warrior_obj, 5],
+         [enemy_lucifer_necromancer_obj,5],
+         [enemy_lucifer_ancient_skeleton_obj, 5],
          [enemy_lucifer_skeleton_king_obj, 6]],
 
         [[enemy_lucifer_cultist_obj, 3],
