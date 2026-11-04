@@ -3,6 +3,9 @@
 //variable takes off gui hud if inside
 if(global.safeInside == false){
 
+// Butterfly Effect: the glow and butterflies round the edges of the screen (drawn first, so the HUD sits on top)
+butterflyScreenDraw();
+
 
 // =====================================================
 // HEALTH ORB (top left)
@@ -94,6 +97,7 @@ draw_surface_ext(orb_surf, 0, 0, 1, 1, 0, c_white, 0.6);   // 0.6 = overall opac
 if (!global.gameIsPaused) {
 	damagePopupsDraw();
 	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+	butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
 }
 
 

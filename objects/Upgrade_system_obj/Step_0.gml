@@ -70,13 +70,51 @@ switch (phase) {
 
 	case "burn":
 		chosen.burn += 1 / 45;   //about 3/4 of a second
+
+		//the other cards: stay dim if there's another pick to make, fade away if this was the last one
+		var _fade_to = (picks_left > 1 && cards_left > 1) ? 0.15 : 0;
 		with (upgrade_card_obj) {
-			if (id != other.chosen) card_alpha = lerp(card_alpha, 0, 0.15);
+			if (id != other.chosen) card_alpha = lerp(card_alpha, _fade_to, 0.15);
 		}
 
-		//all burnt: end the event (the player's Step destroys this object and the cards when the flag is off)
+		//all burnt
 		if (chosen.burn >= 1.3) {
-			main_character_Obj.event_go_upgrade = false;
+			picks_left -= 1;
+			cards_left -= 1;
+
+			if (picks_left <= 0 || cards_left <= 0) {
+				//no picks (or cards) left: end the event (the player's Step destroys this object and the cards when the flag is off)
+				main_character_Obj.event_go_upgrade = false;
+			}
+			else {
+				//another pick: the rest of the cards slide together, then the player chooses again
+				regroup_row(chosen);
+				instance_destroy(chosen);
+				chosen = noone;
+				phase = "regroup";
+			}
+		}
+		break;
+
+	case "regroup":
+		//the background clears and the cards that are left slide into their new spots and light back up
+		bg_alpha = lerp(bg_alpha, 0, 0.2);
+
+		var _done = true;
+		with (upgrade_card_obj) {
+			card_x = lerp(card_x, home_x, 0.2);
+			card_alpha = lerp(card_alpha, 0.9, 0.2);
+			if (abs(card_x - home_x) > 1 || card_alpha < 0.88) _done = false;
+		}
+
+		//close enough: snap them in place and let the player choose again
+		if (_done) {
+			with (upgrade_card_obj) {
+				card_x = home_x;
+				card_alpha = 0.9;
+			}
+			bg_alpha = 0;
+			phase = "choose";
 		}
 		break;
 }

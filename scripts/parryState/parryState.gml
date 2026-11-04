@@ -144,7 +144,7 @@ function stunStateMC(){
 // ============================================================
 // SHOCKWAVE / SPECIAL ATTACK VISUALS
 // ============================================================
-// these were the old charge-up parry's effects - the special spin attack uses them now
+// these were the old charge-up parry's effects - the Bladed Tsunami special uses them now
 // (see the SPECIAL ATTACK section of attackState, and the player's Draw event).
 // they run as the player (they use his sword_* / u_* / parry_circle_radius variables from Create).
 //
@@ -160,7 +160,7 @@ function fxChargeCircleDraw(_charge, _full){
     var _R = parry_circle_radius;
 
     gpu_set_blendmode(bm_add);
-    draw_set_colour(special_fx_colour);
+    draw_set_colour(tsunami_colour);
 
     // the outline: full size from the start, so you can see what's being filled
     draw_set_alpha(0.5);
@@ -225,7 +225,7 @@ function fxRainbowSwordStep(){
 
 /// he glows in the fx colour while charging, stronger as _charge goes 0 -> 1 (draw AFTER him)
 function fxChargeGlowDraw(_charge){
-    gpu_set_fog(true, special_fx_colour, 0, 0);
+    gpu_set_fog(true, tsunami_colour, 0, 0);
     draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6 * _charge);
     gpu_set_fog(false, c_white, 0, 0);
 }

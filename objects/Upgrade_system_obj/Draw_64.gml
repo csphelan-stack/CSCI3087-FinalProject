@@ -16,6 +16,10 @@ if (phase == "choose") {
 	draw_set_font(global.font_medieval);
 
 	draw_text_ext_transformed_colour(card_text_x,card_text_y,card_text,text_sep,100,3,3,0,text_colour,text_colour,text_colour,text_colour,.90);
+
+	//how many cards are still to take, just above the row
+	var _picks_text = (picks_left == 1) ? "1 card left to take" : string(picks_left) + " cards to take";
+	draw_menu_text(display_get_gui_width() / 2, card_start_y - 24, _picks_text, c_white, 2, fa_center);
 }
 
 

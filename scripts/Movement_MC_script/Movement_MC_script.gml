@@ -21,7 +21,7 @@ function applyMovement(){
 		return;
 	}
 
-	// special: starts whichever special is equipped (see special_attack_tornado_script)
+	// special: starts whichever special is equipped (see special_attack_tsunami_script)
 	if(keyboard_check_pressed(global.special_button) && special_equipped != SpecialState.NONE && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
 		startSpecial();
 		return;
@@ -40,6 +40,7 @@ if(global.gameIsPaused){
 else{
 // slower walk inside (global.safeInside is set by characterInside_script / characterOutside_script)
 movespd = global.safeInside ? inside_movespd : fixedmovespd;
+if (butterflyOn()) movespd *= butterfly_move_mult;   // Butterfly Effect: runs faster (butterfly_move_mult)
 }
 
 	
@@ -72,6 +73,7 @@ if (can_move || !global.gameIsPaused) {
     } else if (moving) {
 
 		image_speed = 1.2;
+		if (butterflyOn()) image_speed *= butterfly_move_mult;   // Butterfly Effect: legs keep up with the faster run
         // run_spr / walk_spr / idle_spr are set in Create
         sprite_index = run_spr[dir4];
     } else {
