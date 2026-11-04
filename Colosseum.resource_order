@@ -80,6 +80,7 @@
     {"name":"upgrade_card_obj","order":7,"path":"objects/upgrade_card_obj/upgrade_card_obj.yy",},
     {"name":"Collesium_Child_0","order":1,"path":"rooms/Collesium_Child_0/Collesium_Child_0.yy",},
     {"name":"interior_room","order":2,"path":"rooms/interior_room/interior_room.yy",},
+    {"name":"outside_dungeon_first_level","order":5,"path":"rooms/outside_dungeon_first_level/outside_dungeon_first_level.yy",},
     {"name":"rm_death","order":4,"path":"rooms/rm_death/rm_death.yy",},
     {"name":"rm_dungeon_basic","order":3,"path":"rooms/rm_dungeon_basic/rm_dungeon_basic.yy",},
     {"name":"rm_dungeon_large","order":4,"path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
