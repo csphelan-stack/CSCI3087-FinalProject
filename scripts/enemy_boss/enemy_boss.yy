@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"enemy_boss",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"enemy_boss",
+  "parent":{
+    "name":"bosses",
+    "path":"folders/EnemyAI/bosses.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

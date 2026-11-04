@@ -115,6 +115,34 @@ function enemy_state_chase()
     var _distance = point_distance(x, y, target.x, target.y);
 
 
+    // Bosses choose between their four attacks (see the enemy_boss script).
+    if (boss_enabled)
+    {
+        var _choice = enemy_boss_choose();
+
+        if (_choice != BOSS_ATTACK.NONE)
+        {
+            // Remember which attack, then enter the attack state to start it.
+            boss_attack = _choice;
+            enemy_change_state(ENEMY_STATE.ATTACK);
+            return;
+        }
+
+        // Nothing is ready: walk toward the player until close, then just face them.
+        if (_distance > attack_range * 0.8)
+        {
+            enemy_walk_to(target.x, target.y, movespd);
+        }
+        else
+        {
+            facing = point_direction(x, y, target.x, target.y);
+        }
+
+        // Stop processing CHASE (the code below is for normal enemies).
+        return;
+    }
+
+
     // Magic users cast spells from a distance instead of fighting up close.
     if (magic_enabled)
     {
@@ -175,6 +203,13 @@ function enemy_state_attack()
 {
 	//added this line to make image_speed for different attacks change
 	//so some attacks can go much faster
+
+    // Bosses have their own attack code (see the enemy_boss script).
+    if (boss_enabled)
+    {
+        enemy_boss_attack_step();
+        return;
+    }
 
     // Do not move normally while attacking.
     move_spd = 0;

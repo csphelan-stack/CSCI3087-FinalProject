@@ -43,7 +43,10 @@ enum MAGIC_ELEMENT
     FIRE,
     EARTH,
     LIGHT,
-    DARK
+    DARK,
+    BLOOD,
+    ICE,
+    POISON
 }
 
 
@@ -75,6 +78,16 @@ function enemy_magic_info(_element)
 
         case MAGIC_ELEMENT.DARK:
             return { colour: make_colour_rgb(165, 85, 255), effect: magic_dark_spr, hit_delay: 10, frame_time: 4 };
+
+        // the boss elements
+        case MAGIC_ELEMENT.BLOOD:
+            return { colour: make_colour_rgb(200, 30, 50), effect: magic_blood_spr, hit_delay: 8, frame_time: 4 };
+
+        case MAGIC_ELEMENT.ICE:
+            return { colour: make_colour_rgb(150, 225, 255), effect: magic_ice_spr, hit_delay: 8, frame_time: 4 };
+
+        case MAGIC_ELEMENT.POISON:
+            return { colour: make_colour_rgb(120, 230, 60), effect: magic_poison_spr, hit_delay: 10, frame_time: 4 };
     }
 
     // unknown element: use fire so nothing breaks

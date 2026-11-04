@@ -38,13 +38,33 @@ switch (phase)
 
             // Make the lightning / fire / earth / light / dark effect.
             // It is drawn in front of the characters so it covers the player.
-            instance_create_depth(x, y, depth - 40, magic_fx_obj, {
-                kind:          "burst",
-                element:       element,
-                colour:        colour,
-                effect_sprite: effect_sprite,
-                frame_time:    frame_time
-            });
+            // A big spell makes several effects, spread over the circle.
+            for (var _b = 0; _b < burst_count; _b++)
+            {
+                var _bx = x;
+                var _by = y;
+                var _wait = 0;
+
+                // The first one is in the middle. The others land at random
+                // spots inside the circle, a little later each.
+                if (_b > 0)
+                {
+                    var _bang = random(360);
+                    var _brad = sqrt(random(1)) * hit_radius * 0.82;
+                    _bx = x + lengthdir_x(_brad, _bang);
+                    _by = y + lengthdir_y(_brad, _bang);
+                    _wait = irandom(burst_spread);
+                }
+
+                instance_create_depth(_bx, _by, depth - 40, magic_fx_obj, {
+                    kind:          "burst",
+                    element:       element,
+                    colour:        colour,
+                    effect_sprite: effect_sprite,
+                    frame_time:    frame_time,
+                    start_delay:   _wait
+                });
+            }
         }
         else
         {
@@ -80,10 +100,11 @@ switch (phase)
         spin += 6;
         scale = 1 + 0.06 * sin(timer * 0.6);
 
-        // Hurt the player once, a few frames after the release.
-        if (!hit_done && timer >= hit_delay)
+        // Hurt the player a few frames after the release.
+        // (a big spell, like a lingering cloud, can hurt more than once)
+        if (hits_done < hit_ticks && timer >= hit_delay + hits_done * tick_gap)
         {
-            hit_done = true;
+            hits_done++;
 
             // Is the player standing inside the circle?
             var _player = collision_circle(x, y, hit_radius, main_character_Obj, false, true);

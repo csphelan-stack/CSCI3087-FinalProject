@@ -19,6 +19,7 @@ if (!variable_instance_exists(id, "effect_sprite")) effect_sprite = magic_fire_s
 if (!variable_instance_exists(id, "frame_time"))    frame_time    = 4;
 if (!variable_instance_exists(id, "grow_time"))     grow_time     = 45;
 if (!variable_instance_exists(id, "orb_scale"))     orb_scale     = 1;
+if (!variable_instance_exists(id, "start_delay"))   start_delay   = 0;     // a burst can wait before it starts
 
 // frames since this object was created
 timer = 0;

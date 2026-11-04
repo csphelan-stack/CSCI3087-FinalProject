@@ -58,6 +58,45 @@ if (use_lucifer_enemies){
     ];
 }
 
+// ============================================================
+// BOSS WAVES
+// ============================================================
+// three boss waves are added after the normal waves: the orc boss, then the
+// skeleton boss, then the cultist boss, each with a couple of their own group.
+//   boss_waves_enabled = false  -> no boss waves
+//   boss_waves_first   = true   -> fight the bosses FIRST (handy for testing)
+boss_waves_enabled = true;
+boss_waves_first   = false;
+
+if (boss_waves_enabled)
+{
+    var _boss_waves = [
+        [[enemy_boss_orc_obj, 1],
+         [enemy_orc_grunt_obj, 2]],
+
+        [[enemy_boss_skeleton_obj, 1],
+         [enemy_skeleton_soldier_obj, 2]],
+
+        [[enemy_boss_cultist_obj, 1],
+         [enemy_lucifer_cultist_obj, 2]]
+    ];
+
+    var _all_waves = [];
+
+    if (boss_waves_first)
+    {
+        for (var _i = 0; _i < array_length(_boss_waves); _i++) array_push(_all_waves, _boss_waves[_i]);
+        for (var _i = 0; _i < array_length(wave_data); _i++)   array_push(_all_waves, wave_data[_i]);
+    }
+    else
+    {
+        for (var _i = 0; _i < array_length(wave_data); _i++)   array_push(_all_waves, wave_data[_i]);
+        for (var _i = 0; _i < array_length(_boss_waves); _i++) array_push(_all_waves, _boss_waves[_i]);
+    }
+
+    wave_data = _all_waves;
+}
+
 //current wave available to UI code.
 global.wave_current = 0;
 

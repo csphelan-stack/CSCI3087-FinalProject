@@ -8,6 +8,11 @@ var _tsunami          = (state == PlayerState.SPECIAL && special_equipped == Spe
 var _tsunami_charging = _tsunami && !tsunami_charged;
 var _tsunami_going    = _tsunami && tsunami_charged;
 
+// the whirlwind special has two halves: charging (not full yet), then spinning (full)
+var _whirlwind      = (state == PlayerState.SPECIAL && special_equipped == SpecialState.WHIRLWIND);
+var _whirl_charging = _whirlwind && !special_charged;
+var _whirl_spinning = _whirlwind && special_charged;
+
 // ---- 0. special charge circle on the ground (drawn BEFORE him, so it's underneath) ----
 if (_tsunami_charging) {
     fxChargeCircleDraw(_special_charge, tsunami_charged);

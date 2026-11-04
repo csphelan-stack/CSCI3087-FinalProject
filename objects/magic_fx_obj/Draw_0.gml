@@ -2,6 +2,12 @@
 // MAGIC FX - DRAW
 // ============================================================
 
+// A burst that is still waiting to start is not drawn yet.
+if (start_delay > 0)
+{
+    exit;
+}
+
 if (kind == "orb")
 {
     // ========================================================
