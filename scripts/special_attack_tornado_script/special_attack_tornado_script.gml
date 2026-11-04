@@ -1,4 +1,4 @@
-
+/* DUPLICATE SCRIPT - DO NOT UNCOMMENT
 
 // ============================================================
 // SPECIAL ATTACKS: which one runs depends on special_equipped (see the SpecialState enum in the player's Create)
@@ -252,3 +252,5 @@ function specialHudDraw(){
 	draw_menu_text(_x, _y, "Special ready", make_colour_rgb(230, 190, 90), 1, fa_center);
 	draw_set_alpha(1);   // always reset
 }
+
+*/

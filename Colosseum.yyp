@@ -85,7 +85,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.4.222",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"Colosseum",
   "resources":[
@@ -157,8 +157,8 @@
     {"id":{"name":"Movement_MC_script","path":"scripts/Movement_MC_script/Movement_MC_script.yy",},},
     {"id":{"name":"parryState","path":"scripts/parryState/parryState.yy",},},
     {"id":{"name":"playerHurtDeath","path":"scripts/playerHurtDeath/playerHurtDeath.yy",},},
-    {"id":{"name":"special_attack_tornado_script","path":"scripts/special_attack_tornado_script/special_attack_tornado_script.yy",},},
     {"id":{"name":"special_attack_butterfly_script","path":"scripts/special_attack_butterfly_script/special_attack_butterfly_script.yy",},},
+    {"id":{"name":"special_attack_tornado_script","path":"scripts/special_attack_tornado_script/special_attack_tornado_script.yy",},},
     {"id":{"name":"special_attack_tsunami_script","path":"scripts/special_attack_tsunami_script/special_attack_tsunami_script.yy",},},
     {"id":{"name":"special_dance_attack_script","path":"scripts/special_dance_attack_script/special_dance_attack_script.yy",},},
     {"id":{"name":"Upgrade_system_data","path":"scripts/Upgrade_system_data/Upgrade_system_data.yy",},},
