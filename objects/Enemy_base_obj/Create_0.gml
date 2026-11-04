@@ -43,14 +43,6 @@ lose_range  = 220;  // keeps chasing out to this range
 attack_range = 22;
 stop_range  = 14;   // stops this close to the player
 
-wander_radius  = 64;
-wander_give_up = 180;                               // frames before giving up on a wander point
-idle_min = 40;
-idle_max = 120;
-search_time = game_get_speed(gamespeed_fps) * 3;   // how long he searches before giving up
-hurt_time   = 12;
-kb_friction = 0.8;
-
 // sprites in dir4 order: [right, backward, left, forward] (children fill these in)
 spr_idle  = [-1, -1, -1, -1];
 spr_run   = [-1, -1, -1, -1];

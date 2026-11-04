@@ -53,8 +53,7 @@ def test_attack_hits_before_attack_ends(enemy):
 def test_cooldown_starts_at_zero(enemy):
     assert gml_number(enemy, "attack_cooldown") == 0
 
-"""
+
 def test_no_variable_defined_twice(enemy):
     duplicates = [name for name, vals in enemy.items() if len(vals) > 1]
     assert duplicates == []
-"""
