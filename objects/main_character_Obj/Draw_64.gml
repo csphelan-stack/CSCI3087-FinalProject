@@ -97,6 +97,7 @@ draw_surface_ext(orb_surf, 0, 0, 1, 1, 0, c_white, 0.6);   // 0.6 = overall opac
 if (!global.gameIsPaused) {
 	damagePopupsDraw();
 	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+	butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
 }
 
 

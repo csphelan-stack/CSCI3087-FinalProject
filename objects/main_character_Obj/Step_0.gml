@@ -30,12 +30,16 @@ if(parry_cooldown>0){
 parry_cooldown-=1;
 }
 
-if (special_cooldown > 0 && !global.gameIsPaused) {
+// (it waits while the Butterfly Effect is still going, so it only starts once the butterflies are sent)
+if (special_cooldown > 0 && !global.gameIsPaused && !butterflyBusy()) {
 	special_cooldown -= 1;
 }
 
 // Butterfly Effect: the 10 second window and the butterflies (runs whatever state he's in)
 butterflyStep();
+
+// Bladed Tsunami: the water droplets (keep moving after the tsunami so they can fall and fade)
+tsunamiDropsStep();
 
 // Dance of Dragons: the trail following his path (keeps running after the dance so it can shrink away)
 danceTrailStep();

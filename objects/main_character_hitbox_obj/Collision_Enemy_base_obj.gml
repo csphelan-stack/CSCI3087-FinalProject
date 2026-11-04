@@ -6,13 +6,21 @@ array_push(hit_list,other.id);
 
 if (bf_store) {
 	// Butterfly Effect window: no damage now, the hit is saved and lands when the window ends (endButterfly)
-	other.bf_hits += 1;
-	other.bf_stored += damage;
+	// each enemy can only be tagged once: the first hit is saved, any more do nothing
+	if (other.bf_hits == 0) {
+		other.bf_hits = 1;
+		other.bf_stored = damage;
 
-	// a couple of little butterflies come loose from it
-	var _bx = other.x;
-	var _by = other.y - 14;
-	if (instance_exists(owner)) with (owner) butterflyPuff(_bx, _by, 2, 1, 2.5);
+		// tagged: a burst of little butterflies and a ring out of it
+		var _tagged = other.id;
+		var _bx = other.x;
+		var _by = other.y - 14;
+		if (instance_exists(owner)) with (owner) {
+			butterflyPuff(_bx, _by, 6, 1, 3);
+			var _col = butterflyColour();
+			with (_tagged) fxShockwaveBurst(_col, 4, 26);
+		}
+	}
 } else {
 	other.hp -= damage;
 }

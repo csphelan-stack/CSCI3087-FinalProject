@@ -20,10 +20,10 @@ enum PlayerState {
 }
 
 //which special attack he has. each one gets its own case in startSpecial() and specialStateMC()
-//(top of special_attack_tornado_script). to add a new special: add a name here, then add its cases there
+//(top of special_attack_tsunami_script). to add a new special: add a name here, then add its cases there
 enum SpecialState {
 	NONE,        //no special yet: the special key does nothing
-	WHIRLWIND,     //Acrobatic Tsunami: hold to charge, then spin like a tornado
+	TSUNAMI,       //Bladed Tsunami: hold to charge, then he whirls round in a wave that throws enemies out and drags them back in
 	DANCE,         //Dance of Dragons: a 1 second wind-up, then he dashes enemy to enemy striking each one, and they burn
 	BUTTERFLY,     //Butterfly Effect: 10 seconds of harmless fast hits, then they all land at once and butterflies fly out
 }
@@ -124,30 +124,34 @@ attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 //which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
 //SpecialState.NONE = locked, no special yet
-special_equipped = SpecialState.BUTTERFLY;   //TESTING: switch between BUTTERFLY, DANCE and WHIRLWIND here
+special_equipped = SpecialState.TSUNAMI;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
 
 //---Butterfly Effect (special_attack_butterfly_script)---
-//for 10 seconds his hits do no damage, they're stored on each enemy instead. he swings faster, reaches further,
-//knocks back half as hard and runs faster. when it ends every stored hit lands at once (most of them crits)
-//and butterflies fly out of the enemies to hit the ones around them
-butterfly_time        = 60 * 10;  //how long the window lasts (10 seconds)
+//for 6 seconds his hits do no damage. instead the first hit on each enemy TAGS it (once per enemy). he swings faster,
+//reaches further, knocks back half as hard and runs twice as fast. when it ends time rewinds to when he pressed S and
+//freezes, and every tag becomes butterflies he sends to the tagged enemies he picks (the camera pans round the room to them).
+//then time restarts: each tagged enemy takes its saved hit (most of them crits) and the butterflies he sent each land a big hit
+butterfly_time        = 60 * 6;   //how long the tagging window lasts (6 seconds)
 butterfly_timer       = 0;        //counts down while it's on (0 = off)
 butterfly_cooldown_t  = 60 * 30;  //cooldown after the window ends (30 seconds)
 butterfly_attack_mult = 2.5;      //swings play this many times faster
 butterfly_cd_mult     = 3;        //the attack cooldown is this many times shorter
 butterfly_range_mult  = 1.5;      //hitboxes are this many times bigger and reach this much further
 butterfly_kb_mult     = 0.5;      //knockback is halved
-butterfly_move_mult   = 1.5;      //he runs 1.5x faster
+butterfly_move_mult   = 2.5;      //he runs 2.5x faster
 butterfly_crit_chance = 0.75;     //chance each stored hit lands as a crit
 butterfly_crit_mult   = 2;        //a crit does this many times the damage
 butterfly_cap_mult    = 3;        //an enemy takes at most this many times its max health in one payoff
-//the butterflies that fly out at the end
-butterfly_hits_each   = 5;        //one butterfly for every this many hits an enemy took (at least 1)
-butterfly_max_each    = 4;        //at most this many butterflies out of one enemy
-butterfly_hit_others  = true;     //true = they fly to OTHER enemies nearby, false = back at the one they came out of
-butterfly_seek_range  = 150;      //how far away (room pixels) they look for another enemy to hit
-butterfly_damage      = 2;        //damage each butterfly does when it reaches its target
-butterfly_speed       = 3;        //how fast they fly (pixels per step)
+//the rewind and the choice
+butterfly_rec_gap     = 2;        //records where everyone is every this many steps during the window
+butterfly_rewind_time = 60;       //how long the rewind takes (1 second)
+butterfly_sends_per_tag = 2;      //butterflies to send for every enemy he tagged
+butterfly_send_max    = 12;       //at most this many butterflies to send
+butterfly_send_mult   = 10;       //each butterfly hits for player_damage times this: a massive hit (and can crit, like the stored hits)
+butterfly_choose_limit = 60 * 15; //time to place them before any left over go on the enemy being picked (15 seconds, 0 = no limit)
+butterfly_go_wait     = 20;       //once the last one's placed, they wait this many steps before they all go (so you can see them)
+//the butterflies he sends
+butterfly_speed       = 5;        //how fast they fly (pixels per step)
 butterfly_life        = 60 * 3;   //they fly off after 3 seconds if they can't reach anyone
 butterfly_scale       = 1;        //how big they're drawn (the sprite is butterfly_gif_spr)
 butterflies           = [];       //the butterflies in the air (structs, see butterfliesStep)
@@ -162,6 +166,20 @@ butterfly_fx          = [];       //the little butterflies and the sword's butte
 butterfly_screen      = [];       //the butterflies round the screen edges (structs, see butterflyScreenStep)
 butterfly_screen_alpha = 0;       //they fade in when the window starts and out when it ends
 butterfly_trail_timer = 0;        //lets a little butterfly loose behind him every few steps during the window
+butterfly_phase       = "";       //"" (normal or the window), "rewind" or "choose"
+butterfly_rec         = [];       //the recording: snapshots of where he and every enemy were
+butterfly_rec_timer   = 0;
+butterfly_rewind_t    = 0;        //steps into the rewind
+butterfly_choose_t    = 0;        //steps into the choice
+butterfly_choices     = [];       //the enemies he can send butterflies to (every living enemy in the room)
+butterfly_sends       = [];       //how many he's sending to each of them
+butterfly_sel         = 0;        //which one he's picking
+butterfly_budget      = 0;        //how many butterflies he got to send
+butterfly_left        = 0;        //how many he hasn't placed yet
+butterfly_go_delay    = 0;        //counts down from butterfly_go_wait once they're all placed
+
+//the camera looks at this instead of him while it exists (noone = follow him as normal, see Room_controller_object Step)
+cam_target            = noone;
 
 //---Dance of Dragons (special_dance_attack_script)---
 //press S: he goes straight away, dashing to the nearest enemy without stopping while enemies slow right down.
@@ -274,34 +292,41 @@ dragon_age           = 0;         //counts up: its flowing wave, and when each e
 dragon_gone          = false;     //exploded in the finisher (it comes back when the special's ready)
 dragon_flames        = [];        //the flames in the air (structs, see dragonFlamesStep)
 
-//---special attack: hold S to charge, let go to spin like a tornado (functions at the bottom of attackState)---
-special_charge_time  = 60;       //steps to fully charge (60 = 1 second)
-special_charge_timer = 0;
-special_charged      = false;
-special_dir4         = 3;
-special_spin_time    = 150;      //how long the tornado lasts (150 = 2.5 seconds)
-special_spin_timer   = 0;
-special_spin_angle   = 0;
-special_spin_rate    = 24;       //degrees he turns each step (bigger = faster spin)
-special_spin_frame   = 2;        //which frame of the attack sprites he holds while spinning (the sword out)
-//moving while spinning: fast but hard to control (normal walk is 3)
-special_spin_speed   = 4.5;      //top speed while spinning
-special_spin_launch  = 3;        //speed he gets launched at, the way he was facing, when the spin starts
-special_spin_accel   = 0.35;     //how hard the movement keys push him (lower = slower to turn = less control)
-special_spin_drag    = 0.95;     //how much speed he keeps each step (closer to 1 = slides more)
-special_spin_wobble  = 0.2;      //how hard the tornado shoves him off course each step
-special_vx           = 0;        //his speed while spinning
-special_vy           = 0;
-special_wobble_dir   = 0;        //which way the tornado is shoving him (wanders round on its own)
-special_radius       = 48;       //reach of the tornado (room pixels from his middle)
-special_damage       = 3;        //damage to each enemy in reach, every tick
-special_tick_time    = 12;       //steps between damage ticks (12 = 5 hits a second)
-special_tick_timer   = 0;
-special_knockback    = 6;        //how hard enemies get flung out
-special_ghost_gap    = 3;        //steps between the coloured afterimages
-special_ghost_timer  = 0;
-special_cooldown_t   = 60*15;    //the HEAVY cooldown after a spin (15 seconds)
-special_interrupt_cd = 60*8;     //shorter cooldown if you get hit while charging
+//---Bladed Tsunami (special_attack_tsunami_script): hold S to charge, then he whirls round as a tsunami---
+tsunami_charge_time  = 60;       //steps to fully charge (60 = 1 second)
+tsunami_charge_timer = 0;
+tsunami_charged      = false;
+tsunami_dir4         = 3;
+tsunami_time         = 300;      //how long the tsunami lasts (300 = 5 seconds)
+tsunami_timer        = 0;
+tsunami_angle        = 0;
+tsunami_turn_rate    = 24;       //degrees he turns each step (bigger = faster whirl)
+tsunami_frame        = 2;        //which frame of the attack sprites he holds while whirling (the sword out)
+//moving during the tsunami: fast but hard to control (normal walk is 3)
+tsunami_speed        = 4.5;      //top speed
+tsunami_launch       = 3;        //speed he gets launched at, the way he was facing, when it starts
+tsunami_accel        = 0.35;     //how hard the movement keys push him (lower = slower to turn = less control)
+tsunami_drag         = 0.95;     //how much speed he keeps each step (closer to 1 = slides more)
+tsunami_wobble       = 0.2;      //how hard the current shoves him off course each step
+tsunami_vx           = 0;        //his speed during the tsunami
+tsunami_vy           = 0;
+tsunami_wobble_dir   = 0;        //which way the current is shoving him (wanders round on its own)
+tsunami_radius       = 48;       //reach of each wave (room pixels from his middle)
+tsunami_damage       = 5;        //damage to each enemy in reach, every wave
+tsunami_tick_time    = 12;       //steps between waves (12 = 5 waves a second)
+tsunami_tick_timer   = 0;
+tsunami_knockback    = 6;        //how hard each wave throws enemies out
+//the undertow: between waves, enemies get dragged back in toward him
+tsunami_pull_radius  = 120;      //how far out the undertow reaches (bigger than the waves, so thrown enemies come back)
+tsunami_pull_speed   = 1.8;      //how fast it drags them in (pixels a step at the edge, half that up close)
+tsunami_pull_min     = 18;       //stops pulling this close, so they don't pile up on top of him
+tsunami_pull_swirl   = 30;       //degrees the pull is turned sideways, so they swirl round him as they come in (0 = straight in)
+tsunami_drops        = [];       //the water droplets (structs, see tsunamiDropsStep)
+tsunami_drop_max     = 160;      //most droplets at once
+tsunami_ghost_gap    = 3;        //steps between the coloured afterimages
+tsunami_ghost_timer  = 0;
+tsunami_cooldown_t   = 60*15;    //the HEAVY cooldown after the tsunami (15 seconds)
+tsunami_interrupt_cd = 60*8;     //shorter cooldown if you get hit while charging
 special_cooldown     = 0;
 
 
@@ -426,12 +451,13 @@ dash_ghosts_made       = 0;     //how many shadows this dash has made so far
 
 
 parry_dir4 = 3;          //which way this parry faces (0 right, 1 up, 2 left, 3 down)
-parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (the special has its own colours, special_fx_colour)
+parry_fx_colour = c_aqua;   //colour of the block flash and guard meter (the special has its own colours, tsunami_colour)
 parry_circle_radius = 44;   //size of the parry ring (and the saved charge circle below)
 
-//---special attack colours (Deco card palette)---
-special_fx_colour    = make_colour_rgb(224, 187, 0);   //gold: charge circle, charge glow, burst ring and the wind swirl
-special_ghost_colour = [c_white, make_colour_rgb(218, 246, 80), make_colour_rgb(224, 187, 0)];   //the spin's afterimages: white, highlight, gold
+//---Bladed Tsunami colours (the Nautical card's greens, and blues)---
+tsunami_colour       = make_colour_rgb(0, 152, 219);   //blue: charge circle, charge glow, the big wave rings and the undertow's edge
+tsunami_wave_colours = [make_colour_rgb(0, 152, 219), make_colour_rgb(0, 224, 150), make_colour_rgb(27, 224, 0), make_colour_rgb(155, 246, 81)];   //blue, teal, green, light green: the swirling waves, the wave rings and the droplets
+tsunami_ghost_colour = [c_white, make_colour_rgb(155, 246, 81), make_colour_rgb(0, 224, 150), make_colour_rgb(0, 152, 219)];   //his afterimages: white, light green, teal, blue
 
 
 //============================================================
@@ -450,8 +476,8 @@ sword_sweep        = 0;      //where the colour band is: 0 = bottom of the sprit
 sword_sweep_speed  = 0.02;   //how fast the band climbs
 sword_band         = 0.4;    //how tall the colour band is
 sword_trail_len    = 0.4;    //how long the trail behind the band is
-sword_trail_colour = make_colour_rgb(129, 77, 24); //colour of the trail (bronze)
-sword_palette      = [make_colour_rgb(224, 187, 0), make_colour_rgb(218, 246, 80), c_white]; //the band's colours, in order (exactly 3: gold, highlight, white)
+sword_trail_colour = make_colour_rgb(24, 124, 46); //colour of the trail (deep sea green)
+sword_palette      = [make_colour_rgb(0, 152, 219), make_colour_rgb(27, 224, 0), make_colour_rgb(155, 246, 81)]; //the band's colours, in order (exactly 3: blue, green, light green)
 sword_colours      = 2;      //how many colours pass up the sword at once
 sword_hue          = 0;      //which sword_palette colour the current pass starts on (moves on by itself)
 sword_saturation   = 0.5;    //how strong the sword colours are (1 = full colour, 0 = plain sword)
@@ -472,7 +498,7 @@ u_saturation = shader_get_uniform(parryShader, "u_saturation");
 // universal cooldowns
 dash_cd_max    = dash_cooldown_t;   dash_cd_prev    = 0;
 parry_cd_max   = parry_cooldown_t;  parry_cd_prev   = 0;
-special_cd_max = special_cooldown_t; special_cd_prev = 0;
+special_cd_max = tsunami_cooldown_t; special_cd_prev = 0;
 
 //UI cluster dimmer
 orb_surf = -1;

@@ -11,7 +11,7 @@ function Upgrade_system_data(){
 			desc: "The blade is an extension of one's own body: This upgrade allows the adventurer to hone his skills and sharpen his blade",
 			effects: [
 				{ stat: "player_damage", op: "mult"   , value: 2},
-				{stat: "special_damage",op:"mult", value: 2}
+				{stat: "tsunami_damage",op:"mult", value: 2}
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 0,
@@ -223,14 +223,14 @@ function Upgrade_system_data(){
 		//I also want these attacks to start off alright and then get increasingly better
 		
 				,
-			Special_attack_whirlwind:
+			Special_attack_tsunami:
 		{
 			
 			name: "Bladed Tsunami",
 			special: true,
 			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional (Hold {global.special_button} to activate attack)",
 			effects: [
-				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.WHIRLWIND},
+				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.TSUNAMI},
 			],
 			spriteF: card_nautical_joker_spr,
 			indexF: 2,
@@ -262,7 +262,7 @@ function Upgrade_system_data(){
 		}	
 		
 				,
-					Special_attack_tornado:
+					Special_attack_butterfly:
 		{
 
 			name: "The Butterfly Effect",
