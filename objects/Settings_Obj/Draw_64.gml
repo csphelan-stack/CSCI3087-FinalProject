@@ -6,7 +6,7 @@ if(global.gameIsPaused){
 
 
 
-	
+
 	draw_set_alpha(0.3);
 	draw_set_colour(c_blue);
 	draw_rectangle(
@@ -37,9 +37,6 @@ draw_sprite_stretched_ext(background_spr,0,startx_b,starty_b,width_settings_back
 		draw_button_label(startx_b, starty_b + 50, width_settings_background, 60, "Paused", c_white, 3);
 	}
 
-	
-	
-	
 }
 
 draw_buttons_settings();

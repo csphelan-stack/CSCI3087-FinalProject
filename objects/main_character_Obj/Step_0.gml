@@ -13,13 +13,13 @@ if (hurt_timer > 0) {
 
 
 if(attack_cooldown >0){
-attack_cooldown-=1;	
+attack_cooldown-=1;
 }
 if(	dash_double_wait_time>0){
 	dash_double_wait_time-=1;	
 }
 if(dash_cooldown>0){
-dash_cooldown-=1;	
+dash_cooldown-=1;
 }
 
 if(invuln > 0){
@@ -97,7 +97,7 @@ else{
 
 	
 switch (state){
-	
+
 	case PlayerState.NORMAL:
 		applyMovement();
 		break;

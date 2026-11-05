@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_tests_framework_selftest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_tests_framework_selftest",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,3 +1,7 @@
+// attackState: the player's sword attack.
+// startAttackPlayer() starts a swing (once, when the attack button is pressed).
+// attackStatePlayer() runs every step of the swing and spawns the hitbox on the hit frame.
+// Both run on main_character_Obj and take no arguments.
 function attackStatePlayer(){
 
 
@@ -8,7 +12,7 @@ function attackStatePlayer(){
 
         // which way is he facing? snapped to exactly 0, 90, 180 or 270
         var dir4 = round(facing / 90) mod 4;
-       
+
         var _dir = dir4 * 90;
 		
 		//tracks the opposite of the swing direction so we can apply knockback
@@ -47,7 +51,7 @@ function attackStatePlayer(){
 
 		
         _hb.owner = id;   //telling the hitbox who made it
-		}
+        }
 }
 
 // _counter = true when the swing comes from a successful parry (see parrySuccess), normal attacks leave it out

@@ -1,6 +1,5 @@
 if (state == PlayerState.ATTACK){
 
-
 	state = PlayerState.NORMAL;
 	attack_cooldown = attack_cooldown_time; //starts cooldown
 	if (butterflyOn()) attack_cooldown /= butterfly_cd_mult;   // Butterfly Effect: next swing comes sooner

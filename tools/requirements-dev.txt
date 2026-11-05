@@ -1,0 +1,2 @@
+# Tools the CI "checks" job installs. Pinned so CI results do not change on their own.
+pytest==8.4.2

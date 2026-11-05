@@ -42,7 +42,7 @@ if (instance_exists(owner)) {
 }
 
 with(other){
-	
-enemy_change_state(ENEMY_STATE.HURT);	
-	
+
+enemy_change_state(ENEMY_STATE.HURT);
+
 }

@@ -1,48 +1,177 @@
-# This workflow runs a linter and a test suite every time code is pushed.
+# Team 1 CI pipeline.
+#
+# Runs on every push to any branch, on every pull request into main, and by
+# hand from the Actions tab. Three jobs:
+#
+#   checks      (Ubuntu, about 1 minute)
+#               tests the checkers themselves, then runs the CREDITS check,
+#               JSON data validation and style check
+#   rule-tests  (Ubuntu, about 1 minute, runs at the same time as "checks")
+#               runs the GML game-rule tests in Node.js, without GameMaker
+#   game-tests  (Windows, runs only if both jobs above passed)
+#               builds the game with GameMaker's command-line builder (Igor),
+#               launches it with --run-tests, and fails if any GML test failed
+#
+# Branch protection on main requires all three jobs to pass before a merge.
+#
+# One-time setup: add a repository secret named ACCESS_KEY containing a
+# GameMaker access key (Settings > Secrets and variables > Actions).
 
 name: CI
 
-# Controls when the workflow will run
+# No path filters: with branch protection, a pull request that skipped the
+# pipeline (for example one that only edits a .md file) could never merge.
 on:
-  # Runs on every push to any branch
   push:
-  # Runs on every pull request
+    branches: ["**"]
   pull_request:
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# A newer push to the same branch cancels the older, still-running pipeline.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  checks:
+    name: Style and data checks
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    timeout-minutes: 10
     steps:
-      # Checks out your repository so the job can access your files
-      - uses: actions/checkout@v4
+      - name: Check out the repository
+        uses: actions/checkout@v4
 
-      # Installs Python 3.12 on the runner
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # Installs the linter (flake8) and the test framework (pytest)
-      - name: Install dependencies
-        run: pip install flake8 pytest
+      - name: Install test tools
+        run: pip install -r tools/requirements-dev.txt
 
-      # Checks the tools and tests folders for style and syntax errors
-      - name: Lint (flake8)
-        run: flake8 tools tests --max-line-length=100
+      # If the checkers below were broken they could pass bad code, so their
+      # own tests run first.
+      - name: Test the checkers
+        run: python -m pytest tools/tests -q
 
-      # Runs every test in the tests folder
-      - name: Run unit tests
-        run: pytest -v
+      - name: Check that a CREDITS file exists
+        run: |
+          if [ -z "$(find . -maxdepth 2 -iname 'credits*' -not -path './.git/*' -print -quit)" ]; then
+            echo "::error title=Missing CREDITS file::Add a CREDITS file listing every third-party asset and its license."
+            exit 1
+          fi
 
-      # Scans your GameMaker .yy and .yyp files for broken JSON
-      - name: Validate GameMaker project files
-        run: python tools/gm_check.py .
-      - name: Validate GameMaker project files
-        run: python tools/gm_check.py .
+      - name: Validate JSON data files
+        run: python tools/validate_data.py
+
+      - name: Check style rules
+        run: python tools/check_style.py
+
+  rule-tests:
+    name: Game rule tests (fast, Node.js)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Loads scr_test_framework, scr_rules_* and scr_tests_rules_* and runs
+      # them with stand-ins for GameMaker's built-in functions.
+      - name: Run the GML rule tests in Node.js
+        run: node tools/gml_node/run.js --out test-output-node
+
+      - name: Check test results
+        run: python tools/ci/check_test_results.py test-output-node/test_results.json
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output-node
+          path: test-output-node/test_results.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  game-tests:
+    name: Build game and run GML tests
+    needs: [checks, rule-tests]
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Check that the ACCESS_KEY secret is set
+        shell: pwsh
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+        run: |
+          if (-not $env:ACCESS_KEY) {
+            Write-Output "::error title=Missing secret::Add a GameMaker access key as the repository secret ACCESS_KEY."
+            exit 1
+          }
+
+      - name: Find the GameMaker project file
+        id: find_yyp
+        shell: pwsh
+        run: |
+          $yyp = @(Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.yyp |
+            Where-Object { $_.FullName -notmatch '[\\/](tools|\.git)[\\/]' })
+          if ($yyp.Count -ne 1) { throw "Expected one .yyp file, found $($yyp.Count)" }
+          Write-Output "Project: $($yyp[0].FullName)"
+          "yyp-path=$($yyp[0].FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      # Installs the GameMaker runtime version saved in our .yyp, so CI builds
+      # with the same version we use in the IDE. Cached between runs.
+      - name: Install GameMaker build tools (Igor)
+        id: igor
+        uses: bscotch/igor-setup@v1
+        with:
+          access-key: ${{ secrets.ACCESS_KEY }}
+          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+          cache: true
+
+      # yyc: false builds with the VM, like the Run button in the IDE. It is
+      # faster than the YoYo Compiler and needs no C++ toolchain.
+      - name: Build Windows game
+        id: build
+        uses: bscotch/igor-build@v1
+        with:
+          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+          user-dir: ${{ steps.igor.outputs.user-dir }}
+          yyc: false
+
+      - name: Run the game in test mode
+        shell: pwsh
+        run: ./tools/ci/run-gml-tests.ps1 -BuildDir "${{ steps.build.outputs.out-dir }}" -OutDir test-output -TimeoutSeconds 300
+
+      - name: Check test results
+        run: python tools/ci/check_test_results.py test-output/test_results.json
+
+      # Runs even when a step above failed, so the log is there to diagnose it.
+      - name: Upload test results and game log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output
+          path: |
+            test-output/test_results.json
+            test-output/game-log.txt
+          if-no-files-found: warn
+          retention-days: 14

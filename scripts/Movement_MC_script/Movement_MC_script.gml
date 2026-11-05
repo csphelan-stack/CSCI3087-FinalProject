@@ -1,3 +1,6 @@
+// Movement_MC_script: applyMovement() runs every step on main_character_Obj in the normal
+// state. It reads input, starts attacks and dashes, moves the player and stops at wall_obj.
+// No arguments.
 function applyMovement(){
 	
 		if(dash_double_counter == 1){
@@ -29,13 +32,13 @@ function applyMovement(){
 	
 	
 if(global.gameIsPaused){
-	movespd = 0;
-	can_move = false;
-	// clear the last movement so x += kb_x below can't keep sliding him while paused
-	kb_x = 0;
-	kb_y = 0;
-	image_speed = 0; // freeze the run animation too
-	exit;
+    movespd = 0;
+    can_move = false;
+    // clear the last movement so x += kb_x below can't keep sliding him while paused
+    kb_x = 0;
+    kb_y = 0;
+    image_speed = 0; // freeze the run animation too
+    exit;
 }
 else{
 // slower walk inside (global.safeInside is set by characterInside_script / characterOutside_script)
@@ -43,14 +46,14 @@ movespd = global.safeInside ? inside_movespd : fixedmovespd;
 if (butterflyOn()) movespd *= butterfly_move_mult;   // Butterfly Effect: runs faster (butterfly_move_mult)
 }
 
-	
+
 
 if (can_move || !global.gameIsPaused) {
 
     _hor = keyboard_check(global.right_button) - keyboard_check(global.left_button);
     _ver = keyboard_check(global.down_button)  - keyboard_check(global.up_button);
 
-	
+
     moving = (_hor != 0) || (_ver != 0);
 
     if (moving) {
@@ -95,9 +98,9 @@ if (can_move || !global.gameIsPaused) {
 
 // --- horizontal ---
 // would moving sideways put my hitbox inside a wall?
-if (place_meeting(x + kb_x, y, obj_wall)) {
+if (place_meeting(x + kb_x, y, wall_obj)) {
     // yes: creep forward 1 pixel at a time until I'm touching it
-    while (!place_meeting(x + sign(kb_x), y, obj_wall)) {
+    while (!place_meeting(x + sign(kb_x), y, wall_obj)) {
         x += sign(kb_x);
     }
     kb_x = 0; // then stop moving sideways
@@ -105,15 +108,15 @@ if (place_meeting(x + kb_x, y, obj_wall)) {
 x += kb_x;
 
 // --- vertical --- (same idea, up/down)
-if (place_meeting(x, y + kb_y, obj_wall)) {
-    while (!place_meeting(x, y + sign(kb_y), obj_wall)) {
+if (place_meeting(x, y + kb_y, wall_obj)) {
+    while (!place_meeting(x, y + sign(kb_y), wall_obj)) {
         y += sign(kb_y);
     }
     kb_y = 0;
 }
 y += kb_y;
-	
-	
-	
-	
+
+
+
+
 }

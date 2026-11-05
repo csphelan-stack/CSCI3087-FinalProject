@@ -11,4 +11,3 @@ hovered = point_in_rectangle(
 if (hovered && mouse_check_button_pressed(mb_left)) {
 	with (Settings_Obj) open_page("options");
 }
-  

@@ -1,0 +1,5 @@
+{
+  "enemies": [
+    {"type": "slime", "hp": 10, "damage": 2},
+  ]
+}

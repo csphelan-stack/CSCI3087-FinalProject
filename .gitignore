@@ -1,0 +1,4 @@
+# Python caches and CI output from the checks in tools/ and tests/.
+__pycache__/
+.pytest_cache/
+test-output/

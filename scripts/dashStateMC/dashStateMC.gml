@@ -1,8 +1,12 @@
+// dashStateMC: the player's dash.
+// startDashState() begins a dash (once, when the dash button is pressed).
+// dashStateMC() moves the player a slice of the dash each step and stops at walls.
+// Both run on main_character_Obj and take no arguments.
 function startDashState(){
 
 
-    // runs ONCE when the dash button (space) is pressed
-    state = PlayerState.DASH;
+	// runs ONCE when the dash button (space) is pressed
+	state = PlayerState.DASH;
 
 	image_blend = dash_tint;
 	
@@ -38,7 +42,8 @@ function dashStateMC(){
 	var _dash_spd = dash_length / dash_time;
 	var _dx = lengthdir_x(_dash_spd, dash_dir);
 	var _dy = lengthdir_y(_dash_spd, dash_dir);
-	move_and_collide(_dx, _dy, obj_wall);
+
+	move_and_collide(_dx, _dy, wall_obj);
 
 	// play the dash animation through over the dash, first frame to last (the shadows copy these frames)
 	image_index = floor(_elapsed * (image_number - 1) / max(1, dash_time - 1));

@@ -1,7 +1,7 @@
 //This is how you set up a state machine
-//you enum x amounts of states 
+//you enum x amounts of states
 // and then put the case switch statement of these states in the player objects step event
-//then from there you can make scripts corresponding to the function name of the states in the step event. 
+//then from there you can make scripts corresponding to the function name of the states in the step event.
 //check movement_MC_script for an example
 //this makes writing code for a character much more efficient and also more sperated so it is easier to keep control of
 
@@ -101,7 +101,7 @@ healthbar_height = 12;
 
 healthbar_x = display_get_gui_width() / 2;
 healthbar_y = display_get_gui_height() - 82;
-// 
+//
 
 // attack, dash and parry keys are global.attack_button / dash_button / parry_button now
 // (set in Room_controller_object, changeable on the pause menu's Settings page)

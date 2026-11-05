@@ -1,26 +1,29 @@
+// draw_buttons_settings_script: draw_buttons_settings() runs on Settings_Obj when the game
+// pauses or unpauses. Paused: freezes every other instance's speed and alarms and creates
+// the pause menu buttons. Unpaused: restores them and removes the buttons. No arguments.
 function draw_buttons_settings(){
 
 if(!global.gameIsPaused){
-	
-	window_set_cursor(cr_none);
-	
-	main_character_Obj.can_move=true;
-	
-	for(var r =0; r< btn_num; r++){
 
-		var inst = instance_destroy(settingsA[r].obj);
-		
-	}
-	
-	
-	
+    window_set_cursor(cr_none);
+
+    main_character_Obj.can_move=true;
+
+    for(var r =0; r< btn_num; r++){
+
+        var inst = instance_destroy(settingsA[r].obj);
+
+    }
+
+
+
 }
 else{
-	
-	
-	if (global.gameIsPaused)
+
+
+    if (global.gameIsPaused)
     {
-		
+
         with (all)
         {
             if (object_index == Settings_Obj) continue;

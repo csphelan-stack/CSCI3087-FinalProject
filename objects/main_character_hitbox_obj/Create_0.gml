@@ -1,6 +1,6 @@
-damage = main_character_Obj.sword_damage;
+damage = global.player_attack.damage;
 
-knockback = 10;
+knockback = global.player_attack.knockback;
 
 life = 8;
 

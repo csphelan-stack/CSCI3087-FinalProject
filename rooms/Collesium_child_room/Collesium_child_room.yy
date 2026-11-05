@@ -1,13 +1,13 @@
 {
   "$GMRoom":"v1",
-  "%Name":"Collesium_Child_0",
+  "%Name":"Collesium_child_room",
   "creationCodeFile":"",
   "inheritCode":true,
   "inheritCreationOrder":true,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_5C1D15A2","path":"rooms/Collesium_Child_0/Collesium_Child_0.yy",},
-    {"name":"inst_7714680B","path":"rooms/Collesium_Child_0/Collesium_Child_0.yy",},
+    {"name":"inst_5C1D15A2","path":"rooms/Collesium_child_room/Collesium_child_room.yy",},
+    {"name":"inst_7714680B","path":"rooms/Collesium_child_room/Collesium_child_room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -25,18 +25,18 @@
           1,192,-46,-2147483648,1,256,-46,-2147483648,1,320,-46,-2147483648,1,384,-46,-2147483648,1,448,-610,-2147483648,
         ],"TileDataFormat":1,},"tilesetId":{"name":"village_interior_ts","path":"tilesets/village_interior_ts/village_interior_ts.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
-        {"$GMRInstance":"v4","%Name":"inst_5C1D15A2","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_5C1D15A2","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_5C1D15A2","objectId":{"name":"main_character_Obj","path":"objects/main_character_Obj/main_character_Obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":672.0,"y":384.0,},
-        {"$GMRInstance":"v4","%Name":"inst_7714680B","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_7714680B","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_7714680B","objectId":{"name":"Room_controller_object","path":"objects/Room_controller_object/Room_controller_object.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":256.0,"y":192.0,},
+        {"$GMRInstance":"v4","%Name":"inst_5C1D15A2","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_5C1D15A2","path":"rooms/Collesium_room/Collesium_room.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_5C1D15A2","objectId":{"name":"main_character_Obj","path":"objects/main_character_Obj/main_character_Obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":672.0,"y":384.0,},
+        {"$GMRInstance":"v4","%Name":"inst_7714680B","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_7714680B","path":"rooms/Collesium_room/Collesium_room.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_7714680B","objectId":{"name":"Room_controller_object","path":"objects/Room_controller_object/Room_controller_object.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":256.0,"y":192.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
   ],
-  "name":"Collesium_Child_0",
+  "name":"Collesium_child_room",
   "parent":{
     "name":"Room's",
     "path":"folders/Room's.yy",
   },
   "parentRoom":{
-    "name":"Collesium",
-    "path":"rooms/Collesium/Collesium.yy",
+    "name":"Collesium_room",
+    "path":"rooms/Collesium_room/Collesium_room.yy",
   },
   "physicsSettings":{
     "inheritPhysicsSettings":true,
