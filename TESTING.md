@@ -6,7 +6,8 @@ Every push to any branch, and every pull request into `main`, runs `.github/work
 | --- | --- | --- | --- |
 | Style and data checks | Ubuntu | Tests the checkers themselves (pytest), checks for a CREDITS file, validates the JSON data, checks style rules | A checker test fails, CREDITS is missing, a data file is broken, or a style rule is broken |
 | Game rule tests (fast, Node.js) | Ubuntu, alongside the first job | Runs the GML test framework, rule scripts and their tests in Node.js with stand-ins for GameMaker built-ins | Any GML test fails or crashes, or no tests ran |
-| Build game and run GML tests | Windows, after both jobs pass | Builds the game with Igor, starts it with `--run-tests`, reads `test_results.json` | The build fails, any GML test fails or crashes, no tests ran, or the game does not close within 5 minutes |
+| Check for GameMaker access key | Ubuntu, alongside the first job | Reports whether the `ACCESS_KEY` secret is set | Never; it only decides whether the build job runs |
+| Build game and run GML tests | Windows, after both test jobs pass, only if `ACCESS_KEY` is set (otherwise shown as skipped) | Builds the game with Igor, starts it with `--run-tests`, reads `test_results.json` | The build fails, any GML test fails or crashes, no tests ran, or the game does not close within 5 minutes |
 
 ## What is in this folder
 
@@ -36,7 +37,7 @@ Every push to any branch, and every pull request into `main`, runs `.github/work
    Then delete `tools/gml/`; from now on the scripts live in the project.
 3. **Wire the rules into the objects.** The tests check the rule functions, so the game must use them. For example, in the player's collision with an enemy attack: `player_take_hit(id, dash, other.damage)` instead of `hp -= other.damage`. Units need `hp`, `max_hp` and `is_dead` variables; enemies need `stuck_frames = 0` in their Create event.
 4. **Put the data in the loader's layout** in Included Files: `enemies.json` as `{"enemies": [{"type": "slime", "hp": 10, "damage": 2, "move_speed": 1.5}]}` and `waves.json` as `{"waves": [{"spawns": [{"type": "slime", "count": 3}]}]}`. If our files use other names or keys, change `scr_rules_data` and the settings at the top of `tools/validate_data.py` together.
-5. **Add the GameMaker access key.** One teammate signs in at gamemaker.io, opens Account > Access Keys, and generates a key. In GitHub, open Settings > Secrets and variables > Actions, add a secret named `ACCESS_KEY`, and paste the key. Never commit the key.
+5. **Optional: add the GameMaker access key to turn on the game build.** Without it the pipeline still runs and passes, but "Build game and run GML tests" is skipped. Generating a key needs a GameMaker account with a paid licence (Professional or Enterprise); on a free account the Access Keys page has no Generate button. A teammate with a paid licence signs in, opens https://gamemaker.io/account/access-keys and generates a key. In GitHub, open Settings > Secrets and variables > Actions, add a secret named `ACCESS_KEY`, and paste the key. Never commit the key. The next run builds the game automatically.
 6. **Add a `CREDITS` file** listing every third-party asset and its license.
 7. **Turn on branch protection** for `main` (Settings > Branches): require a pull request, one approval, and the status checks "Style and data checks", "Game rule tests (fast, Node.js)" and "Build game and run GML tests".
 
@@ -107,6 +108,7 @@ Open the run in the Actions tab and find the first red step. Failing tests and s
 | Check style rules | Code breaks a style rule | The message names the file, line and rule; fix it, or change the rule for the whole team |
 | Run the GML rule tests in Node.js | Unsupported GML in a rule or rule-test script, or a syntax error | The message names the file and line; see the rules above |
 | Check test results (either job) | A test failed or crashed | Reproduce with `node tools/gml_node/run.js`; decide whether the code or the test is wrong |
-| Check that the ACCESS_KEY secret is set / Install GameMaker build tools | Secret missing or expired; runtime download failed | Regenerate the key and update the secret; re-run the job |
+| Build game and run GML tests is skipped | No `ACCESS_KEY` secret (expected until someone with a paid licence adds one) | Nothing, or add the key (setup step 5) |
+| Install GameMaker build tools | Key expired or revoked; runtime download failed | Regenerate the key and update the secret; re-run the job |
 | Build Windows game | Compile error, or a script not registered in the `.yyp` | Read the Igor output in the step log; build locally to reproduce |
 | Run the game in test mode | The game did not close within 5 minutes | A test is stuck in a loop or the game never reached the runner; read `game-log.txt` |
