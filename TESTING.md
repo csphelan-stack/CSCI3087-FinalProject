@@ -5,7 +5,7 @@ Every push to any branch, and every pull request into `main`, runs `.github/work
 | Job | Runs on | What it does | Fails when |
 | --- | --- | --- | --- |
 | Style and data checks | Ubuntu | Tests the checkers themselves (pytest), checks for a CREDITS file, validates the JSON data, checks style rules | A checker test fails, CREDITS is missing, a data file is broken, or a style rule is broken |
-| Game rule tests (fast, Node.js) | Ubuntu, alongside the first job | Runs the GML test framework, rule scripts and their tests in Node.js with stand-ins for GameMaker built-ins | Any GML test fails or crashes, or no tests ran |
+| Game rule tests (fast, Node.js) | Ubuntu, alongside the first job | Runs the GML test framework, rule scripts and their 128 tests from `tools/gml` in Node.js with stand-ins for GameMaker built-ins, then plants 38 bugs one at a time (mutation testing) | Any GML test fails or crashes, no tests ran, or a planted bug is not caught by any test |
 | Check for GameMaker access key | Ubuntu, alongside the first job | Reports whether the `ACCESS_KEY` secret is set | Never; it only decides whether the build job runs |
 | Build game and run GML tests | Windows, after both test jobs pass, only if `ACCESS_KEY` is set (otherwise shown as skipped) | Builds the game with Igor, starts it with `--run-tests`, reads `test_results.json` | The build fails, any GML test fails or crashes, no tests ran, or the game does not close within 5 minutes |
 
@@ -26,7 +26,7 @@ Every push to any branch, and every pull request into `main`, runs `.github/work
 | `tools/validate_data.py` | JSON data checks |
 | `tools/ci/run-gml-tests.ps1` | On Windows: unzips the build, runs the game in test mode, collects the results |
 | `tools/ci/check_test_results.py` | Turns `test_results.json` into pass or fail |
-| `tools/tests/` | 125 pytest cases for the Python checkers and the Node harness, plus 13 broken JSON files |
+| `tools/tests/` | 143 pytest cases for the Python checkers, the Node harness and the enemy defaults, plus 13 broken JSON files |
 | `docs/ai-prompts.md` | Template for the team's AI prompt log |
 
 ## One-time setup
@@ -89,10 +89,12 @@ pip install -r tools/requirements-dev.txt
 python -m pytest tools/tests -q                 # the checkers' own tests
 python tools/validate_data.py                   # JSON data
 python tools/check_style.py                     # style rules
-node tools/gml_node/run.js                      # GML rule tests in Node.js
+node tools/gml_node/run.js --scripts tools/gml  # GML rule tests in Node.js
 python tools/ci/check_test_results.py test-output-node/test_results.json
-python tools/gml_node/check_mutations.py        # plant 38 bugs, check each is caught
+python tools/gml_node/check_mutations.py --scripts tools/gml  # plant 38 bugs, check each is caught
 ```
+
+`--scripts tools/gml` is needed while the rule scripts are only in `tools/gml` (setup step 2). Without it, the runner reads the project's `scripts/` folder, which has only the framework and its self-tests. The runner accepts Windows (CRLF) and Unix line endings, so these commands work on any OS.
 
 To run the GML tests inside GameMaker, build the game (Build > Create Executable, zip), unzip it, and run `YourGame.exe --run-tests`. The results go to `%LOCALAPPDATA%\<game name>\test_results.json`; check them with `python tools/ci/check_test_results.py <that file>`.
 
@@ -107,7 +109,8 @@ Open the run in the Actions tab and find the first red step. Failing tests and s
 | Validate JSON data files | Broken JSON, duplicate key, stat out of range, unknown enemy | The message names the file and field; fix the data |
 | Check style rules | Code breaks a style rule | The message names the file, line and rule; fix it, or change the rule for the whole team |
 | Run the GML rule tests in Node.js | Unsupported GML in a rule or rule-test script, or a syntax error | The message names the file and line; see the rules above |
-| Check test results (either job) | A test failed or crashed | Reproduce with `node tools/gml_node/run.js`; decide whether the code or the test is wrong |
+| Check test results (either job) | A test failed or crashed | Reproduce with `node tools/gml_node/run.js --scripts tools/gml`; decide whether the code or the test is wrong |
+| Check the tests catch planted bugs | A planted bug (named in the log, e.g. "health can go below 0") made no test fail | Write the test that catches that bug. If a rule script changed so a bug's code is no longer found, it is listed as SKIPPED; update `MUTATIONS` in `check_mutations.py` |
 | Build game and run GML tests is skipped | No `ACCESS_KEY` secret (expected until someone with a paid licence adds one) | Nothing, or add the key (setup step 5) |
 | Install GameMaker build tools | Key expired or revoked; runtime download failed | Regenerate the key and update the secret; re-run the job |
 | Build Windows game | Compile error, or a script not registered in the `.yyp` | Read the Igor output in the step log; build locally to reproduce |

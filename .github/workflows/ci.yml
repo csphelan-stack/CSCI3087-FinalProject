@@ -7,7 +7,8 @@
 #               tests the checkers themselves, then runs the CREDITS check,
 #               JSON data validation and style check
 #   rule-tests  (Ubuntu, about 1 minute, runs at the same time as "checks")
-#               runs the GML game-rule tests in Node.js, without GameMaker
+#               runs the GML game-rule tests in Node.js, without GameMaker,
+#               then plants bugs one at a time to check a test catches each
 #   access-key  (Ubuntu, a few seconds, runs at the same time as "checks")
 #               reports whether the ACCESS_KEY secret is set
 #   game-tests  (Windows, runs only if "checks" and "rule-tests" passed and
@@ -95,20 +96,31 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Loads scr_test_framework, scr_rules_* and scr_tests_rules_* and runs
-      # them with stand-ins for GameMaker's built-in functions.
+      # Loads scr_test_framework, scr_rules_* and scr_tests_rules_* from
+      # tools/gml and runs them with stand-ins for GameMaker's built-in
+      # functions: the 29 framework self-tests plus the game-rule tests.
+      # The rule scripts live in tools/gml because they are not yet registered
+      # in the GameMaker project.
       - name: Run the GML rule tests in Node.js
-        run: node tools/gml_node/run.js --out test-output-node
+        run: node tools/gml_node/run.js --scripts tools/gml --out test-output-node
 
       - name: Check test results
         run: python tools/ci/check_test_results.py test-output-node/test_results.json
+
+      # Plants one bug at a time in a copy of the rule scripts (for example
+      # "health can go below 0") and fails if any bug is not caught by a test.
+      # This proves the tests check edge cases, not only the happy path.
+      - name: Check the tests catch planted bugs (mutation testing)
+        run: python tools/gml_node/check_mutations.py --scripts tools/gml --json test-output-node/mutations.json
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-output-node
-          path: test-output-node/test_results.json
+          path: |
+            test-output-node/test_results.json
+            test-output-node/mutations.json
           if-no-files-found: warn
           retention-days: 14
 

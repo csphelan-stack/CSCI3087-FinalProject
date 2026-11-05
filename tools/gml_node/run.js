@@ -222,6 +222,11 @@ function makeBuiltins(outDir, state) {
 // Main
 // ---------------------------------------------------------------------------
 
+/** A script's text with any BOM removed and Windows (CRLF) line endings made LF. */
+function readGml(file) {
+    return fs.readFileSync(file, "utf8").replace(/^﻿/, "").replace(/\r\n?/g, "\n");
+}
+
 function main() {
     const args = parseArgs(process.argv.slice(2));
     const scriptsDir = args.scripts || findScriptsDir(process.cwd());
@@ -231,7 +236,7 @@ function main() {
         return 2;
     }
 
-    const problems = files.flatMap((f) => checkGml(f, fs.readFileSync(f, "utf8")));
+    const problems = files.flatMap((f) => checkGml(f, readGml(f)));
     if (problems.length) {
         console.error("This GML cannot run in the Node harness:\n" + problems.join("\n"));
         return 2;
@@ -247,7 +252,7 @@ function main() {
     state.context = context;
 
     const macros = [];
-    const bodies = files.map((f) => ({ f, code: convert(fs.readFileSync(f, "utf8").replace(/^﻿/, ""), macros) }));
+    const bodies = files.map((f) => ({ f, code: convert(readGml(f), macros) }));
     console.log(`Loading ${files.length} scripts: ${files.map((f) => path.basename(f, ".gml")).join(", ")}`);
     try {
         vm.runInContext(macros.join("\n"), context, { filename: "macros" });
