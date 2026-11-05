@@ -1,21 +1,27 @@
 # Team 1 CI pipeline.
 #
 # Runs on every push to any branch, on every pull request into main, and by
-# hand from the Actions tab. Three jobs:
+# hand from the Actions tab. Four jobs:
 #
 #   checks      (Ubuntu, about 1 minute)
 #               tests the checkers themselves, then runs the CREDITS check,
 #               JSON data validation and style check
 #   rule-tests  (Ubuntu, about 1 minute, runs at the same time as "checks")
 #               runs the GML game-rule tests in Node.js, without GameMaker
-#   game-tests  (Windows, runs only if both jobs above passed)
+#   access-key  (Ubuntu, a few seconds, runs at the same time as "checks")
+#               reports whether the ACCESS_KEY secret is set
+#   game-tests  (Windows, runs only if "checks" and "rule-tests" passed and
+#               ACCESS_KEY is set; otherwise it shows as skipped)
 #               builds the game with GameMaker's command-line builder (Igor),
 #               launches it with --run-tests, and fails if any GML test failed
 #
-# Branch protection on main requires all three jobs to pass before a merge.
+# Branch protection on main requires all jobs to pass before a merge. A
+# skipped job counts as passed.
 #
-# One-time setup: add a repository secret named ACCESS_KEY containing a
-# GameMaker access key (Settings > Secrets and variables > Actions).
+# To turn on the game build: add a repository secret named ACCESS_KEY
+# containing a GameMaker access key (Settings > Secrets and variables >
+# Actions). Generating a key needs a GameMaker account with a paid licence;
+# a free account's Access Keys page has no Generate button.
 
 name: CI
 
@@ -106,9 +112,31 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
+  # Secrets cannot be read in a job's "if:", so this job turns "is ACCESS_KEY
+  # set?" into an output that game-tests can check.
+  access-key:
+    name: Check for GameMaker access key
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      present: ${{ steps.check.outputs.present }}
+    steps:
+      - name: Check whether the ACCESS_KEY secret is set
+        id: check
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+        run: |
+          if [ -n "$ACCESS_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Game build skipped::No ACCESS_KEY secret, so the Windows build and in-game GML tests are skipped. See the comment at the top of ci.yml to turn them on."
+          fi
+
   game-tests:
     name: Build game and run GML tests
-    needs: [checks, rule-tests]
+    needs: [checks, rule-tests, access-key]
+    if: needs.access-key.outputs.present == 'true'
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
@@ -116,16 +144,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      - name: Check that the ACCESS_KEY secret is set
-        shell: pwsh
-        env:
-          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-        run: |
-          if (-not $env:ACCESS_KEY) {
-            Write-Output "::error title=Missing secret::Add a GameMaker access key as the repository secret ACCESS_KEY."
-            exit 1
-          }
 
       - name: Find the GameMaker project file
         id: find_yyp
