@@ -59,7 +59,7 @@ function enemy_attack_hit(){
     }
 
     // check for wall between enemy and player
-    if (collision_line(x, y, target.x, target.y, obj_wall, false, true) != noone){
+    if (collision_line(x, y, target.x, target.y, wall_obj, false, true) != noone){
         return false;
     }
 

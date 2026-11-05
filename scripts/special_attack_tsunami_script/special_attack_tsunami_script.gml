@@ -166,7 +166,7 @@ function tsunamiStateMC(){
 		tsunami_vy = tsunami_vy / _spd * tsunami_speed;
 	}
 
-	move_and_collide(tsunami_vx, tsunami_vy, obj_wall);
+	move_and_collide(tsunami_vx, tsunami_vy, wall_obj);
 
 	// the undertow: drags enemies back in toward him every step
 	tsunamiPull();
@@ -271,8 +271,8 @@ function tsunamiPull(){
 		var _dy = lengthdir_y(_s, _dir);
 
 		// walls stop it, the same way enemies normally move
-		if (!place_meeting(x + _dx, y, obj_wall)) x += _dx;
-		if (!place_meeting(x, y + _dy, obj_wall)) y += _dy;
+		if (!place_meeting(x + _dx, y, wall_obj)) x += _dx;
+		if (!place_meeting(x, y + _dy, wall_obj)) y += _dy;
 	}
 }
 

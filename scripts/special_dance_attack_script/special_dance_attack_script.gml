@@ -170,7 +170,7 @@ function danceDashStep(){
 	var _goal = danceDashGoal(_t);
 	var _dir = point_direction(x, y, _goal[0], _goal[1]);
 	var _step = min(dance_dash_speed, point_distance(x, y, _goal[0], _goal[1]));
-	move_and_collide(lengthdir_x(_step, _dir), lengthdir_y(_step, _dir), obj_wall);
+	move_and_collide(lengthdir_x(_step, _dir), lengthdir_y(_step, _dir), wall_obj);
 
 	// mid-dash pose, facing where he's going
 	facing = _dir;
@@ -324,7 +324,7 @@ function danceStrikeStep(){
 	dance_angle = dance_orbit_start + dance_orbit_dir * dance_orbit_turn * _progress;
 	var _gx = dance_cx + lengthdir_x(dance_orbit_radius, dance_angle);
 	var _gy = dance_cy + lengthdir_y(dance_orbit_radius, dance_angle);
-	move_and_collide(_gx - x, _gy - y, obj_wall);
+	move_and_collide(_gx - x, _gy - y, wall_obj);
 
 	facing = point_direction(x, y, dance_cx, dance_cy);   // keeps facing it while he goes round
 	danceGhost();

@@ -72,20 +72,13 @@
     {"name":"main_character_hurtbox_obj","order":3,"path":"objects/main_character_hurtbox_obj/main_character_hurtbox_obj.yy",},
     {"name":"obj_death_menu","order":2,"path":"objects/obj_death_menu/obj_death_menu.yy",},
     {"name":"obj_start_menu","order":1,"path":"objects/obj_start_menu/obj_start_menu.yy",},
-    
-    {"name":"player_attack_config","order":3,"path":"scripts/player_attack_config/player_attack_config.yy",},
-    {"name":"scr_tests_framework_selftest","order":2,"path":"scripts/scr_tests_framework_selftest/scr_tests_framework_selftest.yy",},
-    {"name":"scr_test_framework","order":1,"path":"scripts/scr_test_framework/scr_test_framework.yy",},
-   
-    
-    
-    {"name":"wall_obj","order":2,"path":"objects/wall_obj/wall_obj.yy",},
     {"name":"options_btn_obj","order":3,"path":"objects/options_btn_obj/options_btn_obj.yy",},
     {"name":"parry_shockwave_obj","order":5,"path":"objects/parry_shockwave_obj/parry_shockwave_obj.yy",},
     {"name":"resume_btn_obj","order":1,"path":"objects/resume_btn_obj/resume_btn_obj.yy",},
     {"name":"settings_btn_obj","order":2,"path":"objects/settings_btn_obj/settings_btn_obj.yy",},
     {"name":"upgrade_card_obj","order":7,"path":"objects/upgrade_card_obj/upgrade_card_obj.yy",},
-   
+    {"name":"wall_obj","order":2,"path":"objects/wall_obj/wall_obj.yy",},
+    {"name":"Collesium_child_room","order":1,"path":"rooms/Collesium_child_room/Collesium_child_room.yy",},
     {"name":"interior_room","order":2,"path":"rooms/interior_room/interior_room.yy",},
     {"name":"outside_dungeon_first_level","order":5,"path":"rooms/outside_dungeon_first_level/outside_dungeon_first_level.yy",},
     {"name":"rm_death","order":4,"path":"rooms/rm_death/rm_death.yy",},
@@ -93,7 +86,6 @@
     {"name":"rm_dungeon_large","order":4,"path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
     {"name":"rm_start","order":3,"path":"rooms/rm_start/rm_start.yy",},
     {"name":"testing_room_for_louis","order":3,"path":"rooms/testing_room_for_louis/testing_room_for_louis.yy",},
-    {"name":"Collesium_child_room","order":1,"path":"rooms/Collesium_child_room/Collesium_child_room.yy",},
     {"name":"attackState","order":2,"path":"scripts/attackState/attackState.yy",},
     {"name":"characterPause_script","order":1,"path":"scripts/characterPause_script/characterPause_script.yy",},
     {"name":"dashStateMC","order":3,"path":"scripts/dashStateMC/dashStateMC.yy",},
@@ -109,6 +101,9 @@
     {"name":"enemy_state_machine","order":5,"path":"scripts/enemy_state_machine/enemy_state_machine.yy",},
     {"name":"enemy_wave_spawn","order":6,"path":"scripts/enemy_wave_spawn/enemy_wave_spawn.yy",},
     {"name":"parryState","order":4,"path":"scripts/parryState/parryState.yy",},
+    {"name":"player_attack_config","order":3,"path":"scripts/player_attack_config/player_attack_config.yy",},
+    {"name":"scr_test_framework","order":1,"path":"scripts/scr_test_framework/scr_test_framework.yy",},
+    {"name":"scr_tests_framework_selftest","order":2,"path":"scripts/scr_tests_framework_selftest/scr_tests_framework_selftest.yy",},
     {"name":"special_attack_butterfly_script","order":2,"path":"scripts/special_attack_butterfly_script/special_attack_butterfly_script.yy",},
     {"name":"special_dance_attack_script","order":1,"path":"scripts/special_dance_attack_script/special_dance_attack_script.yy",},
     {"name":"Upgrade_system_data","order":1,"path":"scripts/Upgrade_system_data/Upgrade_system_data.yy",},

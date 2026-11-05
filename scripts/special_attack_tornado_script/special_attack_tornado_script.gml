@@ -144,7 +144,7 @@ function specialSpinStateMC(){
 		special_vy = special_vy / _spd * special_spin_speed;
 	}
 
-	move_and_collide(special_vx, special_vy, obj_wall);
+	move_and_collide(special_vx, special_vy, wall_obj);
 
 	// damage everything in reach every special_tick_time steps
 	special_tick_timer -= 1;

@@ -77,7 +77,7 @@ if (_hit != noone)
 }
 
 // It disappears on a wall or when its time runs out.
-if (place_meeting(x, y, obj_wall) || timer > life)
+if (place_meeting(x, y, wall_obj) || timer > life)
 {
     instance_destroy();
 }

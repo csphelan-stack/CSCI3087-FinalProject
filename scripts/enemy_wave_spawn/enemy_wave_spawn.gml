@@ -29,7 +29,7 @@ function enemy_wave_spawn_next(){
             _try_y - 16,
             _try_x + 16,
             _try_y + 16,
-            obj_wall,false,true
+            wall_obj,false,true
         ) != noone;
 
         //used to check enemy position to mc position (default to F)

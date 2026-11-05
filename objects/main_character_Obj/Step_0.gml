@@ -63,7 +63,7 @@ if (!global.gameIsPaused) {
 
 // knockback: slide him by the push (stopping at walls) and let it fade out
 if (!global.gameIsPaused && (abs(push_x) > 0.1 || abs(push_y) > 0.1)) {
-	move_and_collide(push_x, push_y, obj_wall);
+	move_and_collide(push_x, push_y, wall_obj);
 	push_x *= push_friction;
 	push_y *= push_friction;
 }

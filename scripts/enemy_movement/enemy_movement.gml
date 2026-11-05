@@ -37,7 +37,7 @@ function enemy_apply_movement(){
     var _next_x = x + kb_x;
 
     // check for wall
-    if (!place_meeting(_next_x, y, obj_wall)){
+    if (!place_meeting(_next_x, y, wall_obj)){
         // move horizontally
         x = _next_x;
     }
@@ -47,7 +47,7 @@ function enemy_apply_movement(){
     var _next_y = y + kb_y;
 
     // check for wall
-    if (!place_meeting(x, _next_y, obj_wall)){
+    if (!place_meeting(x, _next_y, wall_obj)){
         // move vertically
         y = _next_y;
     }

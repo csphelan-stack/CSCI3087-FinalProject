@@ -28,7 +28,7 @@ function enemy_can_see_player(_range, _use_cone){
     }
 
     // check if blocks the enemy's vision
-    if (collision_line(x, y, _p.x, _p.y, obj_wall, false, true) != noone){
+    if (collision_line(x, y, _p.x, _p.y, wall_obj, false, true) != noone){
         return false;
     }
 

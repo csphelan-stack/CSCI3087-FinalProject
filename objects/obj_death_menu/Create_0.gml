@@ -38,7 +38,7 @@ activate_item = function(_index) {
         audio_play_sound(snd_game_music, 10, true);
     }
     if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
-    room_goto(Collesium);
+    room_goto(Collesium_room);;
     break;
 case 1: // Main Menu
     audio_stop_sound(snd_death_music);
