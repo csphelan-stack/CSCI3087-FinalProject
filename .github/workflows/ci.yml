@@ -56,7 +56,7 @@ jobs:
       # If the checkers below were broken they could pass bad code, so their
       # own tests run first.
       - name: Test the checkers
-        run: python -m pytest tests -q
+        run: python -m pytest tools/tests -q
 
       - name: Check that a CREDITS file exists
         run: |
