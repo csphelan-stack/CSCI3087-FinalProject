@@ -124,7 +124,7 @@ attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 //which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
 //SpecialState.NONE = locked, no special yet
-special_equipped = SpecialState.TSUNAMI;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
+special_equipped = SpecialState.BUTTERFLY;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
 
 //---Butterfly Effect (special_attack_butterfly_script)---
 //for 6 seconds his hits do no damage. instead the first hit on each enemy TAGS it (once per enemy). he swings faster,

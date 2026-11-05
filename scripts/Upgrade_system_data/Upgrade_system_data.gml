@@ -140,7 +140,7 @@ function Upgrade_system_data(){
 			
 			name: "Foundational Swordplay",
 			special: false,
-			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card allows the ability to combo attack",
+			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card unlocks the ability to combo attack and removes a players seld-knockback when swinging.",
 			
 			effects: [
 			{ stat: "combo_attack_unlock",     op: "set"   , value: true },
@@ -228,7 +228,7 @@ function Upgrade_system_data(){
 			
 			name: "Bladed Tsunami",
 			special: true,
-			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional (Hold {global.special_button} to activate attack)",
+			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional: ability allows a user to spin attack for a certain amount of time with the added effect of pulling enemies closer (Hold {global.special_button} to activate attack)",
 			effects: [
 				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.TSUNAMI},
 			],
@@ -247,7 +247,7 @@ function Upgrade_system_data(){
 			
 			name: "The Dance of Dragons",
 			special: true,
-			desc: $"It is considered a great honor to be able to dance with a dragon as the power it gives is monumentous: the user is allowed to 'dance' around to enemies and is given a second to attack each one the breath of a dragon lingers on each enemy (Hold {global.special_button} to activate attack).",
+			desc: $"It is considered a great honor to be able to dance with a dragon as the power it gives is monumentous: the user is allowed to 'dance' around to enemies and is given a second to attack each one until the final slam. After each attack the breath of a dragon lingers on each enemy (Hold {global.special_button} to activate attack).",
 			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
@@ -267,7 +267,7 @@ function Upgrade_system_data(){
 
 			name: "The Butterfly Effect",
 			special: true,
-			desc: $"One small change compounds over time: this ability decreases the user's damage and knockback and increases attack speed and run speed for 60 seconds once the times is up several changes take effect (Hold {global.special_button} to activate attack)",
+			desc: $"One small change compounds over time: once activated the player can 'tag' enemies once it rewinds the player can send butterflies to specified tagged enemies doing massive damage (Hold {global.special_button} to activate attack)",
 			
 			effects: [
 				{ stat: "special_attack_butterfly_unlock", op: "set",  value: true},
