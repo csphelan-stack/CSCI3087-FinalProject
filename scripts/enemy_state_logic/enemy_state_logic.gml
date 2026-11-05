@@ -201,8 +201,8 @@ function enemy_state_chase()
 
 function enemy_state_attack()
 {
-	//added this line to make image_speed for different attacks change
-	//so some attacks can go much faster
+    //added this line to make image_speed for different attacks change
+    //so some attacks can go much faster
 
     // Bosses have their own attack code (see the enemy_boss script).
     if (boss_enabled)

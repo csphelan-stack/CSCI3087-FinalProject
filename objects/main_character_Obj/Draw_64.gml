@@ -84,7 +84,7 @@ surface_set_target(orb_surf);
     gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha);
 
     //                  x            y          radius    remaining         total            icon              offx offy frame
-    draw_cooldown_orb(_x_special, _cy_big,   _r_big,   special_cooldown, special_cd_max, skull_knight_attack_forward_spr_ICON, 0, 0, 0);
+    draw_cooldown_orb(_x_special, _cy_big,   _r_big,   special_cooldown, special_cd_max, skull_knight_attack_forward_icon_spr, 0, 0, 0);
     draw_cooldown_orb(_x_dash,    _cy_small, _r_small, dash_cooldown,    dash_cd_max,    dash_icon_spr,    2, 2, 0);
     draw_cooldown_orb(_x_parry,   _cy_small, _r_small, parry_cooldown,   parry_cd_max,   parry_icon_spr,   1, 0, 0);
 
@@ -95,9 +95,9 @@ draw_surface_ext(orb_surf, 0, 0, 1, 1, 0, c_white, 0.6);   // 0.6 = overall opac
 
 // damage numbers / "Crit!" above enemies (hidden behind the pause menu)
 if (!global.gameIsPaused) {
-	damagePopupsDraw();
-	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
-	butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
+    damagePopupsDraw();
+    specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+    butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
 }
 
 

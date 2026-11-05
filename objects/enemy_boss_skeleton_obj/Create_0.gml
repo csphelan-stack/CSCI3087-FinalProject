@@ -20,7 +20,7 @@ boss_element = MAGIC_ELEMENT.ICE;
 total_hp        = 200;
 hp              = total_hp;
 movespd         = 1.0;
-attack_damage   = 6;       // the normal swing. the other attacks are multiples of this
+attack_damage   = global.enemy_stats.boss_skeleton.attack_damage;       // the normal swing. the other attacks are multiples of this
 attack_range    = 84;      // how close the player has to be for the normal swing
 
 // ---------- sprites ----------

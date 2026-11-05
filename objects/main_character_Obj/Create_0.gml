@@ -10,9 +10,9 @@ global.temp_upgrade_btn = ord("U");
 event_go_upgrade = false;
 //optional
 enum PlayerState {
-    NORMAL,
-    ATTACK,
-    DASH,
+	NORMAL,
+	ATTACK,
+	DASH,
 	PARRY,
 	STUNNED,
 	SPECIAL,   //using whichever special is equipped (special_equipped, see SpecialState below)
@@ -45,19 +45,19 @@ mask_index = adventurer_mask_spr;
 
 //---his sprites. every list is in dir4 order: [right, up, left, down]---
 idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
-              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+			  adventurer_idle_left_spr,    adventurer_idle_forward_spr];
 run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
-              adventurer_run_left_spr,     adventurer_run_forward_spr];
+			  adventurer_run_left_spr,     adventurer_run_forward_spr];
 walk_spr   = [adventurer_walk_right_spr,   adventurer_walk_backward_spr,     //used inside (see characterInside_script)
-              adventurer_walk_left_spr,    adventurer_walk_forward_spr];
+			  adventurer_walk_left_spr,    adventurer_walk_forward_spr];
 attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
-              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+			  adventurer_attack_left_spr,  adventurer_attack_forward_spr];
 dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
-              adventurer_dash_left_spr,    adventurer_dash_forward_spr];
+			  adventurer_dash_left_spr,    adventurer_dash_forward_spr];
 hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
-              adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
+			  adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
 death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
-              adventurer_death_left_spr,   adventurer_death_forward_spr];
+			  adventurer_death_left_spr,   adventurer_death_forward_spr];
 //there's no block animation, so he holds his idle pose while guarding / charging the special
 parry_block_spr = idle_spr;
 parry_raise_spr = idle_spr;

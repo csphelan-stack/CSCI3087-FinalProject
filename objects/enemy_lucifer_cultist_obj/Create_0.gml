@@ -3,9 +3,9 @@ sprite_index = lucifer_cultist_idle_forward_spr;
 event_inherited();
 
 // cultist: weak caster, slow spell (11 frame attack, the burst is frame 5)
-hp = 10;
+hp = global.enemy_stats.lucifer_cultist.hp;
 movespd = 1.5;
-attack_damage = 3;
+attack_damage = global.enemy_stats.lucifer_cultist.attack_damage;
 attack_range = 25;
 stop_range = 14;
 attack_cooldown_max = 50;

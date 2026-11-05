@@ -20,7 +20,7 @@ boss_element = MAGIC_ELEMENT.BLOOD;
 total_hp        = 220;
 hp              = total_hp;
 movespd         = 1.15;
-attack_damage   = 7;       // the normal swing. the other attacks are multiples of this
+attack_damage   = global.enemy_stats.boss_orc.attack_damage;       // the normal swing. the other attacks are multiples of this
 attack_range    = 78;      // how close the player has to be for the normal swing
 
 // ---------- sprites ----------

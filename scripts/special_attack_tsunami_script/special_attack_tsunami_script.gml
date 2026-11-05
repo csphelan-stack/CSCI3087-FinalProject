@@ -92,7 +92,7 @@ function tsunamiChargeStateMC(){
 
 	// let go before it's full: just stop, no cooldown
 	if (!keyboard_check(global.special_button))
- {
+	{
 	    audio_stop_sound(snd_charge);
 		state = PlayerState.NORMAL;
 		image_speed = 1;
@@ -111,7 +111,7 @@ function tsunamiChargeStateMC(){
 /// runs ONCE the moment the charge is full
 function startTsunami(){
 	audio_stop_sound(snd_charge);
-    audio_play_sound(snd_spin, 20, true);
+	audio_play_sound(snd_spin, 20, true);
 	tsunami_timer = tsunami_time;
 	tsunami_angle = tsunami_dir4 * 90;   // starts facing the way he was
 	tsunami_tick_timer = 0;              // the first wave crashes straight away

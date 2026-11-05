@@ -15,7 +15,7 @@ if (!variable_instance_exists(id, "colour"))        colour        = c_white;
 if (!variable_instance_exists(id, "effect_sprite")) effect_sprite = magic_fire_spr;
 if (!variable_instance_exists(id, "frame_time"))    frame_time    = 4;
 if (!variable_instance_exists(id, "hit_delay"))     hit_delay     = 8;
-if (!variable_instance_exists(id, "damage"))        damage        = 1;
+if (!variable_instance_exists(id, "damage"))        damage        = global.enemy_stats.magic_circle.damage;
 if (!variable_instance_exists(id, "hit_radius"))    hit_radius    = 36;
 if (!variable_instance_exists(id, "charge_time"))   charge_time   = 45;
 

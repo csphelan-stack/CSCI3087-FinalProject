@@ -21,7 +21,7 @@ function draw_cooldown_orb(_cx, _cy, _r, _remaining, _total, _icon = -1, _off_x 
         var _fit = 0.8;   // how much of the orb's diameter the icon fills
         var _s   = (_r * 2 * _fit) / max(sprite_get_width(_icon), sprite_get_height(_icon));
         var _ix = _cx - (sprite_get_width(_icon)  * _s) / 2 + sprite_get_xoffset(_icon) * _s + _off_x;
-		var _iy = _cy - (sprite_get_height(_icon) * _s) / 2 + sprite_get_yoffset(_icon) * _s + _off_y;
+        var _iy = _cy - (sprite_get_height(_icon) * _s) / 2 + sprite_get_yoffset(_icon) * _s + _off_y;
 
         var _col   = _ready ? c_white : c_gray;   // slight darkening while on cooldown
         var _alpha = _ready ? 1 : 0.3;            // the afterimage opacity

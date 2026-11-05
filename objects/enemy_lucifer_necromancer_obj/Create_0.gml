@@ -3,9 +3,9 @@ sprite_index = lucifer_necromancer_idle_forward_spr;
 event_inherited();
 
 // necromancer: dark ring spell (7 frame attack, the ring is frame 4)
-hp = 10;
+hp = global.enemy_stats.lucifer_necromancer.hp;
 movespd = 1.4;
-attack_damage = 4;
+attack_damage = global.enemy_stats.lucifer_necromancer.attack_damage;
 attack_range = 28;
 stop_range = 16;
 attack_cooldown_max = 55;

@@ -13,7 +13,7 @@ var _my = device_mouse_y_to_gui(0);
 hovered = point_in_rectangle(_mx,_my,card_x,card_y,card_x+card_w,card_y+card_h);
 
 if(hovered){
-revealed = true;	
+revealed = true;
 }
 
 if(revealed && flip <1){

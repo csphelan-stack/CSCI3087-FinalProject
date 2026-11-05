@@ -6,7 +6,7 @@ total_hp = 12;
 hp = total_hp;
 
 movespd = 1.5;
-attack_damage = 3;
+attack_damage = global.enemy_stats.skeleton_king.attack_damage;
 attack_range = 25;
 attack_cooldown_max = 45;
 attack_windup = 12;

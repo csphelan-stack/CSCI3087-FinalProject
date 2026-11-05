@@ -3,9 +3,9 @@ sprite_index = lucifer_warrior_idle_forward_spr;
 event_inherited();
 
 // warrior: quick sword swing (6 frame attack, hits on frame 2)
-hp = 14;
+hp = global.enemy_stats.lucifer_warrior.hp;
 movespd = 1.7;
-attack_damage = 4;
+attack_damage = global.enemy_stats.lucifer_warrior.attack_damage;
 attack_range = 24;
 stop_range = 14;
 attack_cooldown_max = 45;

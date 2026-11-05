@@ -75,6 +75,6 @@ function enemy_wave_spawn_next(){
     );
 
     array_push(wave_enemy_ids, _new_enemy);
-    
+
     spawned_this_wave++;
 }

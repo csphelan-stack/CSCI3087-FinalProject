@@ -73,7 +73,7 @@ function specialChargeStateMC(){
 
 	// let go before it's full: just stop, no cooldown
 	if (!keyboard_check(global.special_button))
- {
+	{
 	    audio_stop_sound(snd_charge);
 		state = PlayerState.NORMAL;
 		image_speed = 1;
@@ -92,7 +92,7 @@ function specialChargeStateMC(){
 /// runs ONCE the moment the charge is full
 function startSpecialSpin(){
 	audio_stop_sound(snd_charge);
-    audio_play_sound(snd_spin, 20, true);
+	audio_play_sound(snd_spin, 20, true);
 	special_spin_timer = special_spin_time;
 	special_spin_angle = special_dir4 * 90;   // starts facing the way he was
 	special_tick_timer = 0;                   // the first hit lands straight away

@@ -13,7 +13,7 @@
 
 if (!variable_instance_exists(id, "kind"))       kind       = "wave";
 if (!variable_instance_exists(id, "caster"))     caster     = noone;
-if (!variable_instance_exists(id, "damage"))     damage     = 1;
+if (!variable_instance_exists(id, "damage"))     damage     = global.enemy_stats.boss_projectile.damage;
 if (!variable_instance_exists(id, "spd"))        spd        = 4;
 if (!variable_instance_exists(id, "hit_radius")) hit_radius = 24;
 if (!variable_instance_exists(id, "dir"))        dir        = 0;

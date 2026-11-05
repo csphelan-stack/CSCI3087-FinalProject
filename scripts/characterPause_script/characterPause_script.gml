@@ -36,7 +36,7 @@ global.safeInside = true;
 
 }
 function characterOutside_script(){
-	
+
 with(main_character_Obj){
 can_attack = true;
 can_dash = true;

@@ -31,17 +31,17 @@ if (instance_exists(main_character_Obj)) {
     var cy = camera_get_view_y(cam);
 
     camera_set_view_pos(cam, lerp(cx, target_x, 0.12), lerp(cy, target_y, 0.12));
-	
-	
-	if(room == interior_room){
-		characterInside_script();
-		
-	}else{
-		characterOutside_script();
-	}
-	
 
-	
+
+    if(room == interior_room){
+        characterInside_script();
+
+    }else{
+        characterOutside_script();
+    }
+
+
+
 }
 
 

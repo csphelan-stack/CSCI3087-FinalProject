@@ -19,16 +19,16 @@ wave_active = false;
 wave_data = [
     [[enemy_orc_grunt_obj, 1]],
 
-    [[enemy_orc_grunt_obj, 1], 
+    [[enemy_orc_grunt_obj, 1],
      [enemy_orc_beserker_obj, 1]],
 
-    [[enemy_orc_grunt_obj, 1], 
-     [enemy_orc_beserker_obj, 1], 
+    [[enemy_orc_grunt_obj, 1],
+     [enemy_orc_beserker_obj, 1],
      [enemy_skeleton_soldier_obj, 1]],
 
-    [[enemy_orc_grunt_obj, 1], 
-     [enemy_orc_beserker_obj, 1], 
-     [enemy_orc_warlord_obj, 1], 
+    [[enemy_orc_grunt_obj, 1],
+     [enemy_orc_beserker_obj, 1],
+     [enemy_orc_warlord_obj, 1],
      [enemy_skeleton_soldier_obj, 1]]
 ];
 

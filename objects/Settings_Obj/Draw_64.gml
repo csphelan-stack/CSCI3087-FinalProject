@@ -16,11 +16,11 @@ if(global.gameIsPaused){
 		display_get_gui_height(),
 		true
 	);
-	
-		
-	if (surface_exists(pause_surface)) { draw_surface(pause_surface, 0, 0); } 
-// Draw a semi-transparent overlay 
-draw_set_alpha(0.5); 
+
+
+	if (surface_exists(pause_surface)) { draw_surface(pause_surface, 0, 0); }
+// Draw a semi-transparent overlay
+draw_set_alpha(0.5);
 draw_rectangle_color(0, 0, display_get_gui_width(), display_get_gui_height(), c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
 
@@ -28,7 +28,7 @@ draw_sprite_stretched_ext(background_spr,0,startx_b,starty_b,width_settings_back
 
 
 
-    draw_set_alpha(1);
+	draw_set_alpha(1);
 
 	if (menu_page == "settings") draw_settings_page();
 	else if (menu_page == "options") draw_options_page();

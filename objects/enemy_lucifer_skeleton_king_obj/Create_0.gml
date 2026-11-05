@@ -3,9 +3,9 @@ sprite_index = lucifer_skeleton_king_idle_forward_spr;
 event_inherited();
 
 // skeleton king: boss (10 frame attack, the swing is frame 3)
-hp = 40;
+hp = global.enemy_stats.lucifer_skeleton_king.hp;
 movespd = 1.3;
-attack_damage = 6;
+attack_damage = global.enemy_stats.lucifer_skeleton_king.attack_damage;
 attack_range = 30;
 stop_range = 16;
 attack_cooldown_max = 60;

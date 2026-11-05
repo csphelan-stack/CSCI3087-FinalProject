@@ -9,13 +9,13 @@ function startDashState(){
 	state = PlayerState.DASH;
 
 	image_blend = dash_tint;
-	
-	dash_dir = facing; 
 
-    // dash_dir is an angle, so snap it to 0 right, 1 up, 2 left, 3 down to pick the dash sprite
-    sprite_index = dash_spr[round(dash_dir / 90) mod 4];
-    image_index = 0;   // the first frame of the dash
-    image_speed = 0;   // the code moves the frames instead (dashStateMC)
+	dash_dir = facing;
+
+	// dash_dir is an angle, so snap it to 0 right, 1 up, 2 left, 3 down to pick the dash sprite
+	sprite_index = dash_spr[round(dash_dir / 90) mod 4];
+	image_index = 0;   // the first frame of the dash
+	image_speed = 0;   // the code moves the frames instead (dashStateMC)
 
 	dash_ghosts_made = 0;  // new dash, no shadows yet
 
@@ -98,18 +98,18 @@ function dashStateMC(){
 			image_blend = c_white;
 			state = PlayerState.NORMAL;
 		}
-	
+
 	}
 	else if (dash_timer <= 0 && dash_double_unlock){
 		dash_double_counter +=1;
 		double_dash_wait_state();
-	}	
-	
+	}
+
 }
 //This entire function is just to allow the user to dash twice once it has been unlocked.
 function double_dash_wait_state(){
 	state = PlayerState.NORMAL;
-	
+
 	if(dash_double_wait_time >0){
 		if(dash_double_counter >1 || dash_double_wait_time < 0){
 			if (dash_timer <= 0) {
@@ -120,7 +120,7 @@ function double_dash_wait_state(){
 			}
 		}
 		else if(dash_double_counter == 1 && keyboard_check_pressed(global.dash_button)){
-			state = PlayerState.DASH;	
+			state = PlayerState.DASH;
 		}
 	}
 	else{
@@ -130,5 +130,5 @@ function double_dash_wait_state(){
 			image_blend = c_white;
 			state = PlayerState.NORMAL;
 		}
-	}	
+	}
 }
