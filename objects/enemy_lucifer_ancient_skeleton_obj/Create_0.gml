@@ -3,9 +3,9 @@ sprite_index = lucifer_ancient_skeleton_idle_forward_spr;
 event_inherited();
 
 // ancient skeleton: big slow brute with a greatsword (7 frame attack, the swing lands on frame 5)
-hp = 80;
+hp = global.enemy_stats.lucifer_ancient_skeleton.hp;
 movespd = 1.8;
-attack_damage = 10;
+attack_damage = global.enemy_stats.lucifer_ancient_skeleton.attack_damage;
 attack_range = 30;
 stop_range = 20;
 attack_cooldown_max = 90;

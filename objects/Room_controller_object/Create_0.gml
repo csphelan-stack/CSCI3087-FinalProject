@@ -11,7 +11,7 @@ global.BASE_H = 360;
 // medieval pixel font, made once for the whole game. use it with draw_set_font(global.font_medieval)
 // it's white so draw_set_colour tints it, and it looks crispest at whole-number scales (1, 2, 3)
 if (!variable_global_exists("font_medieval")) {
-	global.font_medieval = font_add_sprite_ext(gui_font_medieval_spr, " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;-+'\"()/%&*_", true, 1);
+    global.font_medieval = font_add_sprite_ext(gui_font_medieval_spr, " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;-+'\"()/%&*_", true, 1);
 }
 
 // Window scale (2 = 1280×720)
@@ -49,7 +49,7 @@ controls_load();
 
 
 
-/* NOTE: fullscreen commented out for switch to rm_start as first room (title screen)
+/* NOTE: fullscreen commented out for switch to start_room as first room (title screen)
 // Default to fullscreen (also set as the project's Windows "start fullscreen"
 // option, but forcing it here too so it's honored during IDE test-runs as well)
 if (!window_get_fullscreen()) {

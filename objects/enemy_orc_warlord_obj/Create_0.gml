@@ -6,7 +6,7 @@ total_hp = 25;
 hp = total_hp;
 
 movespd = 1.2;
-attack_damage = 7;
+attack_damage = global.enemy_stats.orc_warlord.attack_damage;
 attack_range = 28;
 attack_cooldown_max = 65;
 attack_windup = 18;

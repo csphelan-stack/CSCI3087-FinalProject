@@ -5,15 +5,15 @@ function draw_buttons_settings(){
 
 if(!global.gameIsPaused){
 
-    window_set_cursor(cr_none);
+	window_set_cursor(cr_none);
 
-    main_character_Obj.can_move=true;
+	main_character_Obj.can_move=true;
 
-    for(var r =0; r< btn_num; r++){
+	for(var r =0; r< btn_num; r++){
 
-        var inst = instance_destroy(settingsA[r].obj);
+		var inst = instance_destroy(settingsA[r].obj);
 
-    }
+	}
 
 
 
@@ -21,44 +21,44 @@ if(!global.gameIsPaused){
 else{
 
 
-    if (global.gameIsPaused)
-    {
+	if (global.gameIsPaused)
+	{
 
-        with (all)
-        {
-            if (object_index == Settings_Obj) continue;
+		with (all)
+		{
+			if (object_index == Settings_Obj) continue;
 
-            // Save and stop built-in movement
-            p_hspd  = hspeed;
-            p_vspd  = vspeed;
-            p_grav  = gravity;
-            p_path  = path_speed;
-            hspeed = 0; vspeed = 0; gravity = 0; path_speed = 0;
+			// Save and stop built-in movement
+			p_hspd  = hspeed;
+			p_vspd  = vspeed;
+			p_grav  = gravity;
+			p_path  = path_speed;
+			hspeed = 0; vspeed = 0; gravity = 0; path_speed = 0;
 
-            // Save and freeze alarms
-            for (var i = 0; i < 12; i++)
-            {
-                p_alarm[i] = alarm[i];
-                alarm[i] = -1;
-            }
-        }
-    }
-    else
-    {
-        with (all)
-        {
-            if (object_index == Settings_Obj) continue;
+			// Save and freeze alarms
+			for (var i = 0; i < 12; i++)
+			{
+				p_alarm[i] = alarm[i];
+				alarm[i] = -1;
+			}
+		}
+	}
+	else
+	{
+		with (all)
+		{
+			if (object_index == Settings_Obj) continue;
 
-            hspeed = p_hspd;
-            vspeed = p_vspd;
-            gravity = p_grav;
-            path_speed = p_path;
+			hspeed = p_hspd;
+			vspeed = p_vspd;
+			gravity = p_grav;
+			path_speed = p_path;
 
-            for (var i = 0; i < 12; i++) alarm[i] = p_alarm[i];
-        }
-    }
-	
-	
+			for (var i = 0; i < 12; i++) alarm[i] = p_alarm[i];
+		}
+	}
+
+
 	// the Settings / Options pages draw their own stuff, so the main buttons go away while one is open
 	if (menu_page != "main") {
 		for (var r = 0; r < btn_num; r++) instance_destroy(settingsA[r].obj);

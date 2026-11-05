@@ -2,35 +2,35 @@
 // state. It reads input, starts attacks and dashes, moves the player and stops at wall_obj.
 // No arguments.
 function applyMovement(){
-	
-		if(dash_double_counter == 1){
-			double_dash_wait_state();
-		}
-	
+
+        if(dash_double_counter == 1){
+            double_dash_wait_state();
+        }
+
        if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
        audio_play_sound(snd_sword, 20, false);
-	   startAttackPlayer();
+       startAttackPlayer();
         return;
     }
-	
-	if(keyboard_check_pressed(global.dash_button) && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
-		audio_play_sound(snd_dash, 15, false);
-		startDashState();
-		return;
-	}
-	
-		if(keyboard_check_pressed(global.parry_button) && can_move && can_parry && parry_cooldown <=0 && !global.gameIsPaused){
-		startParryState();
-		return;
-	}
 
-	// special: starts whichever special is equipped (see special_attack_tsunami_script)
-	if(keyboard_check_pressed(global.special_button) && special_equipped != SpecialState.NONE && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
-		startSpecial();
-		return;
-	}
-	
-	
+    if(keyboard_check_pressed(global.dash_button) && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
+        audio_play_sound(snd_dash, 15, false);
+        startDashState();
+        return;
+    }
+
+        if(keyboard_check_pressed(global.parry_button) && can_move && can_parry && parry_cooldown <=0 && !global.gameIsPaused){
+        startParryState();
+        return;
+    }
+
+    // special: starts whichever special is equipped (see special_attack_tsunami_script)
+    if(keyboard_check_pressed(global.special_button) && special_equipped != SpecialState.NONE && can_move && can_special && special_cooldown <= 0 && !global.gameIsPaused){
+        startSpecial();
+        return;
+    }
+
+
 if(global.gameIsPaused){
     movespd = 0;
     can_move = false;
@@ -66,21 +66,21 @@ if (can_move || !global.gameIsPaused) {
 
     // assign sprites
     if (hurt_timer > 0) {
-		// just got hit: show the hurt animation (he can still move, see playerHurtDeath)
-		image_speed = 1;
-		sprite_index = hurt_spr[dir4];
+        // just got hit: show the hurt animation (he can still move, see playerHurtDeath)
+        image_speed = 1;
+        sprite_index = hurt_spr[dir4];
     } else if (moving && global.safeInside) {
-		// inside he walks instead of running
-		image_speed = 1;
+        // inside he walks instead of running
+        image_speed = 1;
         sprite_index = walk_spr[dir4];
     } else if (moving) {
 
-		image_speed = 1.2;
-		if (butterflyOn()) image_speed *= butterfly_move_mult;   // Butterfly Effect: legs keep up with the faster run
+        image_speed = 1.2;
+        if (butterflyOn()) image_speed *= butterfly_move_mult;   // Butterfly Effect: legs keep up with the faster run
         // run_spr / walk_spr / idle_spr are set in Create
         sprite_index = run_spr[dir4];
     } else {
-		image_speed = 0.5;
+        image_speed = 0.5;
         // there's an idle for every direction, so he keeps facing the way he last moved
         sprite_index = idle_spr[dir4];
     }

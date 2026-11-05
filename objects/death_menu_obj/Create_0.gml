@@ -43,10 +43,10 @@ activate_item = function(_index) {
 case 1: // Main Menu
     audio_stop_sound(snd_death_music);
     if (variable_global_exists("gameIsPaused")) global.gameIsPaused = false;
-    room_goto(rm_start);
+    room_goto(start_room);
     break;
-	
-	 case 2: // Exit
+
+     case 2: // Exit
             game_end();
             break;
     }

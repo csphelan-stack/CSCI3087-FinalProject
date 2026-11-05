@@ -55,7 +55,7 @@ spr_hurt = [-1, -1, -1, -1];
 // ============================================================
 
 // set the damage this enemy deals
-attack_damage = 3;
+attack_damage = global.enemy_stats.enemy_base.attack_damage;
 
 // set how long the entire attack state lasts
 attack_duration = 30
@@ -117,7 +117,7 @@ state       = ENEMY_STATE.IDLE;
 state_prev  = state;
 state_timer = irandom_range(idle_min, idle_max);
 
-// new enemy healthbar fix 
+// new enemy healthbar fix
 hp_initialized = false;
 
 

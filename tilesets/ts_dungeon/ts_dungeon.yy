@@ -18,8 +18,8 @@
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",
   "spriteId":{
-    "name":"spr_dungeon_tiles",
-    "path":"sprites/spr_dungeon_tiles/spr_dungeon_tiles.yy",
+    "name":"dungeon_tiles_spr",
+    "path":"sprites/dungeon_tiles_spr/dungeon_tiles_spr.yy",
   },
   "spriteNoExport":false,
   "textureGroupId":{

@@ -21,17 +21,17 @@ slow_acc -= 1;
 // burning (the Dance of Dragons and its dragon set burn_timer): a little damage every burn_tick_time steps until it runs out
 // each tick does somewhere from burn_damage to burn_damage_max
 if (burn_timer > 0 && state != ENEMY_STATE.DEAD) {
-	burn_timer -= 1;
-	burn_tick_timer -= 1;
-	if (burn_tick_timer <= 0) {
-		burn_tick_timer = burn_tick_time;
-		var _dmg = irandom_range(burn_damage, max(burn_damage, burn_damage_max));
-		hp -= _dmg;
+    burn_timer -= 1;
+    burn_tick_timer -= 1;
+    if (burn_tick_timer <= 0) {
+        burn_tick_timer = burn_tick_time;
+        var _dmg = irandom_range(burn_damage, max(burn_damage, burn_damage_max));
+        hp -= _dmg;
 
-		// the damage number (damagePopupAdd runs as the player)
-		var _me = id;
-		with (main_character_Obj) damagePopupAdd(_me, _dmg, false);
-	}
+        // the damage number (damagePopupAdd runs as the player)
+        var _me = id;
+        with (main_character_Obj) damagePopupAdd(_me, _dmg, false);
+    }
 }
 
 // if the attack cooldown is active...

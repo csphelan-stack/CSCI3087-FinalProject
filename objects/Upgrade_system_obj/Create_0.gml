@@ -1,5 +1,5 @@
 
-//the point of the upgrade system is to change the main characters variables according 
+//the point of the upgrade system is to change the main characters variables according
 //to the upgrades that have been unlocked or allowed.
 
 
@@ -34,7 +34,7 @@ card_border_sep = 0;
 
 card_text_x = 100;
 card_text_y= card_start_y - 100;
-text_sep = 15; 
+text_sep = 15;
 card_text = " 'Pick A Card        Any Card' ";
 card_text_2 = "All Upgrades are Final";
 

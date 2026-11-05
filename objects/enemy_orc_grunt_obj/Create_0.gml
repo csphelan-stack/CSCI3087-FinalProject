@@ -4,10 +4,10 @@ event_inherited();
 
 //need to change attributes
 total_hp = 8;
-hp = total_hp; 
+hp = total_hp;
 
 movespd = 1.8;
-attack_damage = 3;
+attack_damage = global.enemy_stats.orc_grunt.attack_damage;
 attack_range = 22;
 attack_cooldown_max = 50;
 attack_windup = 12;

@@ -16,7 +16,7 @@ if(attack_cooldown >0){
 attack_cooldown-=1;
 }
 if(	dash_double_wait_time>0){
-	dash_double_wait_time-=1;	
+	dash_double_wait_time-=1;
 }
 if(dash_cooldown>0){
 dash_cooldown-=1;
@@ -88,14 +88,14 @@ if(event_go_upgrade){
 }
 else{
 	if(instance_exists(Upgrade_system_obj)){
-		instance_destroy(Upgrade_system_obj);	
+		instance_destroy(Upgrade_system_obj);
 		instance_destroy(upgrade_card_obj);
 	}
 }
-		
 
 
-	
+
+
 switch (state){
 
 	case PlayerState.NORMAL:

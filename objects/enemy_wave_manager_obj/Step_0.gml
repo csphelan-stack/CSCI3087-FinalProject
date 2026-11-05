@@ -1,5 +1,5 @@
-if (global.gameIsPaused){ 
-    exit; 
+if (global.gameIsPaused){
+    exit;
 }
 
 if (!wave_active && current_wave < array_length(wave_data)){
@@ -67,7 +67,7 @@ for (var i = 0; i < array_length(wave_enemy_ids); i++) {
 }
 
 if (wave_active && _spawn_complete && _alive_count == 0) {
-    
+
     wave_active = false;
 
     // do additional waves remain?

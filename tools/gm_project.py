@@ -50,5 +50,5 @@ def report(problems: list[Problem], title: str, repo_root: Path) -> None:
         print(f"{where}: [{p.rule}] {p.message}")
         if in_actions:
             line_part = f",line={p.line}" if p.line else ""
-            print(f"::error file={shown}{line_part},title={title}: {p.rule}::{p.message}")
+            print(f"::error file={Path(shown).as_posix()}{line_part},title={title}: {p.rule}::{p.message}")
     sys.stdout.flush()

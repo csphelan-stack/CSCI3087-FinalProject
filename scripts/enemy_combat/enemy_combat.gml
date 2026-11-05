@@ -71,10 +71,10 @@ function enemy_attack_hit(){
 //changed to running from the main character objects perspective
 //this helps me to be able to implement a parry mechanism
 
-	var _hurt = false;   // did the hit actually hurt him? (false if he parried it)
-	with(main_character_Obj){
-			_hurt = Enemy_damage_applying(other.attack_damage,other.id);
-	}
+    var _hurt = false;   // did the hit actually hurt him? (false if he parried it)
+    with(main_character_Obj){
+            _hurt = Enemy_damage_applying(other.attack_damage,other.id);
+    }
 
-	return _hurt;
+    return _hurt;
 }

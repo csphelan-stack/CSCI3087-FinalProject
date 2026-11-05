@@ -26,7 +26,7 @@ function startDeath(){
 	audio_play_sound(snd_death, 30, false);
 	// no death animation: go straight to the death screen
 	if (is_undefined(death_spr)) {
-		room_goto(rm_death);
+		room_goto(death_room);
 		return;
 	}
 
@@ -51,7 +51,7 @@ function deathStateMC(){
 	if (death_hold_timer > 0) {
 		death_hold_timer -= 1;
 		if (death_hold_timer <= 0) {
-			room_goto(rm_death);
+			room_goto(death_room);
 		}
 	}
 }

@@ -26,7 +26,7 @@ hp = total_hp;
 movespd = 1.6;
 
 // Give the Berserker 4 attack damage.
-attack_damage = 4;
+attack_damage = global.enemy_stats.orc_beserker.attack_damage;
 
 // Allow the Berserker to attack from 24 pixels away.
 attack_range = 24;

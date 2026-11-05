@@ -14,7 +14,7 @@ function enemy_can_see_player(_range, _use_cone){
 
     // vision cone check when requrested
     if (_use_cone){
-        // calculate direction to player 
+        // calculate direction to player
         var _pdir = point_direction(x, y, _p.x, _p.y);
 
         // calculate how far the player's direction is from

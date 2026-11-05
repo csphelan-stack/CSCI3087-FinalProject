@@ -20,7 +20,7 @@ boss_element = MAGIC_ELEMENT.POISON;
 total_hp        = 170;
 hp              = total_hp;
 movespd         = 0.95;
-attack_damage   = 6;       // the normal attack. the other attacks are multiples of this
+attack_damage   = global.enemy_stats.boss_cultist.attack_damage;       // the normal attack. the other attacks are multiples of this
 attack_range    = 80;      // how close the player has to be for the soul burst
 
 // ---------- sprites ----------

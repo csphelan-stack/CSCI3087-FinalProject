@@ -7,10 +7,10 @@ function enemy_dir4() {
 }
 
 // PICK SPRITE + ANIMATION SPEED
-// called every frame 
+// called every frame
 // priority: attack > hurt > run > idle.
 function enemy_update_animation() {
-    
+
     var _d = enemy_dir4();
 
     // if the enemy is attacking...

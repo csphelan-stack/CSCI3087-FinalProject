@@ -4,12 +4,12 @@ draw_self();
 
 // burning (Dance of Dragons): an orange-red glow that flickers over him
 if (burn_timer > 0 && state != ENEMY_STATE.DEAD) {
-	gpu_set_fog(true, make_colour_rgb(255, 90, 20), 0, 0);
-	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, c_white, 0.25 + 0.2 * abs(sin(current_time / 90)));
-	gpu_set_fog(false, c_white, 0, 0);
+    gpu_set_fog(true, make_colour_rgb(255, 90, 20), 0, 0);
+    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, c_white, 0.25 + 0.2 * abs(sin(current_time / 90)));
+    gpu_set_fog(false, c_white, 0, 0);
 }
 
-// new enemies healthbar fix 
+// new enemies healthbar fix
 // lock in the real max HP once, after the child's Create has run
 if (!hp_initialized) {
     total_hp = hp;
