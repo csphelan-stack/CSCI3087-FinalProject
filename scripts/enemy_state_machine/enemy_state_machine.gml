@@ -13,7 +13,8 @@ enum ENEMY_STATE {
     ATTACK,     // Enemy is attacking the player.
     SEARCH,     // Enemy lost the player and is searching.
     HURT,       // Enemy was damaged and is temporarily stunned.
-    DEAD        // Enemy is dead and playing its death animation.
+    DEAD,       // Enemy is dead and playing its death animation.
+    EXHAUSTED   // A boss is worn out from attacking and stands still (the fatigue bar).
 }
 
 
@@ -131,6 +132,20 @@ function enemy_change_state(_new_state) {
                 // Remember the player's last Y position.
                 last_y = _p.y;
             }
+        break;
+        // ====================================================
+        // EXHAUSTED (bosses only: the fatigue bar was full)
+        // ====================================================
+        case ENEMY_STATE.EXHAUSTED:
+            // The boss is worn out: it stands still for a while.
+            state_timer = boss_exhaust_time;
+            // The fatigue bar starts over.
+            boss_fatigue = 0;
+            // Stop all movement.
+            kb_x = 0;
+            kb_y = 0;
+            // Reset the animation.
+            image_index = 0;
         break;
         // ====================================================
         // DEAD

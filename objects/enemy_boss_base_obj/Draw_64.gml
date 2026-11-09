@@ -48,6 +48,45 @@ draw_rectangle(_x, _y, _x + _w * _pct, _y + _h, false);
 draw_set_colour(c_black);
 draw_line(_x + _w / 2, _y, _x + _w / 2, _y + _h);
 
+// ---------- fatigue bar ----------
+// a thin white bar under the health bar. every attack fills it a little. when it is
+// full the boss is worn out for a while (it stands still) and the bar starts over.
+var _fy = _y + _h + 6;
+var _fh = 4;
+var _fpct = clamp(boss_fatigue_shown / max(boss_fatigue_max, 1), 0, 1);
+
+// The dark back.
+draw_set_colour(make_colour_rgb(16, 12, 20));
+draw_rectangle(_x - 2, _fy - 2, _x + _w + 2, _fy + _fh + 2, false);
+
+draw_set_colour(make_colour_rgb(50, 40, 56));
+draw_rectangle(_x, _fy, _x + _w, _fy + _fh, false);
+
+// The white fill. It flickers when it is almost full.
+draw_set_colour(c_white);
+
+if (_fpct > 0.8)
+{
+    draw_set_alpha(0.65 + 0.35 * sin(current_time * 0.02));
+}
+
+// (nothing is drawn when the bar is empty, so no sliver is left at the left end)
+if (_fpct > 0.005)
+{
+    draw_rectangle(_x, _fy, _x + _w * _fpct, _fy + _fh, false);
+}
+
+draw_set_alpha(1);
+
+// While the boss is worn out, the frame of the bar flashes.
+if (state == ENEMY_STATE.EXHAUSTED)
+{
+    draw_set_alpha(0.5 + 0.5 * sin(current_time * 0.02));
+    draw_set_colour(c_white);
+    draw_rectangle(_x - 2, _fy - 2, _x + _w + 2, _fy + _fh + 2, true);
+    draw_set_alpha(1);
+}
+
 // Put the drawing settings back to normal.
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
