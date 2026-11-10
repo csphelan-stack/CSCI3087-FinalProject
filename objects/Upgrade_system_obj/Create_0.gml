@@ -14,6 +14,8 @@ else{
 */
 
 //only build the upgrade list the first time, so picks (upgrades_possible) aren't reset every time the cards open
+
+audio_play_sound(snd_cards_open, 15, false);
 if (!variable_global_exists("Character_Upgrades")) {
 	Upgrade_system_data();
 }

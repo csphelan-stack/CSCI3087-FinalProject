@@ -1,3 +1,8 @@
+
+
+was_owas_over = false;   //true once the mouse is already on this card, so the hover sound only plays on entryver = false;
+
+
 upg = undefined;
 
 card_x = 0;
