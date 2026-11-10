@@ -118,6 +118,13 @@ function enemy_state_chase()
     // Bosses choose between their four attacks (see the enemy_boss script).
     if (boss_enabled)
     {
+        // A worn-out boss rests instead of attacking (see the fatigue bar).
+        if (boss_fatigue >= boss_fatigue_max)
+        {
+            enemy_change_state(ENEMY_STATE.EXHAUSTED);
+            return;
+        }
+
         var _choice = enemy_boss_choose();
 
         if (_choice != BOSS_ATTACK.NONE)
@@ -201,9 +208,6 @@ function enemy_state_chase()
 
 function enemy_state_attack()
 {
-    //added this line to make image_speed for different attacks change
-    //so some attacks can go much faster
-
     // Bosses have their own attack code (see the enemy_boss script).
     if (boss_enabled)
     {

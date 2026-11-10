@@ -24,6 +24,13 @@
 //   see enemy_boss_orc_obj Create. each boss fills in boss_cfg, one entry
 //   per attack, with its timing and its animation settings.
 //
+// THE FATIGUE BAR
+//   every attack, whatever it is, adds the same amount of fatigue
+//   (boss_fatigue_per_attack) when it starts. when the bar is full the boss
+//   finishes that attack, then it is WORN OUT: it enters the EXHAUSTED state
+//   and does nothing for boss_exhaust_time frames while the bar starts over.
+//   the bar is drawn under the health bar (see enemy_boss_base_obj Draw GUI).
+//
 // HOW THE PARRY STAGGER WORKS
 //   when the player perfectly parries, parrySuccess() sets state_timer on
 //   the enemy that attacked. while a boss attacks, it keeps state_timer at
@@ -70,6 +77,9 @@ function enemy_boss_tick()
 
     // Time used by the aura and the orbiting orbs.
     boss_aura_t++;
+
+    // The fatigue bar on screen slides smoothly toward the real amount.
+    boss_fatigue_shown = lerp(boss_fatigue_shown, boss_fatigue, 0.15);
 
     // At half health the boss becomes enraged:
     // it attacks more often and moves faster.
@@ -159,6 +169,9 @@ function enemy_boss_choose()
 
 function enemy_boss_begin()
 {
+    // Every attack, whatever it is, makes the boss a little more tired.
+    boss_fatigue = min(boss_fatigue + boss_fatigue_per_attack, boss_fatigue_max);
+
     boss_cur = boss_cfg[boss_attack];
     boss_t = 0;
     boss_img = 0;
@@ -747,5 +760,30 @@ function enemy_boss_start()
         last_x = target.x;
         last_y = target.y;
         state = ENEMY_STATE.CHASE;
+    }
+}
+
+
+// ============================================================
+// EXHAUSTED (the fatigue bar was full)
+// ============================================================
+// called from the enemy Step event while a boss is worn out.
+// the boss does nothing at all until the time is up, then goes
+// back to chasing the player as normal.
+// (entering the state is in enemy_change_state, which also resets the bar)
+// ============================================================
+
+function enemy_state_exhausted()
+{
+    // No movement.
+    move_spd = 0;
+
+    // Count the rest down.
+    state_timer--;
+
+    // Rested: back to normal.
+    if (state_timer <= 0)
+    {
+        enemy_change_state(ENEMY_STATE.CHASE);
     }
 }

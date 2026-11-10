@@ -44,7 +44,15 @@ for (var _i = 0; _i < 3; _i++)
 }
 
 // ---------- the boss ----------
-draw_self();
+// A worn-out boss is drawn darker and sags a little (it is breathing hard).
+if (state == ENEMY_STATE.EXHAUSTED)
+{
+    draw_sprite_ext(sprite_index, image_index, x, y + 1 + sin(boss_aura_t * 0.12), 1, 1, 0, make_colour_rgb(135, 135, 160), 1);
+}
+else
+{
+    draw_self();
+}
 
 // A pulse of color while the boss charges a spell, and red while it
 // charges the attack the player has to dodge.

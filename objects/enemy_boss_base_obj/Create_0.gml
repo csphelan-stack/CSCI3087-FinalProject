@@ -36,6 +36,15 @@ boss_cd_scale = 1;
 boss_gap      = 36;                 // pause between two attacks (frames)
 boss_enraged  = false;
 
+// ---------- fatigue ----------
+// every attack, whatever it is, adds the same amount of fatigue. when the bar is
+// full the boss is worn out: it stands still for a while, then the bar starts over.
+boss_fatigue_max        = 100;   // a full bar
+boss_fatigue_per_attack = 20;    // added by EVERY attack (100 / 20 = worn out after 5 attacks)
+boss_exhaust_time       = 180;   // how long it stays worn out, in frames (180 = 3 seconds)
+boss_fatigue            = 0;     // the real amount
+boss_fatigue_shown      = 0;     // the amount drawn on screen (it slides toward the real one)
+
 // ---------- looks ----------
 boss_flash       = 0;               // white flash when hit
 boss_force_hurt  = false;           // only true for the moment a parry staggers the boss
