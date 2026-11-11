@@ -5,7 +5,7 @@
   "macroPageTiles":{
     "SerialiseHeight":10,
     "SerialiseWidth":11,
-    "TileCompressedData":[-72,0,1,230,-11,0,2,231,248,-9,0,4,231,247,247,248,-6,0,5,247,0,230,0,0,],
+    "TileCompressedData":[-83,0,2,175,176,-25,0,],
     "TileDataFormat":1,
   },
   "name":"ts_dungeon",

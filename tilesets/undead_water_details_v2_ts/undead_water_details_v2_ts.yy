@@ -8,7 +8,7 @@
     "TileSerialiseData":[],
   },
   "name":"undead_water_details_v2_ts",
-  "out_columns":53,
+  "out_columns":54,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{
