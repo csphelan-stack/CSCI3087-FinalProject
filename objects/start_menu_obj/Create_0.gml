@@ -46,7 +46,7 @@ activate_item = function(_index) {
     switch (_index) {
         case 0: // Play
             audio_stop_sound(snd_menu_music);
-            room_goto(dungeon_medium_boss_room);
+            room_goto(dungeon_medium_room);
             break;
         case 1: // Toggle fullscreen
             is_fs = !is_fs;
