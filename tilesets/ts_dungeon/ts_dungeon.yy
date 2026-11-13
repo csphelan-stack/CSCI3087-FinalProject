@@ -3,9 +3,10 @@
   "%Name":"ts_dungeon",
   "autoTileSets":[],
   "macroPageTiles":{
-    "SerialiseHeight":0,
-    "SerialiseWidth":0,
-    "TileSerialiseData":[],
+    "SerialiseHeight":10,
+    "SerialiseWidth":11,
+    "TileCompressedData":[-83,0,2,175,176,-25,0,],
+    "TileDataFormat":1,
   },
   "name":"ts_dungeon",
   "out_columns":22,
