@@ -5,10 +5,23 @@
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
-  "instanceCreationOrder":[],
+  "instanceCreationOrder":[
+    {"name":"inst_3F2DD0E4","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
+    {"name":"inst_5BB4F1AF","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
+    {"name":"inst_6967B2B6","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
+    {"name":"inst_7A7CE5C8","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
+    {"name":"inst_33164910","path":"rooms/rm_dungeon_large/rm_dungeon_large.yy",},
+  ],
   "isDnd":false,
   "layers":[
-    {"$GMRTileLayer":"","%Name":"Walls","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Walls","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
+    {"$GMRInstanceLayer":"","%Name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
+        {"$GMRInstance":"v4","%Name":"inst_3F2DD0E4","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_7714680B","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_3F2DD0E4","objectId":{"name":"Room_controller_object","path":"objects/Room_controller_object/Room_controller_object.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":256.0,"y":192.0,},
+        {"$GMRInstance":"v4","%Name":"inst_5BB4F1AF","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_6A614D23","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_5BB4F1AF","objectId":{"name":"Settings_Obj","path":"objects/Settings_Obj/Settings_Obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":-32.0,"y":32.0,},
+        {"$GMRInstance":"v4","%Name":"inst_6967B2B6","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_63BA9B21","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_6967B2B6","objectId":{"name":"enemy_wave_manager_obj","path":"objects/enemy_wave_manager_obj/enemy_wave_manager_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":768.0,"y":480.0,},
+        {"$GMRInstance":"v4","%Name":"inst_7A7CE5C8","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_5E301187","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_7A7CE5C8","objectId":{"name":"Dialogue_Obj","path":"objects/Dialogue_Obj/Dialogue_Obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":384.0,"y":512.0,},
+        {"$GMRInstance":"v4","%Name":"inst_33164910","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":true,"inheritedItemId":{"name":"inst_1C13BC62","path":"rooms/Collesium/Collesium.yy",},"inheritItemSettings":false,"isDnd":false,"name":"inst_33164910","objectId":{"name":"obj_game_music","path":"objects/obj_game_music/obj_game_music.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":512.0,"y":704.0,},
+      ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
+    {"$GMRTileLayer":"","%Name":"Walls","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Walls","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
           -740,-2147483648,1,0,-99,-2147483648,1,18,-20,19,1,20,-78,-2147483648,1,35,-7,-2147483648,1,228,-4,70,
           -8,-2147483648,1,37,-78,-2147483648,1,35,-20,-2147483648,1,37,-78,-2147483648,1,35,-20,-2147483648,1,
           37,-78,-2147483648,1,35,-20,-2147483648,1,37,-78,-2147483648,1,35,-20,-2147483648,1,37,-10,-2147483648,
@@ -21,7 +34,7 @@
           2,35,228,-7,-2147483648,2,228,230,-10,-2147483648,1,37,-78,-2147483648,1,52,-20,53,1,54,-72,-2147483648,
           1,230,-5,-2147483648,1,0,-712,-2147483648,1,0,-4646,-2147483648,
         ],"TileDataFormat":1,},"tilesetId":{"name":"ts_dungeon","path":"tilesets/ts_dungeon/ts_dungeon.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
-    {"$GMRTileLayer":"","%Name":"Floor","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Floor","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
+    {"$GMRTileLayer":"","%Name":"Floor","depth":200,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Floor","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
           -941,-2147483648,-8,228,-4,70,-8,228,1,0,-79,-2147483648,-8,228,4,70,456,457,70,-8,228,-80,-2147483648,
           -8,228,4,70,473,474,70,-8,228,-80,-2147483648,-8,228,4,70,230,230,70,-8,228,-80,-2147483648,-9,228,-2,
           230,-9,228,-80,-2147483648,-9,228,-2,230,-9,228,-80,-2147483648,-9,228,-2,230,-9,228,-80,-2147483648,
@@ -30,7 +43,6 @@
           -9,228,-80,-2147483648,-9,228,-2,230,-9,228,-80,-2147483648,-9,228,-2,230,-9,228,-80,-2147483648,-9,
           228,-2,230,-9,228,-80,-2147483648,-9,228,-2,230,-9,228,-5539,-2147483648,
         ],"TileDataFormat":1,},"tilesetId":{"name":"ts_dungeon","path":"tilesets/ts_dungeon/ts_dungeon.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
-    {"$GMRInstanceLayer":"","%Name":"Instances","depth":200,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRBackgroundLayer":"","%Name":"Background","animationFPS":15.0,"animationSpeedType":0,"colour":4278190080,"depth":300,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"hspeed":0.0,"htiled":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Background","properties":[],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":null,"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":true,"vspeed":0.0,"vtiled":false,"x":0,"y":0,},
   ],
   "name":"rm_dungeon_large",

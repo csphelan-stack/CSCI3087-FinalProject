@@ -48,3 +48,6 @@ spr_death = [
     orc_grunt_death_left_spr,
     orc_grunt_death_forward_spr
 ];
+
+
+

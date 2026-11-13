@@ -102,7 +102,80 @@ if (!global.gameIsPaused) {
 
 
 
+if(health_steal_knives_unlocked){
+	
+	
+	var num_used = 0;
+	
+	
+	
+	if(switch_weapon_to_vpk){
+		for(var i=0;i<knife_throws_before_switching_back_o;i++){
+			var space = space_between_knives * i;
+			if(i >= knife_throws_before_switching_back){
+			draw_sprite_ext(vtk_spr_2,0,gui_x_vtk +space,gui_y_vtk,1,1,0,c_white,1);
+			num_used++;
+			}
+			else{
+			draw_sprite_ext(vtk_spr,0,gui_x_vtk +space,gui_y_vtk,1,1,0,c_white,1);
+			
+			}
+		}
+	}
+	else{
+		
 
+		if(throwing_knfe_cooldown<=0){
+			for(var i=0;i<knife_throws_before_switching_back_o;i++){
+				var space = space_between_knives * i;
+				if(i< knife_throws_before_switching_back){
+					draw_sprite_ext(vtk_spr,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
+				}
+				else{
+				draw_sprite_ext(vtk_spr_2,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
+				}
+			}
+		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use");
+		}
+		else{
+		for(var i=0;i<knife_throws_before_switching_back_o;i++){
+			
+			var space = space_between_knives * i;
+			
+			
+			
+			
+			draw_sprite_ext(vtk_spr_2,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
+		}
+		draw_text(gui_x_vtk,gui_y_vtk+text_y_add,"Reloading.....");
+		}
+	}
+
+}
+
+if(flood_formation_unlock){
+	var num_used = 0;
+	if(switch_weapon_to_sa3){
+	}
+	else{
+		if( sa3_cooldown_time <=0){
+		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use");
+		}
+		else{
+		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"Cooldown.....");
+		}	
+	}
+}
 
 
 }
+
+
+
+
+
+
+
+
+
+

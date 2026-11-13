@@ -140,10 +140,12 @@ function Upgrade_system_data(){
 			
 			name: "Foundational Swordplay",
 			special: false,
-			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card unlocks the ability to combo attack and removes a players seld-knockback when swinging.",
+			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card unlocks the ability to combo attack, increases the attack speed of the player, and reduces player knockback significantly.",
 			
 			effects: [
-			{ stat: "combo_attack_unlock",     op: "set"   , value: true },
+			{ stat: "foundational_swordplay_unlocked",     op: "set"   , value: true},
+			{stat: "normal_attack_speed", op: "add", value:.3},
+			{stat: "attack_recoil", op: "set", value:1},			
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 12,
@@ -162,7 +164,7 @@ function Upgrade_system_data(){
 			
 			name: "Sword art 1st form: House of Cards",
 			special: false,
-			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them.",
+			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them. Turn on this sword art by clicking 1.",
 			
 			effects: [
 			{ stat: "house_of_cards_unlock",     op: "set"   , value: true },
@@ -179,18 +181,18 @@ function Upgrade_system_data(){
 					life_steal_attack:
 		{
 			
-			name: "Sword art 2nd form: Soul Snatcher",
+			name: "Sword art 2nd form: Live Offering",
 			special: false,
-			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives these knives heal you and damage the enemy.",
+			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives; these knives heal you and damage the enemy.Turn on this sword art by clicking 2.",
 			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
-			{ stat: "soul_snatched_unlock",     op: "set"   , value: true },
+			{ stat: "health_steal_knives_unlocked",     op: "set"   , value: true },
 			],
-			spriteF: card_fantasy_shield_spr,
-			indexF: 10,
-			spriteB: card_fantasy_back_spr,
-			indexB: 4,
+			spriteF: vtk_card_spr,
+			indexF: 0,
+			spriteB: card_fire_back_spr,
+			indexB: 1,
 			upgrades_possible : 1
 			
 		}	
@@ -202,7 +204,7 @@ function Upgrade_system_data(){
 			
 			name: "Sword art 3rd Form: Flash Flood",
 			special: false,
-			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.",
+			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.Turn on this sword art by clicking 3.",
 			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter

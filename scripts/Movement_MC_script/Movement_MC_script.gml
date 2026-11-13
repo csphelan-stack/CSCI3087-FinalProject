@@ -1,7 +1,8 @@
 function applyMovement(){
 	
-		if(dash_double_counter == 1){
+		if(dash_double_counter == 1 && !global.gameIsPaused){
 			double_dash_wait_state();
+			if (state != PlayerState.NORMAL) return;
 		}
 	
        if (keyboard_check_pressed(global.attack_button) && can_attack && attack_cooldown <= 0 && !global.gameIsPaused) {
@@ -77,9 +78,18 @@ if (can_move || !global.gameIsPaused) {
         // run_spr / walk_spr / idle_spr are set in Create
         sprite_index = run_spr[dir4];
     } else {
+		
+		
 		image_speed = 0.5;
-        // there's an idle for every direction, so he keeps facing the way he last moved
+        
+		if(switch_weapon_to_vpk){
+		//idle sprite for vampire knives
+		sprite_index = idle_vtk_spr[dir4];
+		}
+		else{
+		// there's an idle for every direction, so he keeps facing the way he last moved
         sprite_index = idle_spr[dir4];
+		}
     }
 
     // apply movement (runs every step, so it drops to 0 when no keys are held)

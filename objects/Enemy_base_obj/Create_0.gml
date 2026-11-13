@@ -23,6 +23,11 @@ dragon_hit_time = 0;   // the dragon companion can't bite him again until its cl
 movespd    = 1.6;   // chase speed
 wander_spd = 0.6;
 
+
+original_movespd = movespd;
+o_wander_spd =wander_spd;
+
+
 //how big every enemy is drawn (1 = normal size). change this back to 1 to undo the scale-up
 //(their collision box grows with it, attack ranges stay the same)
 enemy_scale = 1;
@@ -139,3 +144,10 @@ magic_circle  = noone;                   // the magic circle on the ground
 boss_enabled    = false;
 boss_flash      = 0;       // white flash when a boss takes a hit
 boss_force_hurt = false;   // only true for the moment a parry staggers a boss
+
+
+//sword art 3 variables to make the object spin
+spin_speed_sa3 = 0;
+spin_angle_sa3 =0;
+
+state_timer_stun = 60*2;

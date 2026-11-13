@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"enemy_push_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"enemy_push_state",
+  "parent":{
+    "name":"enemy_scripts",
+    "path":"folders/EnemyAI/enemy_scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

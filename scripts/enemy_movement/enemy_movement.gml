@@ -33,6 +33,9 @@ function enemy_update_velocity(){
 }
 
 function enemy_apply_movement(){
+	
+	
+	
     // calculate next X position.=
     var _next_x = x + kb_x;
 
@@ -51,4 +54,6 @@ function enemy_apply_movement(){
         // move vertically
         y = _next_y;
     }
+	
+	
 }

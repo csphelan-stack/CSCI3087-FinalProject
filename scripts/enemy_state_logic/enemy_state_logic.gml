@@ -201,6 +201,8 @@ function enemy_state_chase()
 
 function enemy_state_attack()
 {
+
+	
 	//added this line to make image_speed for different attacks change
 	//so some attacks can go much faster
 

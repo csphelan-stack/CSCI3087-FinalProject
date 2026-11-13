@@ -110,8 +110,9 @@ function draw_button_label(_x, _y, _w, _h, _text, _col, _scale){
 }
 
 
-// draws text in the medieval font with a dark shadow. _y is the middle of the text, _halign is fa_left / fa_center / fa_right
-function draw_menu_text(_x, _y, _text, _col, _scale, _halign){
+// _wrap_w (optional): wrap the text into lines no wider than this many GUI pixels.
+// leave it out (or -1) for one line, like before
+function draw_menu_text(_x, _y, _text, _col, _scale, _halign, _wrap_w = -1){
 
 	_y += _scale;	// nudge down a font pixel, the font's height includes room for g/p/y tails
 
@@ -119,12 +120,28 @@ function draw_menu_text(_x, _y, _text, _col, _scale, _halign){
 	draw_set_font(global.font_medieval);
 
 	draw_set_halign(_halign);
-	draw_set_valign(fa_middle);
 
-	draw_set_colour(c_black);
-	draw_text_transformed(_x + _scale, _y + _scale, _text, _scale, _scale, 0);	// shadow, one font pixel down-right
-	draw_set_colour(_col);
-	draw_text_transformed(_x, _y, _text, _scale, _scale, 0);
+	if (_wrap_w > 0) {
+		// paragraph: draws DOWN from _y, so extra lines don't grow up over whatever is above it
+		draw_set_valign(fa_top);
+
+		var _w   = _wrap_w / _scale;         // the wrap width is measured before scaling
+		var _sep = string_height("M") + 2;   // line spacing: one font line plus a 2 px gap
+
+		draw_set_colour(c_black);
+		draw_text_ext_transformed(_x + _scale, _y + _scale, _text, _sep, _w, _scale, _scale, 0);	// shadow
+		draw_set_colour(_col);
+		draw_text_ext_transformed(_x, _y, _text, _sep, _w, _scale, _scale, 0);
+	}
+	else {
+		// one line, centred on _y (same as before)
+		draw_set_valign(fa_middle);
+
+		draw_set_colour(c_black);
+		draw_text_transformed(_x + _scale, _y + _scale, _text, _scale, _scale, 0);	// shadow, one font pixel down-right
+		draw_set_colour(_col);
+		draw_text_transformed(_x, _y, _text, _scale, _scale, 0);
+	}
 
 	draw_set_font(old_font);
 	draw_set_halign(fa_left);

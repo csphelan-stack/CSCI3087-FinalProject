@@ -63,3 +63,4 @@ attack_windup       = 50;
 attack_duration     = 75;     // the whole cast (must be longer than the windup)
 attack_cooldown_max = 110;    // pause between casts
 attack_anim_spd     = 0.5;    // slower attack animation so it lasts the whole cast
+

@@ -1,6 +1,8 @@
 damage = main_character_Obj.sword_damage;
 
-knockback = 10;
+knockback = main_character_Obj.knockback;
+
+
 
 life = 8;
 

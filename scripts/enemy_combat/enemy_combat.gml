@@ -44,6 +44,9 @@ function enemy_take_damage(_damage, _source_x, _source_y){
 
 // attempts to damage the current player target
 function enemy_attack_hit(){
+	
+
+	
     if (target == noone){
         return false;
     }
@@ -77,4 +80,10 @@ function enemy_attack_hit(){
 	}
 
 	return _hurt;
+	
+	
+	
+	
+	
+	
 }

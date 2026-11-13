@@ -1,4 +1,4 @@
-if (global.gameIsPaused) exit;
+
 if (!instance_exists(Upgrade_system_obj)) exit;
 
 //only the "choose" part of the event lets you hover and click cards
