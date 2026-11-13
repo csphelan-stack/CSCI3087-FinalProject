@@ -58,7 +58,7 @@ if(health_steal_knives_unlocked){
 	}
 }
 else if(flood_formation_unlock){
-		if(keyboard_check_pressed(global.weapon_change_btn)){
+		if(keyboard_check_pressed(global.weapon_change_btn) && sa3_cooldown_time <=0){
 		switch_weapon_to_sa3 =!switch_weapon_to_sa3;
 	}
 }

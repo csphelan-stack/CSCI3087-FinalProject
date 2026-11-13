@@ -13,7 +13,7 @@ function sword_art_3_script(){
 
 		if(image_index >= sa3_frame_spawn && !flood_formation_finished){
 
-			
+
 
 			attack_sa3_hit_spawned = true;
 			
@@ -44,7 +44,12 @@ function sword_art_3_script(){
 			}
 
 
-
+			if(flood_formation_finished || !instance_exists(flood_formation_obj) || !instance_exists(circle_push_obj)){
+							flood_formation_finished = false;
+			invuln = 0;
+			image_speed =1;
+			exit;
+			}
 
 
 		}
@@ -52,7 +57,7 @@ function sword_art_3_script(){
 
 
 	}
-	else if(flood_formation_finished){
+	else if(flood_formation_finished || !instance_exists(flood_formation_obj) || !instance_exists(circle_push_obj)){
 			
 			flood_formation_finished = false;
 			invuln = 0;
