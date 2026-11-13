@@ -43,21 +43,40 @@ image_yscale = char_scale;
 //player hitbox
 mask_index = adventurer_mask_spr;
 
+//true means right goes first.
+//combo has to be unlocked for this to work.
+//combo idea is this: When we swing normally it has the same amount of time between each swing but
+//if we combo we can swing the second time faster.
+combo_attack_speed = 1.7;
+combo_timer_period_full = 50;
+combo_timer_period = 0;
+normal_attack_speed = 1.2;
+foundational_swordplay_unlocked = false;
+swung_dir = true;
+//this helps us queeue the next attack so it isnt so hard to hit the combo
+combo_queued=false;
+dash_queued = false;
+
 //---his sprites. every list is in dir4 order: [right, up, left, down]---
 idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
-			  adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+			  
 run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
 			  adventurer_run_left_spr,     adventurer_run_forward_spr];
 walk_spr   = [adventurer_walk_right_spr,   adventurer_walk_backward_spr,     //used inside (see characterInside_script)
 			  adventurer_walk_left_spr,    adventurer_walk_forward_spr];
 attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
-			  adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+attack_spr_other =[adventurer_attack2_right_spr, adventurer_attack2_backward_spr,
+              adventurer_attack2_left_spr,  adventurer_attack2_forward_spr];
 dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
 			  adventurer_dash_left_spr,    adventurer_dash_forward_spr];
 hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
 			  adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
 death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
-			  adventurer_death_left_spr,   adventurer_death_forward_spr];
+              adventurer_death_left_spr,   adventurer_death_forward_spr];
+			  
+			  
 //there's no block animation, so he holds his idle pose while guarding / charging the special
 parry_block_spr = idle_spr;
 parry_raise_spr = idle_spr;
@@ -82,18 +101,22 @@ can_move = true;
 //start with no attack have some condition to show he can attack.
 can_attack = true;
 //can he dash / parry / use the special? (characterInside_script turns these off, characterOutside_script back on)
-dash_unlock = false;
+dash_unlock = true;
 can_dash = true;
 can_parry = true;
 can_special = true;
-
+dash_queued_double = false;
 
 //variable that tracks which way the character is facing
 //USE TO ASSIGN SPRITES IN CORRECT DIRECTIONS
 facing = 270; // start facing down (toward the camera)
+sword_damage = 4;
 
 total_hp = 50;
 hp = total_hp;
+
+//knockback to hit enemies away
+knockback = 10;
 
 //healthbar
 healthbar_width = 100;
@@ -107,6 +130,87 @@ healthbar_y = display_get_gui_height() - 82;
 // (set in Room_controller_object, changeable on the pause menu's Settings page)
 consumeBtn = ord("A");
 
+//can be used for anything
+global.kill_counter = 0;
+//used to track 5 kills then reset.
+kill_counter_current = 0;
+
+//////////
+/////////			ATTACK ARTS CREATE EVENTS
+/////////       
+//////// #1 HOUSE OF CARDS ATTACK: NEEDS A KILL COUNTER, A SHOCK EFFECT, A NUMBER OF ENEMIES, ETC
+//most of the variabkes are in the house of cards controller obj
+house_of_cards_unlock = false;
+cooldown_HOC = 0;
+kill_number_HOC = 5;
+
+
+
+
+
+//# sword art 2: health stealing throwing knives. Clicking shift allows the user to switch weapons to fast throwing 
+// short lastig throwing knives that do very little damage but heal the player from the enemies wounds.
+health_steal_knives_unlocked = false;
+global.weapon_change_btn = vk_shift;
+switch_weapon_to_vpk=false;
+damage_vtk = 1;
+life_steal = 1;
+lifetime_vtk = 12;
+speed_vtk = 8;
+amount_of_knives =5;
+//this is how long between throws
+knife_throw_cooldown_total=20;
+knife_throw_cooldown = 0;
+//roughly 5 throws could prolly make this actually track the number of throws but im lazy.
+knife_throws_before_switching_back_o = 7;
+knife_throws_before_switching_back = knife_throws_before_switching_back_o;
+original_space_between =(-1*sprite_get_width(vtk_spr) +25);
+space_between_knives = 8;
+throwing_knfe_cooldown_total = 60 *7;
+throwing_knfe_cooldown=0;
+opp_swing_dir_vtk = 0;
+vtk_recoil = 5;
+attack_vtk_hit_frame = 2;
+attack_vtk_hit_spawned = false;
+
+// just modified the old sprites and made them w/o a sword technnically his sword shouldnt dissapear durinh this
+//but i dont care to fix
+sword_art_2_sprites = [adventurer_attack_throwing_right_spr,adventurer_attack_throwing_backwards_spr,adventurer_attack_throwing_left_spr,adventurer_attack_throwing_forward_spr];
+// for this one I went into the editor and placed the object: tried to do it by calculating but it was too complex
+idle_vtk_spr   = [adventurer_idle_right_spr_1,   adventurer_idle_backward_spr_1,
+              adventurer_idle_left_spr_1,    adventurer_idle_forward_spr_1
+			 ];
+//GUI VARIABLES FOR SWORD ART 2
+gui_x_vtk = 200;
+gui_y_vtk = 395;
+text_y_add = 20;
+text_x_add_shift = -15;
+sprite_vtk = vtk_spr;
+
+
+//SWORD ART 3 VARIABLES
+knockback_sa3 =10;
+swept_away_time = 40;
+switch_weapon_to_sa3 = false;
+flood_formation_unlock = true;
+swept_away_speed = 1;
+attack_sa3_hit_spawned = false;
+flood_formation_finished = false;
+ 
+
+sa3_frame_spawn = 5;
+
+sa3_cooldown_time_o = 60*4;
+sa3_cooldown_time = 0;
+
+//less damage then current max
+sa3_damage = sword_damage*.25;
+sa3_stun_time = 60;
+
+sword_art_3_sprites = [sa3_attack_backwards_spr_1,sa3_attack_forwards_spr];
+
+
+//SWORD ART 3 GUI
 
 
 
@@ -124,7 +228,7 @@ attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 //which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
 //SpecialState.NONE = locked, no special yet
-special_equipped = SpecialState.TSUNAMI;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
+special_equipped = SpecialState.BUTTERFLY;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
 
 //---Butterfly Effect (special_attack_butterfly_script)---
 //for 6 seconds his hits do no damage. instead the first hit on each enemy TAGS it (once per enemy). he swings faster,
@@ -337,7 +441,7 @@ opp_swing_dir = 0;
 push_x = 0;
 push_y = 0;
 push_friction = 0.8;    //how much of the push is left each step (lower = stops sooner)
-attack_recoil = 3;      //push back when one of his swings lands on an enemy
+attack_recoil = 5;      //push back when one of his swings lands on an enemy
 hit_knockback = 6;      //push back when an enemy hits him
 
 attack_cooldown_time = 10; //60 = 1 sec wait
@@ -416,14 +520,15 @@ stun_timer = 0;
 dash_double_unlock = false;
 //counts if a dash has happen more than once.
 dash_double_counter = 0;
-//gives .5 secs to hit the next dash
+//time to hit the next dash, counted from the START of the first dash
+//(42 = the 12-step dash + 30 steps / half a second after it)
 dash_double_wait_time = 0;
-dash_double_w_time_set = 30;
+dash_double_w_time_set = 42;
 
 dash_length = 80;  //total pixels one dash travels
 
 dash_timer = 0;
-dash_time = 5;
+dash_time = 12;   //steps each dash lasts (both dashes of a double dash use this, so they're always the same length)
 
 dash_dir = 0;
 
@@ -512,7 +617,6 @@ hurt_timer = 0;
 death_hold_time = 60;     //steps he lies on the ground after the death animation before the restart
 death_hold_timer = -1;
 
-sword_damage = 4;
 
 
 

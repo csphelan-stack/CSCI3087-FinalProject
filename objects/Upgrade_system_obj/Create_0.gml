@@ -37,10 +37,10 @@ card_border_sep = 0;
 card_text_x = 100;
 card_text_y= card_start_y - 100;
 text_sep = 15;
-card_text = " 'Pick A Card        Any Card' ";
+card_text = "    'Pick A Card Any Card' ";
 card_text_2 = "All Upgrades are Final";
 
-text_colour = c_fuchsia;
+text_colour = c_maroon;
 
 
 //shuffling the cards after getting it from the upgradeCheckPossibleFunction

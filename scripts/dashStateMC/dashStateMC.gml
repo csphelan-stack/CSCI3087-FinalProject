@@ -4,9 +4,9 @@
 // Both run on main_character_Obj and take no arguments.
 function startDashState(){
 
-
-	// runs ONCE when the dash button (space) is pressed
-	state = PlayerState.DASH;
+	dash_queued_double = false;
+    // runs ONCE when the dash button (space) is pressed
+    state = PlayerState.DASH;
 
 	image_blend = dash_tint;
 
@@ -29,6 +29,9 @@ function startDashState(){
 }
 function dashStateMC(){
 
+	if(keyboard_check_pressed(global.dash_button)){
+	dash_queued_double=true;	
+	}
 	// don't move while paused (pausing shouldn't happen mid-fight, but just in case)
 	if (global.gameIsPaused) return;
 
@@ -91,7 +94,7 @@ function dashStateMC(){
 	dash_timer -= 1;
 
 	//adds a second dash that needs to be down consecutively.
-	if(!dash_double_unlock || dash_double_wait_time <0){
+	if(!dash_double_unlock || dash_double_wait_time <=0){
 
 		if (dash_timer <= 0) {
 			dash_cooldown = dash_cooldown_t;
@@ -103,15 +106,28 @@ function dashStateMC(){
 	else if (dash_timer <= 0 && dash_double_unlock){
 		dash_double_counter +=1;
 		double_dash_wait_state();
-	}
-
+		return;
+	}	
+	
 }
 //This entire function is just to allow the user to dash twice once it has been unlocked.
 function double_dash_wait_state(){
+	
+	var _wants_dash_double = dash_queued_double || keyboard_check_pressed(global.dash_button);
+	if(dash_unlock && _wants_dash_double && can_move && can_dash && dash_cooldown <=0 &&dash_double_counter == 1 && !global.gameIsPaused){
+		audio_play_sound(snd_dash, 15, false);
+		startDashState();
+		return;
+	}
+	else {
+	
+	
 	state = PlayerState.NORMAL;
+	image_blend = c_white;
 
+	
 	if(dash_double_wait_time >0){
-		if(dash_double_counter >1 || dash_double_wait_time < 0){
+		if(dash_double_counter >1 || dash_double_wait_time <= 0){
 			if (dash_timer <= 0) {
 			dash_double_counter = 0;
 			dash_cooldown = dash_cooldown_t;
@@ -119,9 +135,7 @@ function double_dash_wait_state(){
 			state = PlayerState.NORMAL;
 			}
 		}
-		else if(dash_double_counter == 1 && keyboard_check_pressed(global.dash_button)){
-			state = PlayerState.DASH;
-		}
+		
 	}
 	else{
 			if (dash_timer <= 0) {
@@ -130,5 +144,6 @@ function double_dash_wait_state(){
 			image_blend = c_white;
 			state = PlayerState.NORMAL;
 		}
+	}	
 	}
 }

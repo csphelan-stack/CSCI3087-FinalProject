@@ -1,6 +1,8 @@
 damage = global.player_attack.damage;
 
-knockback = global.player_attack.knockback;
+knockback = main_character_Obj.knockback;
+
+
 
 life = 8;
 

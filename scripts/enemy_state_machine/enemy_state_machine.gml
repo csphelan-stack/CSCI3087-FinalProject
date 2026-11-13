@@ -14,7 +14,9 @@ enum ENEMY_STATE {
     SEARCH,     // Enemy lost the player and is searching.
     HURT,       // Enemy was damaged and is temporarily stunned.
     DEAD,       // Enemy is dead and playing its death animation.
-    EXHAUSTED   // A boss is worn out from attacking and stands still (the fatigue bar).
+    EXHAUSTED,  // A boss is worn out from attacking and stands still (the fatigue bar).
+    STUN,       // ENEMY GETS STUNNED FOR X AMOUNT OF TIME
+    PUSHSA3     // ENEMY GETS PUSHED BY A CIRCLIAR BARRIER
 }
 
 
@@ -151,6 +153,14 @@ function enemy_change_state(_new_state) {
         // DEAD
         // ====================================================
         case ENEMY_STATE.DEAD:
+		
+			//tracks total kills
+			//global.kill_counter +=1;
+			//tracks current kill streak to apply abilities
+			if(main_character_Obj.house_of_cards_unlock){
+				main_character_Obj.kill_counter_current +=1;	
+			}
+		
             // Stop horizontal movement.
             kb_x = 0;
             // Stop vertical movement.
@@ -168,5 +178,30 @@ function enemy_change_state(_new_state) {
                 enemy_boss_cleanup();
             }
         break;
+		//added by louis to help with my sword arts.
+		case ENEMY_STATE.PUSHSA3:
+			image_index = 0;
+			image_speed =1;
+
+		break;
+		case ENEMY_STATE.STUN:
+			image_index = 0;
+			image_speed =1;
+			state_timer = state_timer_stun;
+            // Find the closest player.
+            var _p_1 = instance_nearest(x, y, main_character_Obj);
+            // Make sure a player actually exists.
+            if (_p_1 != noone){
+                // Store that player as the current enemy target.
+                target = _p_1;
+                // Remember the player's last X position.
+                last_x = _p_1.x;
+                // Remember the player's last Y position.
+                last_y = _p_1.y;
+            }
+			
+
+		break;
+
     }
 }

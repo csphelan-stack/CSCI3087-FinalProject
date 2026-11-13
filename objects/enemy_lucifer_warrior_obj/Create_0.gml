@@ -51,3 +51,5 @@ spr_death = [
     lucifer_warrior_death_left_spr,
     lucifer_warrior_death_forward_spr
 ];
+
+

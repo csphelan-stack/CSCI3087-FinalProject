@@ -143,10 +143,12 @@ function Upgrade_system_data(){
 
 			name: "Foundational Swordplay",
 			special: false,
-			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card allows the ability to combo attack",
-
+			desc: "Letting a sword swing is one thing, but swinging your sword is another: This card unlocks the ability to combo attack, increases the attack speed of the player, and reduces player knockback significantly.",
+			
 			effects: [
-			{ stat: "combo_attack_unlock",     op: "set"   , value: true },
+			{ stat: "foundational_swordplay_unlocked",     op: "set"   , value: true},
+			{stat: "normal_attack_speed", op: "add", value:.3},
+			{stat: "attack_recoil", op: "set", value:1},			
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 12,
@@ -165,8 +167,8 @@ function Upgrade_system_data(){
 
 			name: "Sword art 1st form: House of Cards",
 			special: false,
-			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them.",
-
+			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them. Turn on this sword art by clicking 1.",
+			
 			effects: [
 			{ stat: "house_of_cards_unlock",     op: "set"   , value: true },
 			],
@@ -181,19 +183,19 @@ function Upgrade_system_data(){
 		,
 					life_steal_attack:
 		{
-
-			name: "Sword art 2nd form: Soul Snatcher",
+			
+			name: "Sword art 2nd form: Live Offering",
 			special: false,
-			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives these knives heal you and damage the enemy.",
-
+			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives; these knives heal you and damage the enemy.Turn on this sword art by clicking 2.",
+			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
-			{ stat: "soul_snatched_unlock",     op: "set"   , value: true },
+			{ stat: "health_steal_knives_unlocked",     op: "set"   , value: true },
 			],
-			spriteF: card_fantasy_shield_spr,
-			indexF: 10,
-			spriteB: card_fantasy_back_spr,
-			indexB: 4,
+			spriteF: vtk_card_spr,
+			indexF: 0,
+			spriteB: card_fire_back_spr,
+			indexB: 1,
 			upgrades_possible : 1
 
 		}
@@ -205,8 +207,8 @@ function Upgrade_system_data(){
 
 			name: "Sword art 3rd Form: Flash Flood",
 			special: false,
-			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.",
-
+			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.Turn on this sword art by clicking 3.",
+			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
 			{ stat: "flood_formation_unlock",     op: "set"   , value: true },
@@ -231,7 +233,7 @@ function Upgrade_system_data(){
 
 			name: "Bladed Tsunami",
 			special: true,
-			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional (Hold {global.special_button} to activate attack)",
+			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional: ability allows a user to spin attack for a certain amount of time with the added effect of pulling enemies closer (Hold {global.special_button} to activate attack)",
 			effects: [
 				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.TSUNAMI},
 			],
@@ -250,8 +252,8 @@ function Upgrade_system_data(){
 
 			name: "The Dance of Dragons",
 			special: true,
-			desc: $"It is considered a great honor to be able to dance with a dragon as the power it gives is monumentous: the user is allowed to 'dance' around to enemies and is given a second to attack each one the breath of a dragon lingers on each enemy (Hold {global.special_button} to activate attack).",
-
+			desc: $"It is considered a great honor to be able to dance with a dragon as the power it gives is monumentous: the user is allowed to 'dance' around to enemies and is given a second to attack each one until the final slam. After each attack the breath of a dragon lingers on each enemy (Hold {global.special_button} to activate attack).",
+			
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
 			{ stat: "dance_of_dragons_unlock", op:"set",value: true}
@@ -270,8 +272,8 @@ function Upgrade_system_data(){
 
 			name: "The Butterfly Effect",
 			special: true,
-			desc: $"One small change compounds over time: this ability decreases the user's damage and knockback and increases attack speed and run speed for 60 seconds once the times is up several changes take effect (Hold {global.special_button} to activate attack)",
-
+			desc: $"One small change compounds over time: once activated the player can 'tag' enemies once it rewinds the player can send butterflies to specified tagged enemies doing massive damage (Hold {global.special_button} to activate attack)",
+			
 			effects: [
 				{ stat: "special_attack_butterfly_unlock", op: "set",  value: true},
 			],
