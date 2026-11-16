@@ -16,7 +16,7 @@ if(end_of_draw){
 }
 
 if(health_steal_line_timer<=0 && has_hit_yet){
-	
+
 	end_of_draw = true;
 }
 else{
@@ -42,13 +42,13 @@ if(hit_enemy != noone){
 			has_hit_yet = true;
 			health_steal_line_timer = drain_fly_time;
 
-	
+
 			_enemy.hp -= damage_vtk;
-	
-	
+
+
 
 			}
-	
+
 
 
 lifetime--;

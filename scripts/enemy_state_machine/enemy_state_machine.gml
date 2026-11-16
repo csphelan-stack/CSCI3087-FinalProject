@@ -153,14 +153,14 @@ function enemy_change_state(_new_state) {
         // DEAD
         // ====================================================
         case ENEMY_STATE.DEAD:
-		
-			//tracks total kills
-			//global.kill_counter +=1;
-			//tracks current kill streak to apply abilities
-			if(main_character_Obj.house_of_cards_unlock){
-				main_character_Obj.kill_counter_current +=1;	
-			}
-		
+
+            //tracks total kills
+            //global.kill_counter +=1;
+            //tracks current kill streak to apply abilities
+            if(main_character_Obj.house_of_cards_unlock){
+                main_character_Obj.kill_counter_current +=1;
+            }
+
             // Stop horizontal movement.
             kb_x = 0;
             // Stop vertical movement.
@@ -178,16 +178,16 @@ function enemy_change_state(_new_state) {
                 enemy_boss_cleanup();
             }
         break;
-		//added by louis to help with my sword arts.
-		case ENEMY_STATE.PUSHSA3:
-			image_index = 0;
-			image_speed =1;
+        //added by louis to help with my sword arts.
+        case ENEMY_STATE.PUSHSA3:
+            image_index = 0;
+            image_speed =1;
 
-		break;
-		case ENEMY_STATE.STUN:
-			image_index = 0;
-			image_speed =1;
-			state_timer = state_timer_stun;
+        break;
+        case ENEMY_STATE.STUN:
+            image_index = 0;
+            image_speed =1;
+            state_timer = state_timer_stun;
             // Find the closest player.
             var _p_1 = instance_nearest(x, y, main_character_Obj);
             // Make sure a player actually exists.
@@ -199,9 +199,9 @@ function enemy_change_state(_new_state) {
                 // Remember the player's last Y position.
                 last_y = _p_1.y;
             }
-			
 
-		break;
+
+        break;
 
     }
 }

@@ -32,7 +32,7 @@ draw_sprite_stretched_ext(background_spr,0,startx_b,starty_b,width_settings_back
 //If the current menu_page is setting then call the draw_settings_page script
 // if options draw options page draw script.
 //else we draw the main page that shows the choices of resume game, setting, optionsadn has the exit button.
-	if (menu_page == "settings") draw_settings_page(); 
+	if (menu_page == "settings") draw_settings_page();
 	else if (menu_page == "options") draw_options_page();
 	else {
 		// title centered at the top of the frame

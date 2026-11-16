@@ -13,7 +13,7 @@ alarm[1] = 0;
 
 line_x1 = 0;
 line_y1 = 0;
-draw_timer = 0; 
+draw_timer = 0;
 
 drawing_finished = false;
 

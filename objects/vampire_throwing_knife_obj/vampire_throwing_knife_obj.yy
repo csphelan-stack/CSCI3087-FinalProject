@@ -34,8 +34,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"vtk_spr_1",
-    "path":"sprites/vtk_spr_1/vtk_spr_1.yy",
+    "name":"vtk_1_spr",
+    "path":"sprites/vtk_1_spr/vtk_1_spr.yy",
   },
   "spriteMaskId":null,
   "visible":true,

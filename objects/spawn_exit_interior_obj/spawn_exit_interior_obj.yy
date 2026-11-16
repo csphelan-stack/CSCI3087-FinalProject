@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spawn_obj_spr_1",
-    "path":"sprites/spawn_obj_spr_1/spawn_obj_spr_1.yy",
+    "name":"spawn_exit_interior_spr",
+    "path":"sprites/spawn_exit_interior_spr/spawn_exit_interior_spr.yy",
   },
   "spriteMaskId":null,
   "visible":false,

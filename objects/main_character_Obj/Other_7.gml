@@ -1,10 +1,10 @@
 if (state == PlayerState.ATTACK){
-	var _wants_combo = combo_queued || keyboard_check(global.attack_button); 
+	var _wants_combo = combo_queued || keyboard_check(global.attack_button);
 	var _wants_dash = dash_queued || keyboard_check_pressed(global.dash_button);																		// double-clicked OR holding
 
 	if (foundational_swordplay_unlocked && !swung_dir && !switch_weapon_to_vpk && _wants_combo) {
 		audio_play_sound(snd_sword, 20, false);
-	   startAttackPlayer();	
+	   startAttackPlayer();
 	}
 	else if(dash_unlock && _wants_dash && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
 		audio_play_sound(snd_dash, 15, false);

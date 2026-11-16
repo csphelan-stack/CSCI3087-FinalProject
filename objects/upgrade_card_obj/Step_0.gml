@@ -1,7 +1,7 @@
 
 //first frame: the mouse has not entered this card yet
 if (!variable_instance_exists(id, "was_over")) {
-    was_over = false;
+	was_over = false;
 }
 
 
@@ -10,7 +10,7 @@ var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 var _over = point_in_rectangle(_mx, _my, card_x, card_y, card_x + card_w, card_y + card_h);
 if (_over && !was_over) {
-    audio_play_sound(snd_card_hover, 8, false);
+	audio_play_sound(snd_card_hover, 8, false);
 }
 was_over = _over;
 

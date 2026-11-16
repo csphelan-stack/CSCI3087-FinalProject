@@ -100,7 +100,7 @@ if (boss_waves_enabled)
 //current wave available to UI code.
 global.wave_current = 0;
 
-// this room's waves haven't been beaten yet. the door to the interior room (interior_room_enter)
+// this room's waves haven't been beaten yet. the door to the interior room (interior_room_enter_obj)
 // stays hidden and locked until Step sets this to true after the last wave.
 // note: coming back to a room makes a new wave manager, so this resets and the waves start again
 global.waves_complete = false;

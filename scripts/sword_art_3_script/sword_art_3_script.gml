@@ -1,11 +1,16 @@
+// sword_art_3_script: Sword Art 3, run every step of the player's ATTACK state while it's the chosen sword art.
+// When the swing reaches frame sa3_frame_spawn (and the cooldown is over) it holds the pose, creates a
+// circle_push_obj and 8 flood_formation_obj waves (one every 45 degrees) carrying knockback_sa3, sa3_damage
+// and sa3_stun_time. When the waves are done it ends his invulnerability and lets the animation carry on.
+// Called from main_character_Obj Step (runs as the player); takes nothing in.
 function sword_art_3_script(){
 
 
 	if( !attack_sa3_hit_spawned && sa3_cooldown_time <= 0){
-		
-		
-		
-		
+
+
+
+
 
 		var dir4 = round(facing / 45) mod 8;
 
@@ -16,13 +21,13 @@ function sword_art_3_script(){
 
 
 			attack_sa3_hit_spawned = true;
-			
-			
-				image_index = 5;	
-				image_speed = 0;	
-			
-			
-			
+
+
+				image_index = 5;
+				image_speed = 0;
+
+
+
 			_circle_push_obj = instance_create_depth(x,y,-1000,circle_push_obj);
 			for(var i =0;i<8;i++){
 				var _dir = 0;
@@ -58,12 +63,12 @@ function sword_art_3_script(){
 
 	}
 	else if(flood_formation_finished || !instance_exists(flood_formation_obj) || !instance_exists(circle_push_obj)){
-			
+
 			flood_formation_finished = false;
 			invuln = 0;
 			image_speed =1;
 			exit;
 		}
-	
-	
+
+
 }

@@ -1,7 +1,7 @@
 // ============================================================
 // THE YELLOW SPAWN POINT: where you come out after the interior (upgrade) room
 // ============================================================
-// put one of these in front of the interior door (interior_room_enter) in every room that has one.
+// put one of these in front of the interior door (interior_room_enter_obj) in every room that has one.
 // it's invisible in the game (Visible is unticked); the yellow square only shows in the room editor.
 //
 // ROOM START runs once when the room begins, after every instance's Create and creation code.

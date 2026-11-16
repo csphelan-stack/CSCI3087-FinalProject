@@ -5,11 +5,11 @@
 function attackStatePlayer(){
 
 	if(keyboard_check_pressed(global.attack_button)){
-		combo_queued=true;	
-		
+		combo_queued=true;
+
 	}
 	if(keyboard_check_pressed(global.dash_button)){
-		dash_queued=true;	
+		dash_queued=true;
 	}
 
 	// has the swing reached the hit frame, and have we NOT made a hitbox yet this swing?
@@ -59,8 +59,8 @@ function attackStatePlayer(){
 
 		_hb.owner = id;   //telling the hitbox who made it
 		}
-		
-	
+
+
 }
 
 // _counter = true when the swing comes from a successful parry (see parrySuccess), normal attacks leave it out
@@ -68,20 +68,20 @@ function startAttackPlayer(_counter = false){
 	combo_queued=false;
 	dash_queued = false;
 	// runs ONCE when Z is pressed
-    state = PlayerState.ATTACK;
-	
+	state = PlayerState.ATTACK;
+
 	if(switch_weapon_to_vpk){
-		
+
 		var dir4 = round(facing / 90) mod 4;
-		
+
 		sprite_index = sword_art_2_sprites[dir4];
 		image_index = 0;
 		image_speed = 1;
-		
+
 		attack_vtk_hit_spawned = false;
 	}
 	else if (switch_weapon_to_sa3 && sa3_cooldown_time <=0){
-		
+
 		if(facing >0 && facing<=180){
 			sprite_index = sword_art_3_sprites[0];
 		}
@@ -90,33 +90,33 @@ function startAttackPlayer(_counter = false){
 		}
 		image_index = 0;
 		image_speed = 1;
-		
-		
+
+
 		attack_sa3_hit_spawned = false;
 	}
 	else{
-	    // same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
-	    var dir4 = round(facing / 90) mod 4;
+		// same direction math as the movement code: 0 = right, 1 = up, 2 = left, 3 = down
+		var dir4 = round(facing / 90) mod 4;
 		//this combo allows two closely followed attacks that go from right to a left attack
 		// Want to expand on this attack and make it more fun to use.
 		if(foundational_swordplay_unlocked){
 			if(!swung_dir){
-				sprite_index = attack_spr_other[dir4]; 	
+				sprite_index = attack_spr_other[dir4];
 				image_speed = combo_attack_speed;
-	
+
 			}
 			else {
-				sprite_index = attack_spr[dir4]; 
-			    image_speed = normal_attack_speed; 
+				sprite_index = attack_spr[dir4];
+				image_speed = normal_attack_speed;
 			// play at the sprite's normal speed
 			}
-				swung_dir = !swung_dir;	
+				swung_dir = !swung_dir;
 				combo_timer_period = combo_timer_period_full;
 		}
 		//this else only exists for before the combo uprade is unlocked just one single attack
 		else{
-		sprite_index = attack_spr[dir4]; 
-	    image_speed = normal_attack_speed; 
+		sprite_index = attack_spr[dir4];
+		image_speed = normal_attack_speed;
 		// play at the sprite's normal speed
 		}
 
@@ -126,11 +126,11 @@ function startAttackPlayer(_counter = false){
 		if (butterflyOn()) image_speed *= butterfly_attack_mult;   // Butterfly Effect: much faster swings
 
 		attack_is_countered = _counter;   // reset every swing, so only the parry's swing is a counter
-	
-	
+
+
 		attack_hit_spawned = false;  //new swing, so it hasn't made a hitbox yet
 	}
-	
+
 }
 
 

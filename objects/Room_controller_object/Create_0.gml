@@ -17,7 +17,7 @@ global.door_entered_interior = false;
 // interior_room, and if GameMaker makes that copy when we walk in, its Create would otherwise wipe out
 // prev_room and the door back to the fight wouldn't know where to go.
 if (!variable_global_exists("prev_room")) {
-	global.prev_room = noone;
+    global.prev_room = noone;
 }
 // obj_controller: Create
 
