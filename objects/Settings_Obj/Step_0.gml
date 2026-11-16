@@ -13,6 +13,7 @@ else if (global.gameIsPaused) {
 	pause_menu_step();
 }
 
+
 if(global.gameIsPaused){
 
 	window_set_cursor(gui_cursor_spr);

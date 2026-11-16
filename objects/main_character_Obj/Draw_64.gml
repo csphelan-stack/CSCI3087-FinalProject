@@ -32,13 +32,13 @@ draw_sprite_ext(face_portrait_spr, 0, _x + _frame_off_x_face, _y + _frame_off_y_
 // 3. red fill, cropped from the bottom up
 var _fill_h = _h * _pct;
 if (_fill_h > 0) {
-    draw_sprite_part_ext(
-        orb_fill_spr, 0,
-        0, _h - _fill_h,
-        _w, _fill_h,
-        _x, _y + (_h - _fill_h),
-        1, 1, c_white, 0.5
-    );
+	draw_sprite_part_ext(
+		orb_fill_spr, 0,
+		0, _h - _fill_h,
+		_w, _fill_h,
+		_x, _y + (_h - _fill_h),
+		1, 1, c_white, 0.5
+	);
 }
 
 // 4. frame/glass on top
@@ -80,50 +80,50 @@ var _gh = display_get_gui_height();
 if (!surface_exists(orb_surf)) orb_surf = surface_create(_gw, _gh);
 
 surface_set_target(orb_surf);
-    draw_clear_alpha(c_black, 0);
-    gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha);
+	draw_clear_alpha(c_black, 0);
+	gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha);
 
-    //                  x            y          radius    remaining         total            icon              offx offy frame
-    draw_cooldown_orb(_x_special, _cy_big,   _r_big,   special_cooldown, special_cd_max, skull_knight_attack_forward_icon_spr, 0, 0, 0);
-    draw_cooldown_orb(_x_dash,    _cy_small, _r_small, dash_cooldown,    dash_cd_max,    dash_icon_spr,    2, 2, 0);
-    draw_cooldown_orb(_x_parry,   _cy_small, _r_small, parry_cooldown,   parry_cd_max,   parry_icon_spr,   1, 0, 0);
+	//                  x            y          radius    remaining         total            icon              offx offy frame
+	draw_cooldown_orb(_x_special, _cy_big,   _r_big,   special_cooldown, special_cd_max, skull_knight_attack_forward_icon_spr, 0, 0, 0);
+	draw_cooldown_orb(_x_dash,    _cy_small, _r_small, dash_cooldown,    dash_cd_max,    dash_icon_spr,    2, 2, 0);
+	draw_cooldown_orb(_x_parry,   _cy_small, _r_small, parry_cooldown,   parry_cd_max,   parry_icon_spr,   1, 0, 0);
 
-    gpu_set_blendmode(bm_normal);
+	gpu_set_blendmode(bm_normal);
 surface_reset_target();
 
 draw_surface_ext(orb_surf, 0, 0, 1, 1, 0, c_white, 0.6);   // 0.6 = overall opacity of the cluster
 
 // damage numbers / "Crit!" above enemies (hidden behind the pause menu)
 if (!global.gameIsPaused) {
-    damagePopupsDraw();
-    specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
-    butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
+	damagePopupsDraw();
+	specialHudDraw();   // "Special ready" / cooldown seconds above the health bar
+	butterflyPhaseHudDraw();   // Butterfly Effect: the rewind's tint, and how many butterflies are left to send
 }
 
 
 
 if(health_steal_knives_unlocked){
-	
-	
+
+
 	var num_used = 0;
-	
-	
-	
+
+
+
 	if(switch_weapon_to_vpk){
 		for(var i=0;i<knife_throws_before_switching_back_o;i++){
 			var space = space_between_knives * i;
 			if(i >= knife_throws_before_switching_back){
-			draw_sprite_ext(vtk_spr_2,0,gui_x_vtk +space,gui_y_vtk,1,1,0,c_white,1);
+			draw_sprite_ext(vtk_2_spr,0,gui_x_vtk +space,gui_y_vtk,1,1,0,c_white,1);
 			num_used++;
 			}
 			else{
 			draw_sprite_ext(vtk_spr,0,gui_x_vtk +space,gui_y_vtk,1,1,0,c_white,1);
-			
+
 			}
 		}
 	}
 	else{
-		
+
 
 		if(throwing_knfe_cooldown<=0){
 			for(var i=0;i<knife_throws_before_switching_back_o;i++){
@@ -132,20 +132,20 @@ if(health_steal_knives_unlocked){
 					draw_sprite_ext(vtk_spr,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
 				}
 				else{
-				draw_sprite_ext(vtk_spr_2,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
+				draw_sprite_ext(vtk_2_spr,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
 				}
 			}
 		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use");
 		}
 		else{
 		for(var i=0;i<knife_throws_before_switching_back_o;i++){
-			
+
 			var space = space_between_knives * i;
-			
-			
-			
-			
-			draw_sprite_ext(vtk_spr_2,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
+
+
+
+
+			draw_sprite_ext(vtk_2_spr,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
 		}
 		draw_text(gui_x_vtk,gui_y_vtk+text_y_add,"Reloading.....");
 		}
@@ -163,7 +163,7 @@ if(flood_formation_unlock){
 		}
 		else{
 		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"Cooldown.....");
-		}	
+		}
 	}
 }
 

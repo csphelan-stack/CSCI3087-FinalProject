@@ -9,8 +9,8 @@
   "name":"wall_obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Colosseum",
-    "path":"Colosseum.yyp",
+    "name":"Room_settings",
+    "path":"folders/Room_settings.yy",
   },
   "parentObjectId":null,
   "persistent":false,

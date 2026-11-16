@@ -59,24 +59,24 @@ dash_queued = false;
 
 //---his sprites. every list is in dir4 order: [right, up, left, down]---
 idle_spr   = [adventurer_idle_right_spr,   adventurer_idle_backward_spr,
-              adventurer_idle_left_spr,    adventurer_idle_forward_spr];
-			  
+			  adventurer_idle_left_spr,    adventurer_idle_forward_spr];
+
 run_spr    = [adventurer_run_right_spr,    adventurer_run_backward_spr,
 			  adventurer_run_left_spr,     adventurer_run_forward_spr];
 walk_spr   = [adventurer_walk_right_spr,   adventurer_walk_backward_spr,     //used inside (see characterInside_script)
 			  adventurer_walk_left_spr,    adventurer_walk_forward_spr];
 attack_spr = [adventurer_attack_right_spr, adventurer_attack_backward_spr,
-              adventurer_attack_left_spr,  adventurer_attack_forward_spr];
+			  adventurer_attack_left_spr,  adventurer_attack_forward_spr];
 attack_spr_other =[adventurer_attack2_right_spr, adventurer_attack2_backward_spr,
-              adventurer_attack2_left_spr,  adventurer_attack2_forward_spr];
+			  adventurer_attack2_left_spr,  adventurer_attack2_forward_spr];
 dash_spr   = [adventurer_dash_right_spr,   adventurer_dash_backward_spr,
 			  adventurer_dash_left_spr,    adventurer_dash_forward_spr];
 hurt_spr   = [adventurer_hurt_right_spr,   adventurer_hurt_backward_spr,
 			  adventurer_hurt_left_spr,    adventurer_hurt_forward_spr];
 death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
-              adventurer_death_left_spr,   adventurer_death_forward_spr];
-			  
-			  
+			  adventurer_death_left_spr,   adventurer_death_forward_spr];
+
+
 //there's no block animation, so he holds his idle pose while guarding / charging the special
 parry_block_spr = idle_spr;
 parry_raise_spr = idle_spr;
@@ -116,7 +116,8 @@ total_hp = 50;
 hp = total_hp;
 
 //knockback to hit enemies away
-knockback = 10;
+//(the value lives in scripts/player_attack_config with the rest of the sword stats, so change it there)
+knockback = global.player_attack.knockback;
 
 //healthbar
 healthbar_width = 100;
@@ -137,7 +138,7 @@ kill_counter_current = 0;
 
 //////////
 /////////			ATTACK ARTS CREATE EVENTS
-/////////       
+/////////
 //////// #1 HOUSE OF CARDS ATTACK: NEEDS A KILL COUNTER, A SHOCK EFFECT, A NUMBER OF ENEMIES, ETC
 //most of the variabkes are in the house of cards controller obj
 house_of_cards_unlock = false;
@@ -148,7 +149,7 @@ kill_number_HOC = 5;
 
 
 
-//# sword art 2: health stealing throwing knives. Clicking shift allows the user to switch weapons to fast throwing 
+//# sword art 2: health stealing throwing knives. Clicking shift allows the user to switch weapons to fast throwing
 // short lastig throwing knives that do very little damage but heal the player from the enemies wounds.
 health_steal_knives_unlocked = false;
 global.weapon_change_btn = vk_shift;
@@ -177,8 +178,8 @@ attack_vtk_hit_spawned = false;
 //but i dont care to fix
 sword_art_2_sprites = [adventurer_attack_throwing_right_spr,adventurer_attack_throwing_backwards_spr,adventurer_attack_throwing_left_spr,adventurer_attack_throwing_forward_spr];
 // for this one I went into the editor and placed the object: tried to do it by calculating but it was too complex
-idle_vtk_spr   = [adventurer_idle_right_spr_1,   adventurer_idle_backward_spr_1,
-              adventurer_idle_left_spr_1,    adventurer_idle_forward_spr_1
+idle_vtk_spr   = [adventurer_idle_right_1_spr,   adventurer_idle_backward_1_spr,
+			  adventurer_idle_left_1_spr,    adventurer_idle_forward_1_spr
 			 ];
 //GUI VARIABLES FOR SWORD ART 2
 gui_x_vtk = 200;
@@ -196,7 +197,7 @@ flood_formation_unlock = true;
 swept_away_speed = 1;
 attack_sa3_hit_spawned = false;
 flood_formation_finished = false;
- 
+
 
 sa3_frame_spawn = 5;
 
@@ -207,7 +208,7 @@ sa3_cooldown_time = 0;
 sa3_damage = sword_damage*.25;
 sa3_stun_time = 60;
 
-sword_art_3_sprites = [sa3_attack_backwards_spr_1,sa3_attack_forwards_spr];
+sword_art_3_sprites = [sa3_attack_backwards_1_spr,sa3_attack_forwards_spr];
 
 
 //SWORD ART 3 GUI

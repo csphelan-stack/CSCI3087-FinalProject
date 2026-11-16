@@ -11,7 +11,7 @@ health_steal_line_timer = 0;
 
 facing = 0;
 
-sprite_index = vtk_spr_1;
+sprite_index = vtk_1_spr;
 amount_of_knives =0;
 
 //opp_swing_dir_vtk = 0;

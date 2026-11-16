@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"wave_animation_spr_L",
-    "path":"sprites/wave_animation_spr_L/wave_animation_spr_L.yy",
+    "name":"wave_animation_L_spr",
+    "path":"sprites/wave_animation_L_spr/wave_animation_L_spr.yy",
   },
   "spriteMaskId":null,
   "visible":true,
