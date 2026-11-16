@@ -1,8 +1,24 @@
 window_set_cursor(cr_none);
 window_set_cursor(gui_cursor_spr);
 
+// ---------- DOORS ----------
+//whether or not we gave enetered the upgrade room
+// if yes then make it transport us to the red spawn spot not the blue.
+// else go to blue
+// (not used anywhere at the moment: the spawn points check global.prev_room instead, see below)
+global.door_entered_interior = false;
 
-
+// global.prev_room = the room we just walked out of. every door sets it in its Room End as we leave a room.
+// the spawn points read it in their Room Start: if we just left interior_room, the yellow spawn point
+// (spawn_exit_interior_obj) is used, otherwise the normal blue one (spawn_obj).
+// the interior room's door also uses it to send us back to the fight room we came in from.
+// noone = we haven't come through a door yet (start of the game).
+// it's only set the first time: this controller is persistent, but there's another one placed in
+// interior_room, and if GameMaker makes that copy when we walk in, its Create would otherwise wipe out
+// prev_room and the door back to the fight wouldn't know where to go.
+if (!variable_global_exists("prev_room")) {
+	global.prev_room = noone;
+}
 // obj_controller: Create
 
 global.BASE_W = 640;
@@ -37,7 +53,6 @@ global.safeInside = false;
 
 
 
-global.safeInside = false;
 
 
 
@@ -46,7 +61,7 @@ controls_load();
 
 
 
-
+global.coming_from_door = false;
 
 
 /* NOTE: fullscreen commented out for switch to start_room as first room (title screen)
@@ -77,22 +92,7 @@ if (application_surface != -1) {
 display_set_gui_size(global.BASE_W * gui_scaling, global.BASE_H * gui_scaling);
 
 
-//parralax background
-// sky parallax layers, farthest first
-sky_sprites = [sky_day_layer1_spr, sky_day_layer2_spr, sky_day_layer3_spr];
-sky_follow  = [1.0, 0.97, 0.95];  // 1 = stuck to the screen (far away); lower = shifts more as the camera moves
-sky_drift   = [0, -0.01, -0.05];  // clouds drifting on their own, pixels per step
-sky_scale   = 360 / 324;          // sky images are 576x324, the view is 640x360
-sky_offset  = array_create(array_length(sky_sprites), 0);
-sky_layers  = [];
-for (var i = 0; i < array_length(sky_sprites); i++) {
-    var lay = layer_create(10000 - i);                  // deep = drawn behind everything
-    var bg  = layer_background_create(lay, sky_sprites[i]);
-    layer_background_htiled(bg, true);
-    layer_background_xscale(bg, sky_scale);
-    layer_background_yscale(bg, sky_scale);
-    sky_layers[i] = lay;
-}
+
 
 
 

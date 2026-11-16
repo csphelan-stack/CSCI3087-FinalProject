@@ -76,6 +76,7 @@ if (wave_active && _spawn_complete && _alive_count == 0) {
         wave_timer = wave_delay;
     } else {
         //all waves completed?
+        // this makes the door to the interior room (interior_room_enter) appear and open on D
         global.waves_complete = true;
     }
 }

@@ -1,6 +1,6 @@
 {
   "$GMSprite":"v2",
-  "%Name":"village_door_plank_opening_side_spr",
+  "%Name":"village_door_plank_close_side_spr",
   "bboxMode":0,
   "bbox_bottom":159,
   "bbox_left":30,
@@ -31,7 +31,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"2a85e0f0-d396-4383-8c70-a7e4b5dae00b","blendMode":0,"displayName":"default","isLocked":false,"name":"2a85e0f0-d396-4383-8c70-a7e4b5dae00b","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"village_door_plank_opening_side_spr",
+  "name":"village_door_plank_close_side_spr",
   "nineSlice":null,
   "origin":9,
   "parent":{
@@ -43,7 +43,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"village_door_plank_opening_side_spr",
+    "%Name":"village_door_plank_close_side_spr",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -67,7 +67,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"village_door_plank_opening_side_spr",
+    "name":"village_door_plank_close_side_spr",
     "playback":1,
     "playbackSpeed":10.0,
     "playbackSpeedType":0,
@@ -79,37 +79,37 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"945b18ce-566b-467d-88d0-177b784e7f7e","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"945b18ce-566b-467d-88d0-177b784e7f7e","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"c496bb93-4a9e-41b9-aa53-c8fadd757bc1","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"27000550-d6da-4104-a329-069df5670d5d","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"27000550-d6da-4104-a329-069df5670d5d","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"d042a088-6db6-4ef6-8398-d47d60506e6a","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1f15c2e6-7320-4450-b90d-4735bc291321","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1f15c2e6-7320-4450-b90d-4735bc291321","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"a6dc864c-019e-434f-b848-1e6c35efca85","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a101ba75-79a9-431b-988e-a4b16b728fb6","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a101ba75-79a9-431b-988e-a4b16b728fb6","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"bcaaadb8-b07f-4072-b609-4b40861e75f0","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7cb5ea38-e230-4007-877e-911bc19f832c","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7cb5ea38-e230-4007-877e-911bc19f832c","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"e5fa6be7-1c09-4329-bfc3-b32c9a812158","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"2fcf4434-9432-4ee1-9e63-87806fccd0c7","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"2fcf4434-9432-4ee1-9e63-87806fccd0c7","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"3041ed63-b24a-4917-a038-113453fe07fb","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"34eb85c1-219f-40c7-a93d-27d0cf52e627","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"34eb85c1-219f-40c7-a93d-27d0cf52e627","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"a7e50471-75eb-439a-afdc-2c4c2496056b","IsCreationKey":false,"Key":6.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"fcd0b45d-c230-4aca-9ed9-55cfd5743491","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"fcd0b45d-c230-4aca-9ed9-55cfd5743491","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"823c8144-0fa3-473b-839f-0e98556753c5","IsCreationKey":false,"Key":7.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"cd8fe0df-0e3d-4f3c-b8fa-f24f328c7a85","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"cd8fe0df-0e3d-4f3c-b8fa-f24f328c7a85","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"d7acae0b-f29e-42bc-aa83-c416eaea090e","IsCreationKey":false,"Key":8.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0b02fef8-0241-4fa7-870a-a39a478fedaf","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0b02fef8-0241-4fa7-870a-a39a478fedaf","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"59b9dc5f-71e8-4cd8-8b18-9dfdd7d4258a","IsCreationKey":false,"Key":9.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5042aa2a-3744-4855-b57b-145ecf0bf648","path":"sprites/village_door_plank_opening_side_spr/village_door_plank_opening_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5042aa2a-3744-4855-b57b-145ecf0bf648","path":"sprites/village_door_plank_close_side_spr/village_door_plank_close_side_spr.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"80e366f7-408c-4696-9ed7-5f63c0757b23","IsCreationKey":false,"Key":10.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],

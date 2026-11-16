@@ -9,6 +9,17 @@ if(house_of_cards_unlock){
 
 
 
+//may need to take out
+//basically just destroys the enemy_wave_manager once all waves in that room have been completed
+// and I checked it to persisstant on the wave manager object so that it stays like that in the room.
+// (the wave manager isn't persistent any more. global.waves_complete is set to true by the wave manager
+//  after its last wave, and back to false by the Create of the next room's wave manager.
+//  interior_room_enter's Step also destroys the wave manager once the waves are done, so this does the same job.)
+if(global.waves_complete){
+	if(instance_exists(enemy_wave_manager_obj)){
+		instance_destroy(enemy_wave_manager_obj);
+	}
+}
 
 
 if(knife_throw_cooldown >0){
