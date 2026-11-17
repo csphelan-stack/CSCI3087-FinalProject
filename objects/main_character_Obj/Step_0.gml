@@ -62,17 +62,37 @@ if(throwing_knfe_cooldown>0){
 	throwing_knfe_cooldown-=1;
 }
 
+if(sae3_timer_to_weapon >=0){
+	sae3_timer_to_weapon--;	
+}
+if(sae2_timer_to_weapon >=0){
+	sae2_timer_to_weapon--;	
+}
+
+
+if(sae2_timer_to_weapon<=0 && sae2_timer_to_weapon !=-1){
+	switch_weapon_to_vpk =!switch_weapon_to_vpk;
+	sae2_timer_to_weapon = -1; 
+}
+
+if(sae3_timer_to_weapon<=0 && sae3_timer_to_weapon !=-1){
+	switch_weapon_to_sa3 =!switch_weapon_to_sa3;
+	sae3_timer_to_weapon = -1;
+}
+
+
 if(health_steal_knives_unlocked){
 	//NEED TO ADD EITHER A COOLDOWN OR A KILL COUNT BEFORE ACTIVATION
 	if(keyboard_check_pressed(global.weapon_change_btn) && throwing_knfe_cooldown<=0){
-		switch_weapon_to_vpk =!switch_weapon_to_vpk;
+		sae2_timer_to_weapon = 	sae2_timer_to_weapon_o;
 	}
 }
 else if(flood_formation_unlock){
-		if(keyboard_check_pressed(global.weapon_change_btn) && sa3_cooldown_time <=0){
-		switch_weapon_to_sa3 =!switch_weapon_to_sa3;
+		if(keyboard_check_pressed(global.weapon_change_btn) && sa3_cooldown_time <=0 && state != PlayerState.ATTACK){
+			sae3_timer_to_weapon = 	sae3_timer_to_weapon_o;
 	}
 }
+
 
 
 

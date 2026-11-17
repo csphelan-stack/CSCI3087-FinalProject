@@ -78,8 +78,10 @@ death_spr  = [adventurer_death_right_spr,  adventurer_death_backward_spr,
 
 
 //there's no block animation, so he holds his idle pose while guarding / charging the special
-parry_block_spr = idle_spr;
-parry_raise_spr = idle_spr;
+parry_block_spr = [parry_block_right_spr,   parry_block_backward_spr,
+			  parry_block_left_spr,    parry_block_forward_spr];
+parry_raise_spr = [parry_block_right_spr,   parry_block_backward_spr,
+			  parry_block_left_spr,    parry_raise_forward_spr];
 
 //these two var's are used in the tracking of the character's on screen position and direction
 _hor = 0;
@@ -144,8 +146,10 @@ kill_counter_current = 0;
 house_of_cards_unlock = false;
 cooldown_HOC = 0;
 kill_number_HOC = 5;
-
-
+gui_x_sa1 = 600;
+sa1_stun = 60 * 1.5;
+stun_min = false;
+space_between_cards_sa1 = sprite_get_width(card_deco_building_spr) + 4;
 
 
 
@@ -173,6 +177,8 @@ opp_swing_dir_vtk = 0;
 vtk_recoil = 5;
 attack_vtk_hit_frame = 2;
 attack_vtk_hit_spawned = false;
+sae2_timer_to_weapon_o = 20;
+sae2_timer_to_weapon = -1;
 
 // just modified the old sprites and made them w/o a sword technnically his sword shouldnt dissapear durinh this
 //but i dont care to fix
@@ -182,7 +188,7 @@ idle_vtk_spr   = [adventurer_idle_right_1_spr,   adventurer_idle_backward_1_spr,
 			  adventurer_idle_left_1_spr,    adventurer_idle_forward_1_spr
 			 ];
 //GUI VARIABLES FOR SWORD ART 2
-gui_x_vtk = 200;
+gui_x_vtk = 350;
 gui_y_vtk = 395;
 text_y_add = 20;
 text_x_add_shift = -15;
@@ -209,10 +215,11 @@ sa3_damage = sword_damage*.25;
 sa3_stun_time = 60;
 
 sword_art_3_sprites = [sa3_attack_backwards_1_spr,sa3_attack_forwards_spr];
-
-
+sae3_timer_to_weapon_o = 30;
+sae3_timer_to_weapon = -1;
 //SWORD ART 3 GUI
-
+gui_x_sa3_images = 590;
+sa3_gui_x = 600;
 
 
 

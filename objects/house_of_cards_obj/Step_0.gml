@@ -1,6 +1,8 @@
-if (targets_hit >= number_of_targets_HOC - 1 && alarm[1] < 0) {
-		alarm[1] = 60;
-	}
+// finished once the strike has landed (strike_frame 2) and the lightning has finished
+// drawing (strike_frame goes past the number of targets)
+if (strike_frame > max(2, number_of_targets_HOC)) {
+	instance_destroy();
+}
 
 	if(strike_frame == 2){
 	target_drawn = true;
@@ -16,7 +18,12 @@ if (targets_hit >= number_of_targets_HOC - 1 && alarm[1] < 0) {
 
 
 				if(target_drawn){
-				targets[i].hp -= damage_HOC;
+					main_character_Obj.stun_min = true;
+					targets[i].hp -= damage_HOC;
+					// and stun it. Inside with(), "other" is this House of Cards object
+					with (targets[i]) {
+						enemy_stun_state();
+					}
 				}
 			}
 		}

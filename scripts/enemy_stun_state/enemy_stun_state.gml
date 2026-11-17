@@ -3,6 +3,8 @@
 // when the timer runs out it stops sliding and goes back to ENEMY_STATE.CHASE.
 // Called from Enemy_base_obj Step (runs as the enemy); takes nothing in.
 function enemy_stun_state(){
+	
+	
 
       // Reduce horizontal knockback over time.
     kb_x *= kb_friction;
@@ -21,10 +23,15 @@ function enemy_stun_state(){
 
         // Stop vertical knockback.
         kb_y = 0;
-
+		
+		//robust way to deal with the two different sword arts that usew this stun
+		main_character_Obj.stun_min = false;
+			
         // Return to chasing the player.
         enemy_change_state(ENEMY_STATE.CHASE);
     }
 
 
 }
+
+

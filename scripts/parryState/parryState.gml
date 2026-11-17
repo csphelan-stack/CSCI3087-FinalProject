@@ -23,7 +23,7 @@ function startParryState(){
 	// guard straight up: the looping block animation, no charge-up
 	sprite_index = parry_block_spr[parry_dir4];
 	image_index = 0;
-	image_speed = 1;
+	image_speed = 0.8;
 }
 
 function parryStateMC(){
