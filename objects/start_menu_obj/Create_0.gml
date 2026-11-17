@@ -1,3 +1,8 @@
+// cursor set for start menu
+
+window_set_cursor(cr_none);
+window_set_cursor(gui_cursor_spr);
+
 if (!audio_is_playing(snd_menu_music)) {
     audio_stop_sound(snd_game_music);
     audio_play_sound(snd_menu_music, 10, true);
