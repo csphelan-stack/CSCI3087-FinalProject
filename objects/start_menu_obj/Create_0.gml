@@ -1,3 +1,8 @@
+// cursor set for start menu
+
+window_set_cursor(cr_none);
+
+
 if (!audio_is_playing(snd_menu_music)) {
     audio_stop_sound(snd_game_music);
     audio_play_sound(snd_menu_music, 10, true);
@@ -47,6 +52,7 @@ activate_item = function(_index) {
         case 0: // Play
             audio_stop_sound(snd_menu_music);
             room_goto(outside_dungeon_first_level_room);
+			//room_goto(interior_room);
             break;
         case 1: // Toggle fullscreen
             is_fs = !is_fs;

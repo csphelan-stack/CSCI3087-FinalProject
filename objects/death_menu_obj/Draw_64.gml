@@ -32,3 +32,5 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_color(c_white);
 draw_set_alpha(1);
+
+draw_sprite(gui_cursor_spr, 0, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));

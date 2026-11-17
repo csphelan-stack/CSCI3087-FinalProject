@@ -42,9 +42,9 @@ hurt_anim_spd = 1.0;
 attack_anim_spd = 1.0;
 
 //vision
-sight_range = 150;  // spotting distance
-view_angle  = 120;  // vision cone width (360 = sees all around)
-lose_range  = 220;  // keeps chasing out to this range
+sight_range = 300;  // spotting distance
+view_angle  = 360;  // vision cone width (360 = sees all around)
+lose_range  = 420;  // keeps chasing out to this range
 attack_range = 22;
 stop_range  = 14;   // stops this close to the player
 

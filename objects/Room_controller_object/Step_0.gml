@@ -44,6 +44,13 @@ if (instance_exists(main_character_Obj)) {
 
 }
 
+// DEBUG: press M to jump to the interior (upgrade) room. Delete before handing in.
+if (keyboard_check_pressed(ord("M"))) {
+    global.prev_room = room;       // so the return door knows where you came from
+    global.waves_complete = true;  // pretend this room's waves are beaten
+    room_goto(interior_room);
+}
+
 
 
 
