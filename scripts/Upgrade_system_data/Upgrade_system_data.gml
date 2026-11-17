@@ -13,8 +13,7 @@ function Upgrade_system_data(){
 			special: false,
 			desc: "The blade is an extension of one's own body: This upgrade allows the adventurer to hone his skills and sharpen his blade",
 			effects: [
-				{ stat: "player_damage", op: "mult"   , value: 2},
-				{stat: "tsunami_damage",op:"mult", value: 2}
+				{ stat: "player_damage", op: "mult"   , value: 1.8},
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 0,
@@ -30,7 +29,7 @@ function Upgrade_system_data(){
 			special: false,
 			desc: "The collection of orbs is a mystical art passed down through generations: This upgrade allows the user to increase their natural health",
 			effects: [
-				{ stat: "total_hp", op: "mult"   ,    value: 1.2 },
+				{ stat: "total_hp", op: "mult"   ,    value: 1.4 },
 			],
 			spriteF: card_space_star_spr,
 			indexF: 0,
@@ -62,10 +61,11 @@ function Upgrade_system_data(){
 
 			name: "Luminescent Silhouette",
 			special: false,
+			requires: "dash_unlock",
 			desc: "All things have a limit and all things hold a cost. This upgrade allows the user to dash further but less often",
 			    effects: [
 		{ stat: "dash_length",   op: "mult"   ,  value: 1.8 },
-		{ stat: "dash_cooldown_t",op: "add"   , value: 60 },
+		{ stat: "dash_cooldown_t",op: "add"   , value: 40 },
 		{stat: "dash_ghost_count", op: "add", value:2}
 		],
 			spriteF: card_deco_feather_spr,
@@ -82,6 +82,7 @@ function Upgrade_system_data(){
 
 			name: "Double Rainbow",
 			special: false,
+			requires: "dash_unlock",
 			desc: "Double rainbows are a sign of good fortune in many cultures: allows a second dash shortly following the first.",
 			    effects: [
 		{ stat: "dash_double_unlock",   op: "set"   ,  value: true },
@@ -167,6 +168,7 @@ function Upgrade_system_data(){
 
 			name: "Sword art 1st form: House of Cards",
 			special: false,
+			requires: "foundational_swordplay_unlocked",
 			desc: "When the bottom falls they all do: this sword ability activates after every 5 kills, and effects all enemies in a certain radius damaging and stunning all of them. Turn on this sword art by clicking 1.",
 
 			effects: [
@@ -177,6 +179,7 @@ function Upgrade_system_data(){
 			spriteB: card_deco_back_spr,
 			indexB: 9,
 			upgrades_possible : 1
+			
 
 		}
 
@@ -186,6 +189,7 @@ function Upgrade_system_data(){
 
 			name: "Sword art 2nd form: Live Offering",
 			special: false,
+			requires: "foundational_swordplay_unlocked",
 			desc: "The essence of another taken and given to you: clicking shift allows a user to change weapons to a set of throwing knives; these knives heal you and damage the enemy.Turn on this sword art by clicking 2.",
 
 			effects: [
@@ -207,6 +211,7 @@ function Upgrade_system_data(){
 
 			name: "Sword art 3rd Form: Flash Flood",
 			special: false,
+			requires: "foundational_swordplay_unlocked",
 			desc: "The ebs and flows of swordsmanship combined with the waves of the sea: this sword art allows the user to flood his surroundings on every 3rd attack stunning enemies and grouping them together.Turn on this sword art by clicking 3.",
 
 			effects: [
@@ -236,6 +241,7 @@ function Upgrade_system_data(){
 			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional: ability allows a user to spin attack for a certain amount of time with the added effect of pulling enemies closer (Hold {global.special_button} to activate attack)",
 			effects: [
 				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.TSUNAMI},
+				//{ stat: ,op:"set"  value: true},
 			],
 			spriteF: card_nautical_joker_spr,
 			indexF: 2,
@@ -256,7 +262,8 @@ function Upgrade_system_data(){
 
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
-			{ stat: "dance_of_dragons_unlock", op:"set",value: true}
+			{ stat: "dance_of_dragons_unlock", op:"set",value: true},
+			{ stat: "special_equipped", op:"set",value:  SpecialState.DANCE},
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 12,
@@ -265,8 +272,7 @@ function Upgrade_system_data(){
 			upgrades_possible : 1
 
 		}
-
-				,
+ ,
 					Special_attack_butterfly:
 		{
 
@@ -276,6 +282,7 @@ function Upgrade_system_data(){
 
 			effects: [
 				{ stat: "special_attack_butterfly_unlock", op: "set",  value: true},
+				{ stat: "special_equipped", op:"set",value:  SpecialState.BUTTERFLY},
 			],
 			spriteF: card_forest_joker_spr,
 			indexF: 1,
@@ -296,21 +303,32 @@ function Upgrade_system_data(){
 
 function upgradeCheckPossible(){
 
-
-
-
 	var _available = [];
-	var _keys = struct_get_names(global.Character_Upgrades);
+	var _keys = struct_get_names(global.Character_Upgrades); // to get all current names from data set 0 restrictions
+	var _player = instance_find(main_character_Obj, 0);   // to check what he's already unlocked
 
 	for (var i = 0; i < array_length(_keys); i++) {
 		var _upg = global.Character_Upgrades[$ _keys[i]];
-		if (_upg.upgrades_possible >= 1 && _upg.special == false) {
-			array_push(_available, _upg);
+
+		// used up, or a special card.
+		if (_upg.upgrades_possible < 1 || _upg.special) {
+			continue;
 		}
+
+		// locked behind another upgrade? "requires" names the player variable that upgrade turns on.
+		// if he doesn't have that variable yet, or it's still false, skip the card for now.
+		// it shows up in later deals once he's picked the upgrade it needs.
+		if (struct_exists(_upg, "requires")) {
+			if (_player == noone
+			|| !variable_instance_exists(_player, _upg.requires)
+			|| !variable_instance_get(_player, _upg.requires)) {
+				continue;
+			}
+		}
+
+		array_push(_available, _upg);
 	}
 	return _available;
-
-
 }
 
 function applyUpgrade(_upg){
@@ -353,8 +371,23 @@ function applyUpgrade(_upg){
 
 
 }
+//basically copied the original check upgrades but changed it to only use the 3 special upgrades.
+// this function will be called one time and we can only pick one special.
+function upgradeCheckSpecials(){
+	
+var _available = [];
+	var _keys = struct_get_names(global.Character_Upgrades); // to get all current names from data set 0 restrictions
 
 
+	for (var i = 0; i < array_length(_keys); i++) {
+		var _upg = global.Character_Upgrades[$ _keys[i]];
 
+		// used up, or not a special card.
+		if (_upg.upgrades_possible < 1 || _upg.special == false) {
+			continue;
+		}
 
-
+		array_push(_available, _upg);
+	}
+	return _available;
+}

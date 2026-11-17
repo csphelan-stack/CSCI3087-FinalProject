@@ -152,18 +152,20 @@ else {
 //UPGRADE SYSTEM START: RN IT IS JUST A BUTTON PRESS NEEDS TO BE AN EVENT TRIGGER
 //
 //////////////////////////////////////////////////
+
+////
+//// DELETE BEFORE FINAL PRES
 if(keyboard_check_pressed(global.temp_upgrade_btn)){
-	event_go_upgrade = !event_go_upgrade
+	event_go_upgrade = !event_go_upgrade;	
 }
+
+
 if(event_go_upgrade){
 	//only make one (this runs every step)
 	if(!instance_exists(Upgrade_system_obj)){
 		instance_create_depth(x,y,-100,Upgrade_system_obj);
 
 	}
-
-
-
 }
 else{
 	if(instance_exists(Upgrade_system_obj)){

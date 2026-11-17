@@ -1,18 +1,6 @@
 
 //the point of the upgrade system is to change the main characters variables according
 //to the upgrades that have been unlocked or allowed.
-
-
-
-/*
-if(main_character_Obj.special_upgrade_available){
-	u_special_upgrade_available = true;
-}
-else{
-	u_special_upgrade_available = false;
-}
-*/
-
 //only build the upgrade list the first time, so picks (upgrades_possible) aren't reset every time the cards open
 
 audio_play_sound(snd_cards_open, 15, false);
@@ -20,8 +8,15 @@ if (!variable_global_exists("Character_Upgrades")) {
 	Upgrade_system_data();
 }
 
+// count how many times the cards have been dealt (1 = first deal, 2 = second...)
+// it's a global so it isn't lost when this object is destroyed after each deal
+if (!variable_global_exists("upgrade_deals")) {
+	global.upgrade_deals = 0;
+}
+global.upgrade_deals += 1;
 
 
+special_round =3;
 
 
 
@@ -49,13 +44,30 @@ available_upgrades = upgradeCheckPossible();
 shuffled_upgrades = [];
 shuffled_upgrades = array_shuffle(available_upgrades);
 
+//special upgrades
+special_available = [];
+special_available = upgradeCheckSpecials();
+shuffled_upgrades_special = [];
+shuffled_upgrades_special = array_shuffle(special_available);
+
+special_card_number = 3;
+
+
 card_number = irandom_range(3,5);   //whole number of cards
 card_number = min(card_number, array_length(shuffled_upgrades));   //can't show more cards than there are upgrades left
 
 //how many cards the player takes each time the cards come out
-picks_per_event = 2;
+if(global.upgrade_deals == special_round){
+picks_per_event = 1;
+picks_left = min(picks_per_event, special_card_number);   //can't take more cards than were dealt
+cards_left = special_card_number;  
+}
+else{
+picks_per_event = 3;
 picks_left = min(picks_per_event, card_number);   //can't take more cards than were dealt
-cards_left = card_number;                         //cards still on the table
+cards_left = card_number;  
+}
+                       //cards still on the table
 
 
 //the event goes "choose" -> "confirm" -> "burn" (or "back" to "choose" if you say No)
@@ -85,6 +97,27 @@ no_hover  = false;
 var _row_w = card_number * card_width + (card_number - 1) * card_gap;
 var _row_x = floor((display_get_gui_width() - _row_w) / 2);   // left edge of the first card
 
+//on the third round of upgrades we get to pick one special upgrade
+//after this they are never pickable again
+if(global.upgrade_deals == special_round){
+	for (var i = 0; i < special_card_number; i++) {
+	var _c = instance_create_depth(0, 0, depth - 1, upgrade_card_obj);
+	_c.upg    = shuffled_upgrades_special[i];
+	_c.card_x = _row_x + i * (card_width + card_gap);   // each card is one card + one gap further right
+	_c.card_y = card_start_y;
+	_c.card_w = card_width;
+	_c.card_h = card_height;
+
+	//remember its spot in the row so "No" can put it back
+	_c.home_x = _c.card_x;
+	_c.home_y = card_start_y;
+	_c.home_w = card_width;
+	_c.home_h = card_height;
+}
+	
+}	//if not special then deal as normal
+else{
+
 // deal the cards: one card object per upgrade
 for (var i = 0; i < card_number; i++) {
 	var _c = instance_create_depth(0, 0, depth - 1, upgrade_card_obj);
@@ -101,6 +134,7 @@ for (var i = 0; i < card_number; i++) {
 	_c.home_h = card_height;
 }
 
+}
 
 //after a card is taken: works out new centred spots for the cards that are left
 //(_skip = the burnt card, so it doesn't get a spot). they slide there in the "regroup" phase
