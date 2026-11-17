@@ -103,7 +103,7 @@ can_move = true;
 //start with no attack have some condition to show he can attack.
 can_attack = true;
 //can he dash / parry / use the special? (characterInside_script turns these off, characterOutside_script back on)
-dash_unlock = true;
+dash_unlock = false;
 can_dash = true;
 can_parry = true;
 can_special = true;
@@ -199,7 +199,7 @@ sprite_vtk = vtk_spr;
 knockback_sa3 =10;
 swept_away_time = 40;
 switch_weapon_to_sa3 = false;
-flood_formation_unlock = true;
+flood_formation_unlock = false;
 swept_away_speed = 1;
 attack_sa3_hit_spawned = false;
 flood_formation_finished = false;
@@ -236,7 +236,7 @@ attack_hit_spawned = false;  //has this swing already made its hitbox?
 
 //which special he's using (see SpecialState). picking a special card sets this, so it lives on the player, not in global
 //SpecialState.NONE = locked, no special yet
-special_equipped = SpecialState.BUTTERFLY;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
+special_equipped = SpecialState.NONE;   //TESTING: switch between BUTTERFLY, DANCE and TSUNAMI here
 
 //---Butterfly Effect (special_attack_butterfly_script)---
 //for 6 seconds his hits do no damage. instead the first hit on each enemy TAGS it (once per enemy). he swings faster,
