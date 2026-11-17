@@ -250,6 +250,7 @@
     {"name":"card_nautical_joker_spr","order":8,"path":"sprites/card_nautical_joker_spr/card_nautical_joker_spr.yy",},
     {"name":"dash_icon_spr","order":3,"path":"sprites/dash_icon_spr/dash_icon_spr.yy",},
     {"name":"dungeon_tiles_spr","order":18,"path":"sprites/dungeon_tiles_spr/dungeon_tiles_spr.yy",},
+    {"name":"enemy_spawn_zone_spr","order":19,"path":"sprites/enemy_spawn_zone_spr/enemy_spawn_zone_spr.yy",},
     {"name":"face_portrait_spr","order":7,"path":"sprites/face_portrait_spr/face_portrait_spr.yy",},
     {"name":"gui_arrow_down_spr","order":19,"path":"sprites/gui_arrow_down_spr/gui_arrow_down_spr.yy",},
     {"name":"gui_arrow_fast_forward_spr","order":16,"path":"sprites/gui_arrow_fast_forward_spr/gui_arrow_fast_forward_spr.yy",},
