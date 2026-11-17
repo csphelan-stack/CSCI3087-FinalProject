@@ -1,7 +1,7 @@
 {
   "$GMRoom":"v1",
   "%Name":"death_room",
-  "creationCodeFile":"",
+  "creationCodeFile":"rooms/death_room/RoomCreationCode.gml",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
