@@ -23,6 +23,7 @@
     {"name":"special_attacks","order":12,"path":"folders/Main_character/special_attacks.yy",},
     {"name":"Sword_arts","order":13,"path":"folders/Main_character/Sword_arts.yy",},
     {"name":"Upgrade_system","order":10,"path":"folders/Main_character/Upgrade_system.yy",},
+    {"name":"npcs","order":28,"path":"folders/npcs.yy",},
     {"name":"Room_settings","order":5,"path":"folders/Room_settings.yy",},
     {"name":"room_transitions","order":4,"path":"folders/Room_settings/room_transitions.yy",},
     {"name":"Room's","order":3,"path":"folders/Room's.yy",},
