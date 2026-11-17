@@ -21,6 +21,7 @@
     {"name":"inst_6DC36F71","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
     {"name":"inst_72032A36","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
     {"name":"inst_536ED661","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
+    {"name":"inst_71CDC9AF","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -40,6 +41,7 @@
         {"$GMRInstance":"v4","%Name":"inst_6DC36F71","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6DC36F71","objectId":{"name":"enemy_spawn_zone_obj","path":"objects/enemy_spawn_zone_obj/enemy_spawn_zone_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":3.5,"scaleY":3.0,"x":896.0,"y":704.0,},
         {"$GMRInstance":"v4","%Name":"inst_72032A36","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_72032A36","objectId":{"name":"enemy_spawn_zone_obj","path":"objects/enemy_spawn_zone_obj/enemy_spawn_zone_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":3.5,"scaleY":3.0,"x":416.0,"y":320.0,},
         {"$GMRInstance":"v4","%Name":"inst_536ED661","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_536ED661","objectId":{"name":"enemy_spawn_zone_obj","path":"objects/enemy_spawn_zone_obj/enemy_spawn_zone_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":3.5,"scaleY":3.0,"x":896.0,"y":320.0,},
+        {"$GMRInstance":"v4","%Name":"inst_71CDC9AF","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_71CDC9AF","objectId":{"name":"object_healing_fountain","path":"objects/object_healing_fountain/object_healing_fountain.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":704.0,"y":288.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"Floor","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Floor","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
           -941,-2147483648,1,0,-7,-2147483648,3,0,-2147483648,0,-89,-2147483648,1,0,-99,-2147483648,1,0,-181,-2147483648,

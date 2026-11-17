@@ -1,0 +1,1 @@
+sprite_index = knight_idle_forward_spr;
