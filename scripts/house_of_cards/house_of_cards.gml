@@ -22,23 +22,24 @@ var number_of_enemies_effected =7;
 
 		var _object = instance_create_depth(x,y,-100,house_of_cards_obj);
 
-		// 3. Process the found instances
-		if (_num > 0) {
-		    for (var i = 0; i < min(_num,number_of_enemies_effected); ++i) {
-		        var _inst_id = _list[| i]; // Get instance ID from DS list
-				if(instance_exists(_inst_id)){
-
-					if(array_contains(_object.targets,_inst_id)){
-
-					}
-					else{
-					_object.targets[i] = _inst_id;
-					_object.number_of_targets_HOC = min(_num,number_of_enemies_effected);
-					}
-				}
-
-		    }
+		// 3. Pick the targets: up to 7 enemies that are still ALIVE.
+		// An enemy in ENEMY_STATE.DEAD is only playing its death animation and is about to be destroyed,
+		// which would take its strike with it. Skip those and keep looking: loop over EVERY enemy found,
+		// not just the first 7, so dying enemies don't use up the slots.
+		for (var i = 0; i < _num; ++i) {
+			var _inst_id = _list[| i];
+			if (instance_exists(_inst_id) && _inst_id.state != ENEMY_STATE.DEAD) {
+				array_push(_object.targets, _inst_id);   // adds to the end, so the list never has gaps
+				if (array_length(_object.targets) >= number_of_enemies_effected) break;   // got 7, stop looking
+			}
 		}
+		// how many we actually got (could be fewer than 7, or 0)
+		_object.number_of_targets_HOC = array_length(_object.targets);
+					
+		
+
+		    
+		
 
 
 

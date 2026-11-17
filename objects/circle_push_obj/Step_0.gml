@@ -1,5 +1,5 @@
 
-max(main_character_Obj.invuln, 10);
+main_character_Obj.invuln=max(main_character_Obj.invuln, 10);
 
 if (radius < max_radius) {
     radius += grow_speed;

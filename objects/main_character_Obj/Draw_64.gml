@@ -135,7 +135,7 @@ if(health_steal_knives_unlocked){
 				draw_sprite_ext(vtk_2_spr,0,gui_x_vtk + space,gui_y_vtk,1,1,0,c_white,.8);
 				}
 			}
-		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use");
+		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use Vampire Knives");
 		}
 		else{
 		for(var i=0;i<knife_throws_before_switching_back_o;i++){
@@ -154,16 +154,55 @@ if(health_steal_knives_unlocked){
 }
 
 if(flood_formation_unlock){
-	var num_used = 0;
+
+	var _space_above_txt = 8;
 	if(switch_weapon_to_sa3){
+		for(var i=0;i<5;i++){
+			var space = 50 * i;
+			var _alpha = 0.75 + .1*i;
+		draw_sprite_ext(wave_animation_small_spr,i,gui_x_sa3_images +space ,gui_y_vtk +_space_above_txt,1,1,0,c_white,min(1,_alpha));
+		}
+		draw_text(sa3_gui_x+text_x_add_shift,gui_y_vtk+text_y_add,"ATTACK TO FLOOD");
 	}
 	else{
+		for(var i=0;i<4;i++){
+			var space = 50 * i;
+			
+		draw_sprite_ext(wave_animation_small_spr,i,gui_x_sa3_images +space ,gui_y_vtk +_space_above_txt,1,1,0,c_white,.5);
+		}
 		if( sa3_cooldown_time <=0){
-		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use");
+			
+		
+		draw_text(sa3_gui_x+text_x_add_shift,gui_y_vtk+text_y_add,"SHIFT to use Flash Flood");
 		}
 		else{
-		draw_text(gui_x_vtk+text_x_add_shift,gui_y_vtk+text_y_add,"Cooldown.....");
+			
+		draw_text(sa3_gui_x+text_x_add_shift,gui_y_vtk+text_y_add,"Cooldown.....");
 		}
+	}
+}
+if(house_of_cards_unlock){
+	var _current_kills =	abs( global.kill_counter - kill_counter_current) mod 5;
+	var _space_above_txt = -20;
+	if(cooldown_HOC <=0){
+		for(var i = 0;i<_current_kills;i++){
+			var space = space_between_cards_sa1 * i;
+			draw_sprite_ext(card_deco_building_spr,12,gui_x_sa1 + space,gui_y_vtk +_space_above_txt,1,1,0,c_white,1);
+		}
+		for(var i = 0;i<kill_number_HOC;i++){
+			var space = space_between_cards_sa1 * i;
+			draw_sprite_ext(card_deco_building_spr,12,gui_x_sa1 + space,gui_y_vtk +_space_above_txt,1,1,0,c_white,.75);
+		}
+		
+		var _num = 5- _current_kills;
+		draw_text(gui_x_sa1+text_x_add_shift,gui_y_vtk+text_y_add,$"{_num} MORE KILLS");
+	}
+	else{
+		for(var i = 0;i<kill_number_HOC;i++){
+			var space = space_between_cards_sa1 * i;
+			draw_sprite_ext(card_deco_building_spr,12,gui_x_sa1 + space,gui_y_vtk +_space_above_txt,1,1,0,c_white,.75);
+		}
+		draw_text(gui_x_sa1+text_x_add_shift,gui_y_vtk+text_y_add,$"COOLDOWN....");
 	}
 }
 

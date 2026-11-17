@@ -16,13 +16,7 @@ function enemy_push_state(){
 
 		move_and_collide(_mx, _my, wall_obj);
 
-		//// which way is "away from the circle"
-		//var _dist = point_distance(circle_push_obj.x, circle_push_obj.y, x, y);   // how far from the centre now
-		//var _gap  = circle_push_obj.radius - _dist;                                // how far inside the edge it is
 
-		//if (_gap > 0) {
-		//	move_and_collide(lengthdir_x(_gap, _dir), lengthdir_y(_gap, _dir), wall_obj);
-		//}
 
 	}
 	else{

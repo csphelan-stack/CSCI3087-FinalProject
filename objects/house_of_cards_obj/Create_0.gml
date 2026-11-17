@@ -4,8 +4,8 @@ targets = [];
 time_hit = 30;
 number_of_targets_HOC = 0;
 targets_hit=0;
-stun_time_HOC = 30;
-damage_HOC = 8;
+stun_time_HOC = 60 * 1.5;
+damage_HOC = 8 *1.3;
 
 
 alarm[0] = time_hit;

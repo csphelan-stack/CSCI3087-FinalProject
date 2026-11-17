@@ -187,7 +187,16 @@ function enemy_change_state(_new_state) {
         case ENEMY_STATE.STUN:
             image_index = 0;
             image_speed =1;
-            state_timer = state_timer_stun;
+            
+			
+			//very silly way of doing this but idc 
+			if(main_character_Obj.stun_min){
+				state_timer = main_character_Obj.sa1_stun;
+			}
+			else{
+			state_timer = state_timer_stun;
+			}
+			
             // Find the closest player.
             var _p_1 = instance_nearest(x, y, main_character_Obj);
             // Make sure a player actually exists.
