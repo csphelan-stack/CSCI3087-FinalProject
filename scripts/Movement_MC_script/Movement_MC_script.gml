@@ -14,7 +14,7 @@ function applyMovement(){
         return;
     }
 
-    if(keyboard_check_pressed(global.dash_button) && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
+    if(dash_unlock && keyboard_check_pressed(global.dash_button) && can_move && can_dash && dash_cooldown <=0 && !global.gameIsPaused){
         audio_play_sound(snd_dash, 15, false);
         startDashState();
         return;
