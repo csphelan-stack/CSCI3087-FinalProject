@@ -12,6 +12,11 @@ if (hp <= 0 && state != ENEMY_STATE.DEAD) {
 }
 
 
+
+
+// ============================================================
+// LOUIS SWORD ART STUFF, NO SAO
+// ============================================================
 //if the circle obj has touched the enemy it changed to the push state
 
 if (instance_exists(circle_push_obj) && state != ENEMY_STATE.PUSHSA3) {
@@ -72,8 +77,7 @@ if (attack_cooldown > 0){
 // ============================================================
 
 // Bosses count their attack cooldowns and watch their health here.
-if (boss_enabled)
-{
+if (boss_enabled){
     enemy_boss_tick();
 }
 
@@ -97,7 +101,7 @@ switch (state) {
     case ENEMY_STATE.PUSHSA3: enemy_push_state(); break;
     case ENEMY_STATE.STUN: enemy_stun_state(); break;
     case ENEMY_STATE.DEAD:
-        // keep the death animation playing, then skip everything below
+        // keep the death animation playing and skip everything below
         enemy_state_dead();
         exit;
 }

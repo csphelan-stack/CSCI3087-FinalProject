@@ -1,24 +1,15 @@
 // ============================================================
 // ENEMY BOSS
 // ============================================================
-// everything a boss needs on top of a normal enemy.
-// a boss is a child of enemy_boss_base_obj, which is a child of
-// Enemy_base_obj, so it still uses the normal state machine
-// (idle, chase, attack, hurt, dead). the only differences:
-//
-//   - in CHASE, instead of walking up and swinging, the boss picks one
-//     of four attacks (enemy_boss_choose)
+//each boss is a child of -> enemy_boss is a child of -> enemy_base_obj
+
+//   - in CHASE, boss uses one of the four attacks instead of basic swing OR magic
 //   - the ATTACK state runs enemy_boss_attack_step instead of the
-//     normal attack code
-//   - SUPER ARMOR: normal hits (sword, spin) do not stun the boss, they
-//     only make it flash white. a PERFECT PARRY still staggers it.
-//
-// THE FOUR ATTACKS (every boss has all four)
-//   MELEE   - the normal attack, used when the player is close
-//   MAGIC   - the normal magic: a few small magic circles
-//   AREA    - the big magic: one huge magic circle (large area)
-//   SPECIAL - the attack the player has to dodge or parry
-//             "charge" (orc), "wave" (skeleton), "skulls" (cultist)
+//     normal attack code bc boss_enabled is true in parent class
+//   - SUPER ARMOR: normal hits flash white and don't stun,
+//     a perfect parry still staggers it.
+// THE FOUR ATTACKS MELEE< MAGIC< AREA< SPECIAL
+
 //
 // HOW A BOSS IS SET UP
 //   see enemy_boss_orc_obj Create. each boss fills in boss_cfg, one entry
@@ -38,9 +29,7 @@
 //   was parried and staggers.
 // ============================================================
 
-// the boss's four attacks
-enum BOSS_ATTACK
-{
+enum BOSS_ATTACK {
     NONE,
     MELEE,
     MAGIC,
@@ -48,7 +37,8 @@ enum BOSS_ATTACK
     SPECIAL
 }
 
-// state_timer is kept at this while a boss attacks (see above)
+// state_timer is kept at this while a boss attacks 
+// makes a boss unstunnable / only a parry can offset this
 #macro BOSS_SENTINEL -999
 
 
@@ -58,20 +48,18 @@ enum BOSS_ATTACK
 // called from the enemy Step event, only for bosses.
 // ============================================================
 
-function enemy_boss_tick()
-{
+function enemy_boss_tick(){
     // Count every attack's cooldown down.
-    for (var _i = 0; _i < array_length(boss_cd); _i++)
-    {
-        if (boss_cd[_i] > 0)
-        {
+    // the "_i" is the current attack's cooldown
+    // boss_cd[NONE, MELEE, MAGIC, AREA, SPECIAL] each with its own cooldown
+    for (var _i = 0; _i < array_length(boss_cd); _i++){
+        if (boss_cd[_i] > 0){
             boss_cd[_i]--;
         }
     }
 
     // The white hit-flash fades out.
-    if (boss_flash > 0)
-    {
+    if (boss_flash > 0) {
         boss_flash--;
     }
 
@@ -83,8 +71,7 @@ function enemy_boss_tick()
 
     // At half health the boss becomes enraged:
     // it attacks more often and moves faster.
-    if (!boss_enraged && hp <= total_hp * 0.5)
-    {
+    if (!boss_enraged && hp <= total_hp * 0.5) {
         boss_enraged = true;
         boss_cd_scale = 0.7;
         movespd *= 1.25;
@@ -100,8 +87,7 @@ function enemy_boss_tick()
 // farther away than it can see the player (sight_range).
 // ============================================================
 
-function enemy_boss_range(_range)
-{
+function enemy_boss_range(_range){
     return min(_range, sight_range);
 }
 
@@ -113,11 +99,10 @@ function enemy_boss_range(_range)
 // or BOSS_ATTACK.NONE if nothing is ready (then the boss keeps walking).
 // ============================================================
 
-function enemy_boss_choose()
-{
+function enemy_boss_choose() {
     // A short breather between attacks.
-    if (attack_cooldown > 0)
-    {
+    // Globally set from enemy_base_bj
+    if (attack_cooldown > 0){
         return BOSS_ATTACK.NONE;
     }
 
@@ -130,28 +115,23 @@ function enemy_boss_choose()
 
     // Close enough for the normal attack. It is listed twice so it is
     // the usual choice when the player is right next to the boss.
-    if (_dist <= attack_range && boss_cd[BOSS_ATTACK.MELEE] <= 0)
-    {
+    if (_dist <= attack_range && boss_cd[BOSS_ATTACK.MELEE] <= 0){
         array_push(_options, BOSS_ATTACK.MELEE);
         array_push(_options, BOSS_ATTACK.MELEE);
     }
 
     // The ranged attacks need line of sight and the right distance.
-    if (_sees)
-    {
-        for (var _k = BOSS_ATTACK.MAGIC; _k <= BOSS_ATTACK.SPECIAL; _k++)
-        {
+    if (_sees){
+        for (var _k = BOSS_ATTACK.MAGIC; _k <= BOSS_ATTACK.SPECIAL; _k++){
             var _c = boss_cfg[_k];
 
-            if (boss_cd[_k] <= 0 && _dist >= _c.range_min && _dist <= enemy_boss_range(_c.range_max))
-            {
+            if (boss_cd[_k] <= 0 && _dist >= _c.range_min && _dist <= enemy_boss_range(_c.range_max)) {
                 array_push(_options, _k);
             }
         }
     }
 
-    if (array_length(_options) == 0)
-    {
+    if (array_length(_options) == 0){
         return BOSS_ATTACK.NONE;
     }
 
@@ -167,8 +147,7 @@ function enemy_boss_choose()
 // boss_attack has already been set by the chase state.
 // ============================================================
 
-function enemy_boss_begin()
-{
+function enemy_boss_begin() {
     // Every attack, whatever it is, makes the boss a little more tired.
     boss_fatigue = min(boss_fatigue + boss_fatigue_per_attack, boss_fatigue_max);
 
@@ -187,8 +166,7 @@ function enemy_boss_begin()
     boss_dir = point_direction(x, y, last_x, last_y);
     facing = boss_dir;
 
-    switch (boss_attack)
-    {
+    switch (boss_attack){
         case BOSS_ATTACK.MAGIC:
             enemy_boss_begin_magic();
         break;
@@ -205,8 +183,7 @@ function enemy_boss_begin()
 
 
 // the colored orb that grows on the boss while it charges a spell
-function enemy_boss_make_orb(_colour, _grow_time)
-{
+function enemy_boss_make_orb(_colour, _grow_time) {
     magic_orb = instance_create_depth((bbox_left + bbox_right) / 2, (bbox_top + bbox_bottom) / 2, depth - 20, magic_fx_obj, {
         kind:      "orb",
         caster:    id,
@@ -220,9 +197,8 @@ function enemy_boss_make_orb(_colour, _grow_time)
 // ------------------------------------------------------------
 // MAGIC: a few small magic circles
 // ------------------------------------------------------------
-function enemy_boss_begin_magic()
-{
-    var _c = boss_cur;
+function enemy_boss_begin_magic() {
+    var _c = boss_cur; // settings of the attack used rn
     var _info = enemy_magic_info(boss_element);
 
     // Where the player is right now.
@@ -234,8 +210,7 @@ function enemy_boss_begin_magic()
     // Work out where every circle goes. Each boss uses its own pattern.
     var _spots = [];
 
-    switch (_c.pattern)
-    {
+    switch (_c.pattern) {
         // one on the player and one on each side of them (a pincer)
         case "triangle":
             array_push(_spots, [_px, _py]);
@@ -245,8 +220,7 @@ function enemy_boss_begin_magic()
 
         // a trail of circles from the boss to the player
         case "line":
-            for (var _i = 1; _i <= _c.count; _i++)
-            {
+            for (var _i = 1; _i <= _c.count; _i++) {
                 var _t = _i / _c.count;
                 array_push(_spots, [lerp(x, _px, _t), lerp(y, _py, _t)]);
             }
@@ -256,8 +230,7 @@ function enemy_boss_begin_magic()
         case "scatter":
             array_push(_spots, [_px, _py]);
 
-            for (var _i = 1; _i < _c.count; _i++)
-            {
+            for (var _i = 1; _i < _c.count; _i++) {
                 var _a = random(360);
                 var _r = random_range(48, 88);
                 array_push(_spots, [_px + lengthdir_x(_r, _a), _py + lengthdir_y(_r, _a)]);
@@ -266,8 +239,7 @@ function enemy_boss_begin_magic()
     }
 
     // Make the circles. Each one is released a little after the one before.
-    for (var _i = 0; _i < array_length(_spots); _i++)
-    {
+    for (var _i = 0; _i < array_length(_spots); _i++) {
         var _circle = instance_create_depth(_spots[_i][0], _spots[_i][1], depth + 20, magic_circle_obj, {
             caster:        id,
             element:       boss_element,
@@ -288,8 +260,7 @@ function enemy_boss_begin_magic()
 // ------------------------------------------------------------
 // AREA: one huge magic circle
 // ------------------------------------------------------------
-function enemy_boss_begin_area()
-{
+function enemy_boss_begin_area() {
     var _c = boss_cur;
     var _info = enemy_magic_info(boss_element);
 
@@ -297,8 +268,7 @@ function enemy_boss_begin_area()
     var _cx = last_x;
     var _cy = last_y;
 
-    if (_c.centre == "boss")
-    {
+    if (_c.centre == "boss") {
         _cx = x;
         _cy = y;
     }
@@ -330,12 +300,10 @@ function enemy_boss_begin_area()
 // ------------------------------------------------------------
 // SPECIAL: the attack the player must dodge or parry
 // ------------------------------------------------------------
-function enemy_boss_begin_special()
-{
+function enemy_boss_begin_special() {
     var _c = boss_cur;
 
-    switch (_c.type)
-    {
+    switch (_c.type) {
         // a warning lane on the ground shows where the boss will go / shoot
         case "charge":
         case "wave":
@@ -350,8 +318,7 @@ function enemy_boss_begin_special()
 
         // skulls appear around the boss, then launch one after another
         case "skulls":
-            for (var _i = 0; _i < _c.count; _i++)
-            {
+            for (var _i = 0; _i < _c.count; _i++) {
                 instance_create_depth(x, y, depth - 10, boss_projectile_obj, {
                     kind:       "skull",
                     caster:     id,
@@ -375,11 +342,9 @@ function enemy_boss_begin_special()
 // attack code) while the boss is attacking.
 // ============================================================
 
-function enemy_boss_attack_step()
-{
+function enemy_boss_attack_step() {
     // A PERFECT PARRY changed state_timer: the boss is staggered.
-    if (state_timer != BOSS_SENTINEL)
-    {
+    if (state_timer != BOSS_SENTINEL) {
         enemy_boss_stagger(state_timer);
         return;
     }
@@ -393,30 +358,25 @@ function enemy_boss_attack_step()
     // moment before it goes off, so the player can dodge sideways.
     var _lock = 0;
 
-    if (boss_attack == BOSS_ATTACK.SPECIAL && (_c.type == "charge" || _c.type == "wave"))
-    {
+    if (boss_attack == BOSS_ATTACK.SPECIAL && (_c.type == "charge" || _c.type == "wave")) {
         _lock = 16;
     }
 
-    if (!boss_charging && boss_t < _c.windup - _lock && target != noone && instance_exists(target))
-    {
+    if (!boss_charging && boss_t < _c.windup - _lock && target != noone && instance_exists(target)) {
         boss_dir = point_direction(x, y, target.x, target.y);
     }
 
-    if (!boss_charging)
-    {
+    if (!boss_charging) {
         facing = boss_dir;
     }
 
     // What happens in each attack.
-    switch (boss_attack)
-    {
+    switch (boss_attack) {
         // ---------------- MELEE ----------------
         case BOSS_ATTACK.MELEE:
 
             // The swing connects (this is the same hit check normal enemies use).
-            if (!boss_hit_done && boss_t >= _c.windup + _c.delay)
-            {
+            if (!boss_hit_done && boss_t >= _c.windup + _c.delay) {
                 boss_hit_done = true;
                 attack_hit_done = true;
                 enemy_attack_hit();
@@ -428,8 +388,7 @@ function enemy_boss_attack_step()
         case BOSS_ATTACK.MAGIC:
 
             // Release the circles one after another.
-            for (var _i = 0; _i < array_length(boss_circles); _i++)
-            {
+            for (var _i = 0; _i < array_length(boss_circles); _i++){
                 if (boss_t == _c.windup + _i * _c.gap && instance_exists(boss_circles[_i]))
                 {
                     boss_circles[_i].released = true;
@@ -437,8 +396,7 @@ function enemy_boss_attack_step()
             }
 
             // The orb flares out when the first circle goes off.
-            if (boss_t >= _c.windup)
-            {
+            if (boss_t >= _c.windup) {
                 attack_hit_done = true;
             }
 
@@ -447,12 +405,10 @@ function enemy_boss_attack_step()
         // ---------------- AREA ----------------
         case BOSS_ATTACK.AREA:
 
-            if (boss_t == _c.windup)
-            {
+            if (boss_t == _c.windup) {
                 attack_hit_done = true;
 
-                if (instance_exists(boss_circles[0]))
-                {
+                if (instance_exists(boss_circles[0])) {
                     boss_circles[0].released = true;
                 }
             }
@@ -469,59 +425,50 @@ function enemy_boss_attack_step()
     boss_img = enemy_boss_anim_frame();
 
     // A parry can also happen during the hit above, so check again.
-    if (state_timer != BOSS_SENTINEL)
-    {
+    if (state_timer != BOSS_SENTINEL) {
         enemy_boss_stagger(state_timer);
         return;
     }
 
     // The attack is over.
-    if (boss_t >= _c.total)
-    {
+    if (boss_t >= _c.total) {
         enemy_boss_end();
     }
 }
 
 
 // the part of the attack that is different for each special attack
-function enemy_boss_special_step()
-{
+function enemy_boss_special_step(){
     var _c = boss_cur;
 
-    switch (_c.type)
-    {
+    switch (_c.type){
         // ---------------- CHARGE (orc) ----------------
         case "charge":
 
             // The warning lane is done: the boss rushes forward.
-            if (boss_t == _c.windup)
-            {
+            if (boss_t == _c.windup){
                 boss_charging = true;
                 attack_hit_done = true;
                 enemy_boss_remove_tele();
             }
 
-            if (boss_charging)
-            {
+            if (boss_charging){
                 // Run in a straight line (walls still stop the boss).
                 move_spd = _c.speed;
                 move_dir = boss_dir;
 
                 // The player is hurt (once) if they are inside the warning lane,
                 // which is exactly as wide as the circle of hit_radius around the boss.
-                if (!boss_hit_done && collision_circle(x, y - 10, _c.hit_radius, main_character_Obj, false, true) != noone)
-                {
+                if (!boss_hit_done && collision_circle(x, y - 10, _c.hit_radius, main_character_Obj, false, true) != noone){
                     boss_hit_done = true;
 
-                    with (main_character_Obj)
-                    {
+                    with (main_character_Obj){
                         Enemy_damage_applying(round(other.attack_damage * other.boss_cur.mult), other.id);
                     }
                 }
 
                 // The rush ends after a fixed time.
-                if (boss_t >= _c.windup + _c.charge_time)
-                {
+                if (boss_t >= _c.windup + _c.charge_time) {
                     boss_charging = false;
                 }
             }
@@ -531,21 +478,18 @@ function enemy_boss_special_step()
         // ---------------- WAVE (skeleton) ----------------
         case "wave":
 
-            if (boss_t == _c.windup)
-            {
+            if (boss_t == _c.windup) {
                 attack_hit_done = true;
                 enemy_boss_remove_tele();
 
                 // One wave, or three in a fan once the boss is enraged.
                 var _n = 1;
 
-                if (boss_enraged)
-                {
+                if (boss_enraged) {
                     _n = 3;
                 }
 
-                for (var _i = 0; _i < _n; _i++)
-                {
+                for (var _i = 0; _i < _n; _i++) {
                     var _a = boss_dir + (_i - (_n - 1) / 2) * 30;
 
                     instance_create_depth(x + lengthdir_x(36, _a), y + lengthdir_y(36, _a), depth - 10, boss_projectile_obj, {
@@ -566,8 +510,7 @@ function enemy_boss_special_step()
         case "skulls":
 
             // The skulls fly by themselves. The boss just holds the pose.
-            if (boss_t >= _c.windup)
-            {
+            if (boss_t >= _c.windup){
                 attack_hit_done = true;
             }
 
@@ -586,58 +529,47 @@ function enemy_boss_special_step()
 //   delay  - frames between the release and the strike frame
 // ============================================================
 
-function enemy_boss_anim_frame()
-{
+function enemy_boss_anim_frame() {
     var _c = boss_cur;
 
     var _spr = _c.spr;
 
-    if (boss_charging)
-    {
+    if (boss_charging){
         _spr = spr_special;
     }
 
     var _n = sprite_get_number(_spr[enemy_dir4()]);
 
     // Charging: the run animation just loops.
-    if (boss_charging)
-    {
+    if (boss_charging){
         return (boss_t * 0.3) mod _n;
     }
 
     var _f = 0;
 
-    if (_c.hold >= 0)
-    {
+    if (_c.hold >= 0){
         // Raise the weapon / arms, then freeze there until the release.
         var _raise = _c.windup * 0.45;
 
-        if (boss_t < _raise)
-        {
+        if (boss_t < _raise){
             _f = lerp(0, _c.hold, boss_t / max(_raise, 1));
         }
-        else if (boss_t < _c.windup)
-        {
+        else if (boss_t < _c.windup){
             _f = _c.hold;
         }
-        else if (boss_t < _c.windup + _c.delay)
-        {
+        else if (boss_t < _c.windup + _c.delay){
             _f = lerp(_c.hold, _c.strike, (boss_t - _c.windup) / max(_c.delay, 1));
         }
-        else
-        {
+        else{
             _f = lerp(_c.strike, _n - 1, clamp((boss_t - _c.windup - _c.delay) / max(_c.total - _c.windup - _c.delay, 1), 0, 1));
         }
     }
-    else
-    {
+    else{
         // No hold: play straight to the strike frame, then finish the swing.
-        if (boss_t < _c.windup + _c.delay)
-        {
+        if (boss_t < _c.windup + _c.delay){
             _f = lerp(0, _c.strike, boss_t / max(_c.windup + _c.delay, 1));
         }
-        else
-        {
+        else {
             _f = lerp(_c.strike, _n - 1, clamp((boss_t - _c.windup - _c.delay) / max(_c.total - _c.windup - _c.delay, 1), 0, 1));
         }
     }
@@ -647,11 +579,9 @@ function enemy_boss_anim_frame()
 
 
 // called from enemy_update_animation while a boss is in the ATTACK state
-function enemy_boss_animate(_d)
-{
+function enemy_boss_animate(_d) {
     // Safety: no attack data yet, so use the normal attack sprite.
-    if (!is_struct(boss_cur))
-    {
+    if (!is_struct(boss_cur)) {
         sprite_index = spr_attack[_d];
         image_speed = attack_anim_spd;
         return;
@@ -660,8 +590,7 @@ function enemy_boss_animate(_d)
     var _spr = boss_cur.spr;
 
     // The orc's charge uses its running sprite.
-    if (boss_charging)
-    {
+    if (boss_charging) {
         _spr = spr_special;
     }
 
@@ -678,10 +607,8 @@ function enemy_boss_animate(_d)
 // ============================================================
 
 // get rid of the warning lane
-function enemy_boss_remove_tele()
-{
-    if (instance_exists(boss_tele))
-    {
+function enemy_boss_remove_tele() {
+    if (instance_exists(boss_tele)) {
         instance_destroy(boss_tele);
     }
 
@@ -689,15 +616,13 @@ function enemy_boss_remove_tele()
 }
 
 // anything the boss made that should not outlive its attack
-function enemy_boss_cleanup()
-{
+function enemy_boss_cleanup() {
     enemy_boss_remove_tele();
     boss_charging = false;
 }
 
 // the attack finished normally
-function enemy_boss_end()
-{
+function enemy_boss_end() {
     // This attack goes on cooldown.
     boss_cd[boss_attack] = round(boss_cur.cd * boss_cd_scale);
 
@@ -712,11 +637,9 @@ function enemy_boss_end()
 }
 
 // the boss was perfectly parried: it staggers (the parry sets how long)
-function enemy_boss_stagger(_stun_time)
-{
+function enemy_boss_stagger(_stun_time) {
     // This attack goes on a half cooldown so it is not instantly repeated.
-    if (boss_attack != BOSS_ATTACK.NONE)
-    {
+    if (boss_attack != BOSS_ATTACK.NONE) {
         boss_cd[boss_attack] = round(boss_cur.cd * boss_cd_scale * 0.5);
     }
 
@@ -741,8 +664,7 @@ function enemy_boss_stagger(_stun_time)
 // each boss calls this at the very end of its Create event.
 // ============================================================
 
-function enemy_boss_start()
-{
+function enemy_boss_start() {
     // The health bar needs to know the full health.
     total_hp = hp;
     hp_initialized = true;
@@ -755,8 +677,7 @@ function enemy_boss_start()
     // Bosses always know where the player is: start the fight chasing.
     target = instance_nearest(x, y, main_character_Obj);
 
-    if (target != noone)
-    {
+    if (target != noone) {
         last_x = target.x;
         last_y = target.y;
         state = ENEMY_STATE.CHASE;
@@ -773,8 +694,7 @@ function enemy_boss_start()
 // (entering the state is in enemy_change_state, which also resets the bar)
 // ============================================================
 
-function enemy_state_exhausted()
-{
+function enemy_state_exhausted() {
     // No movement.
     move_spd = 0;
 
@@ -782,8 +702,7 @@ function enemy_state_exhausted()
     state_timer--;
 
     // Rested: back to normal.
-    if (state_timer <= 0)
-    {
+    if (state_timer <= 0) {
         enemy_change_state(ENEMY_STATE.CHASE);
     }
 }

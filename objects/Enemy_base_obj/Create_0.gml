@@ -9,6 +9,7 @@
 //=>just orc and skeleton and then game master
 //change the cone of view for enemies? perception is too low
 //finish hard coding the waves . . . up to 18 maybe (5 before boss wave)
+//maybe add ranged attacks
 // ---------- defaults (children override these after event_inherited) ----------
 total_hp   = 10;
 hp         = total_hp;
