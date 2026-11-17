@@ -241,6 +241,7 @@ function Upgrade_system_data(){
 			desc: $"Usually spinning in a circle extremely fast makes one sick and with the addition of a sword things get hairy, but this special ability allows one to SPIN SPIN SPIN with all the grace of a trained proffessional: ability allows a user to spin attack for a certain amount of time with the added effect of pulling enemies closer (Hold {global.special_button} to activate attack)",
 			effects: [
 				{ stat: "special_equipped", op: "set"   ,     value: SpecialState.TSUNAMI},
+				//{ stat: ,op:"set"  value: true},
 			],
 			spriteF: card_nautical_joker_spr,
 			indexF: 2,
@@ -261,7 +262,8 @@ function Upgrade_system_data(){
 
 			effects: [
 			//greater defense: blocked hits drain 20% less of the guard meter
-			{ stat: "dance_of_dragons_unlock", op:"set",value: true}
+			{ stat: "dance_of_dragons_unlock", op:"set",value: true},
+			{ stat: "special_equipped", op:"set",value:  SpecialState.DANCE},
 			],
 			spriteF: card_fantasy_sword_spr,
 			indexF: 12,
@@ -270,8 +272,7 @@ function Upgrade_system_data(){
 			upgrades_possible : 1
 
 		}
-
-				,
+ ,
 					Special_attack_butterfly:
 		{
 
@@ -281,6 +282,7 @@ function Upgrade_system_data(){
 
 			effects: [
 				{ stat: "special_attack_butterfly_unlock", op: "set",  value: true},
+				{ stat: "special_equipped", op:"set",value:  SpecialState.BUTTERFLY},
 			],
 			spriteF: card_forest_joker_spr,
 			indexF: 1,

@@ -188,7 +188,7 @@ idle_vtk_spr   = [adventurer_idle_right_1_spr,   adventurer_idle_backward_1_spr,
 			  adventurer_idle_left_1_spr,    adventurer_idle_forward_1_spr
 			 ];
 //GUI VARIABLES FOR SWORD ART 2
-gui_x_vtk = 350;
+gui_x_vtk = 590;
 gui_y_vtk = 395;
 text_y_add = 20;
 text_x_add_shift = -15;

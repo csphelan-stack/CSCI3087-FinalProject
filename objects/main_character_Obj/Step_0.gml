@@ -153,6 +153,13 @@ else {
 //
 //////////////////////////////////////////////////
 
+////
+//// DELETE BEFORE FINAL PRES
+if(keyboard_check_pressed(global.temp_upgrade_btn)){
+	event_go_upgrade = !event_go_upgrade;	
+}
+
+
 if(event_go_upgrade){
 	//only make one (this runs every step)
 	if(!instance_exists(Upgrade_system_obj)){
