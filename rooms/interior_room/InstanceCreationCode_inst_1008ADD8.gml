@@ -1,0 +1,1 @@
+sprite_index=fortress_char6_idle_spr;

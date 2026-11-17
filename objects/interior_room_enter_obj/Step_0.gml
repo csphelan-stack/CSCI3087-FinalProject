@@ -24,5 +24,3 @@ if(global.waves_complete){
 	}
 }
 
-// (removed: global.prev_room = room_get_name(room); it turned prev_room into the room's name as text
-//  every step. Room End sets it to the room itself as we leave, which is what everything else expects.)

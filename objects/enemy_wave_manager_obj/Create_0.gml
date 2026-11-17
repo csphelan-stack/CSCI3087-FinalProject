@@ -1,3 +1,19 @@
+// ---------- BACK FROM THE INTERIOR (UPGRADE) ROOM: DON'T RESTART THE WAVES ----------
+// leaving a room throws away everything in it, so coming back makes a brand new wave manager,
+// which would start this room's waves all over again.
+// global.prev_room is the room we just walked out of (every door sets it in its Room End).
+// if that was the interior room, we've come back to a room whose waves are already beaten
+// (its interior door only opens once global.waves_complete is true), so:
+//   - say the waves are done, like they were when we left
+//   - and get rid of this wave manager before it starts anything
+// in any other room (like the next room through the gate) prev_room isn't the interior room,
+// so the waves start as normal.
+if (variable_global_exists("prev_room") && global.prev_room == interior_room) {
+    global.waves_complete = true;
+    instance_destroy();
+    exit;   // skip setting up the waves below
+}
+
 current_wave = 0;
 
 wave_queue = [];
@@ -102,5 +118,5 @@ global.wave_current = 0;
 
 // this room's waves haven't been beaten yet. the door to the interior room (interior_room_enter_obj)
 // stays hidden and locked until Step sets this to true after the last wave.
-// note: coming back to a room makes a new wave manager, so this resets and the waves start again
+// (coming back from the interior room never gets this far: the check at the top keeps the waves beaten)
 global.waves_complete = false;

@@ -5,3 +5,7 @@
 view_enabled = true;      // use views (cameras) in this room
 view_visible[0] = true;   // show view 0
 view_camera[0] = cam;     // and make view 0 use our camera (made in Create, moved to follow the player in Step)
+
+if(room == start_room || room == death_room){
+	instance_destroy(main_character_Obj);
+}
