@@ -104,7 +104,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.4.222",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"Colosseum",
   "resources":[
@@ -218,6 +218,9 @@
     {"id":{"name":"snd_game_music","path":"sounds/snd_game_music/snd_game_music.yy",},},
     {"id":{"name":"snd_hurt","path":"sounds/snd_hurt/snd_hurt.yy",},},
     {"id":{"name":"snd_menu_music","path":"sounds/snd_menu_music/snd_menu_music.yy",},},
+    {"id":{"name":"snd_new_room_music","path":"sounds/snd_new_room_music/snd_new_room_music.yy",},},
+    {"id":{"name":"snd_next_room_music","path":"sounds/snd_next_room_music/snd_next_room_music.yy",},},
+    {"id":{"name":"snd_small_boss_music","path":"sounds/snd_small_boss_music/snd_small_boss_music.yy",},},
     {"id":{"name":"snd_spin","path":"sounds/snd_spin/snd_spin.yy",},},
     {"id":{"name":"snd_sword","path":"sounds/snd_sword/snd_sword.yy",},},
     {"id":{"name":"adventurer_attack_backward_spr","path":"sprites/adventurer_attack_backward_spr/adventurer_attack_backward_spr.yy",},},
