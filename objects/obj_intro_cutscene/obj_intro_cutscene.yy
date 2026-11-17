@@ -1,20 +1,18 @@
 {
   "$GMObject":"",
-  "%Name":"empty_npc_obj",
+  "%Name":"obj_intro_cutscene",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"empty_npc_obj",
+  "name":"obj_intro_cutscene",
   "overriddenProperties":[],
   "parent":{
     "name":"npcs",
     "path":"folders/npcs.yy",
   },
-  "parentObjectId":{
-    "name":"wall_obj",
-    "path":"objects/wall_obj/wall_obj.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -31,7 +29,7 @@
   "properties":[],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
-  "solid":true,
+  "solid":false,
   "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
