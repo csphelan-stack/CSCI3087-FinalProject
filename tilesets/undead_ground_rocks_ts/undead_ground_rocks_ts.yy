@@ -8,7 +8,7 @@
     "TileSerialiseData":[],
   },
   "name":"undead_ground_rocks_ts",
-  "out_columns":47,
+  "out_columns":48,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{

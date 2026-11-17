@@ -8,7 +8,7 @@
     "TileSerialiseData":[],
   },
   "name":"dungeon_other_objects_ts",
-  "out_columns":13,
+  "out_columns":14,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{

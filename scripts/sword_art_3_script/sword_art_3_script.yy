@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sword_art_3_script",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sword_art_3_script",
+  "parent":{
+    "name":"Sword_arts",
+    "path":"folders/Main_character/Sword_arts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

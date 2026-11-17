@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"house_of_cards",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"house_of_cards",
+  "parent":{
+    "name":"Sword_arts",
+    "path":"folders/Main_character/Sword_arts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

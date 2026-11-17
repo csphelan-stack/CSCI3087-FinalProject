@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"weapon_draw_script",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"weapon_draw_script",
+  "parent":{
+    "name":"Sword_arts",
+    "path":"folders/Main_character/Sword_arts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

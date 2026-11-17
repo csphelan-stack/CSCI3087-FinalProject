@@ -3,6 +3,33 @@ if (hp <= 0 && state != PlayerState.DEAD){
 	startDeath();
 }
 
+if(house_of_cards_unlock){
+	house_of_cards();
+}
+
+
+
+//may need to take out
+//basically just destroys the enemy_wave_manager once all waves in that room have been completed
+// and I checked it to persisstant on the wave manager object so that it stays like that in the room.
+// (the wave manager isn't persistent any more. global.waves_complete is set to true by the wave manager
+//  after its last wave, and back to false by the Create of the next room's wave manager.
+//  interior_room_enter_obj's Step also destroys the wave manager once the waves are done, so this does the same job.)
+if(global.waves_complete){
+	if(instance_exists(enemy_wave_manager_obj)){
+		instance_destroy(enemy_wave_manager_obj);
+	}
+}
+
+
+if(knife_throw_cooldown >0){
+knife_throw_cooldown--;
+}
+
+if(cooldown_HOC >0){
+cooldown_HOC-=1;
+}
+
 // hurt flinch counts down (attacking, dashing etc. cut it short)
 if (hurt_timer > 0) {
 	hurt_timer -= 1;
@@ -11,6 +38,15 @@ if (hurt_timer > 0) {
 	}
 }
 
+if(combo_timer_period >0){
+	combo_timer_period-=1;
+}
+if(combo_timer_period <=0){
+	swung_dir = true;
+}
+if(sa3_cooldown_time >0){
+	sa3_cooldown_time--;
+}
 
 if(attack_cooldown >0){
 attack_cooldown-=1;
@@ -21,6 +57,25 @@ if(	dash_double_wait_time>0){
 if(dash_cooldown>0){
 dash_cooldown-=1;
 }
+
+if(throwing_knfe_cooldown>0){
+	throwing_knfe_cooldown-=1;
+}
+
+if(health_steal_knives_unlocked){
+	//NEED TO ADD EITHER A COOLDOWN OR A KILL COUNT BEFORE ACTIVATION
+	if(keyboard_check_pressed(global.weapon_change_btn) && throwing_knfe_cooldown<=0){
+		switch_weapon_to_vpk =!switch_weapon_to_vpk;
+	}
+}
+else if(flood_formation_unlock){
+		if(keyboard_check_pressed(global.weapon_change_btn) && sa3_cooldown_time <=0){
+		switch_weapon_to_sa3 =!switch_weapon_to_sa3;
+	}
+}
+
+
+
 
 if(invuln > 0){
 invuln -= 1;
@@ -84,7 +139,11 @@ if(event_go_upgrade){
 	//only make one (this runs every step)
 	if(!instance_exists(Upgrade_system_obj)){
 		instance_create_depth(x,y,-100,Upgrade_system_obj);
+
 	}
+
+
+
 }
 else{
 	if(instance_exists(Upgrade_system_obj)){
@@ -102,7 +161,15 @@ switch (state){
 		applyMovement();
 		break;
 	case PlayerState.ATTACK:
-		attackStatePlayer();
+			if(switch_weapon_to_vpk){
+				sword_art_2();
+			}
+			else if(switch_weapon_to_sa3){
+				sword_art_3_script();
+			}
+			else{
+				attackStatePlayer();
+			}
 		break;
 	case PlayerState.DASH:
 		dashStateMC();

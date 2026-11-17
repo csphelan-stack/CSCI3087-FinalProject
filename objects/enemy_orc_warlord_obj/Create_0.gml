@@ -47,3 +47,4 @@ spr_death = [
     orc_warlord_death_left_spr,
     orc_warlord_death_forward_spr
 ];
+

@@ -47,3 +47,4 @@ spr_death = [
     skeleton_soldier_idle_left_spr,
     skeleton_soldier_idle_forward_spr
 ];
+

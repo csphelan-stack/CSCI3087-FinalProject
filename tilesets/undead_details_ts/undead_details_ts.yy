@@ -8,7 +8,7 @@
     "TileSerialiseData":[],
   },
   "name":"undead_details_ts",
-  "out_columns":23,
+  "out_columns":24,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{

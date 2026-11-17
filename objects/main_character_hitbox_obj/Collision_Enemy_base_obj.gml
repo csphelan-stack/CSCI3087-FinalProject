@@ -25,21 +25,24 @@ if (bf_store) {
 	other.hp -= damage;
 }
 
-var _kb_dir = point_direction(owner.x,owner.y,other.x,other.y);
-other.kb_x = lengthdir_x(knockback,_kb_dir);
-other.kb_y = lengthdir_y(knockback,_kb_dir);
 
-// recoil: the swing pushes the player back too, the opposite way
-if (instance_exists(owner)) {
-	owner.push_x = lengthdir_x(owner.attack_recoil, _kb_dir + 180);
-	owner.push_y = lengthdir_y(owner.attack_recoil, _kb_dir + 180);
+		var _kb_dir = point_direction(owner.x,owner.y,other.x,other.y);
+		other.kb_x = lengthdir_x(knockback,_kb_dir);
+		other.kb_y = lengthdir_y(knockback,_kb_dir);
 
-	// damage number above the enemy (inside with(owner), "other" would be this hitbox, so grab them first)
-	var _enemy = other.id;
-	var _dmg = damage;
-	var _crit = is_crit;
-	if (!bf_store) with (owner) damagePopupAdd(_enemy, _dmg, _crit);   // stored hits show as "x12" instead (butterfliesDraw)
-}
+		// recoil: the swing pushes the player back too, the opposite way
+	if (instance_exists(owner)) {
+			owner.push_x = lengthdir_x(owner.attack_recoil, _kb_dir + 180);
+			owner.push_y = lengthdir_y(owner.attack_recoil, _kb_dir + 180);
+
+			// damage number above the enemy (inside with(owner), "other" would be this hitbox, so grab them first)
+			var _enemy = other.id;
+			var _dmg = damage;
+			var _crit = is_crit;
+			if (!bf_store) with (owner) damagePopupAdd(_enemy, _dmg, _crit);   // stored hits show as "x12" instead (butterfliesDraw)
+	}
+
+
 
 with(other){
 

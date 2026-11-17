@@ -51,3 +51,4 @@ spr_death = [
     lucifer_skeleton_king_death_left_spr,
     lucifer_skeleton_king_death_forward_spr
 ];
+

@@ -10,8 +10,8 @@
   "name":"dash_afterimage_obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Upgrade_system",
-    "path":"folders/Main_character/Upgrade_system.yy",
+    "name":"Sword_arts",
+    "path":"folders/Main_character/Sword_arts.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -3,9 +3,13 @@
   "%Name":"undead_objects_ts",
   "autoTileSets":[],
   "macroPageTiles":{
-    "SerialiseHeight":0,
-    "SerialiseWidth":0,
-    "TileSerialiseData":[],
+    "SerialiseHeight":55,
+    "SerialiseWidth":15,
+    "TileCompressedData":[
+      -711,0,-9,2117,-6,0,-9,2117,-6,0,-9,2117,-5,0,-10,2117,-5,0,-8,2117,-8,0,-7,2117,-8,0,-5,2117,-10,0,
+      -5,2117,-4,0,
+    ],
+    "TileDataFormat":1,
   },
   "name":"undead_objects_ts",
   "out_columns":60,

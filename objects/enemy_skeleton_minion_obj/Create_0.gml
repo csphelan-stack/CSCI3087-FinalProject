@@ -47,3 +47,5 @@ spr_death = [
     skeleton_minion_idle_left_spr,
     skeleton_minion_idle_forward_spr
 ];
+
+

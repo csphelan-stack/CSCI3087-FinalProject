@@ -123,6 +123,7 @@ function parryGuardBreak(){
 /// runs ONCE when he gets stunned
 function startStun(){
 	state = PlayerState.STUNNED;
+	//stun time can be decreased or increased but right now its linked to the player so it isnt based on the enemy
 	stun_timer = stun_time;
 
 	var dir4 = round(facing / 90) mod 4;
@@ -140,101 +141,3 @@ function stunStateMC(){
 }
 
 
-
-// ============================================================
-// SHOCKWAVE / SPECIAL ATTACK VISUALS
-// ============================================================
-// these were the old charge-up parry's effects - the Bladed Tsunami special uses them now
-// (see the SPECIAL ATTACK section of attackState, and the player's Draw event).
-// they run as the player (they use his sword_* / u_* / parry_circle_radius variables from Create).
-//
-// how the special uses them:
-//   Step (while charging):  _charge goes 0 -> 1, then fxRainbowSwordStep() once it's full
-//   Draw (before draw_self): fxChargeCircleDraw(_charge, _charge >= 1)
-//   Draw (the player):       if full fxRainbowSwordDraw() else draw_self(), then fxChargeGlowDraw(_charge)
-//   when full / on release:  fxShockwaveBurst(...)
-// ============================================================
-
-/// the circle on the ground that fills up as it charges. _charge = 0 (empty) to 1 (full)
-function fxChargeCircleDraw(_charge, _full){
-	var _R = parry_circle_radius;
-
-	gpu_set_blendmode(bm_add);
-	draw_set_colour(tsunami_colour);
-
-	// the outline: full size from the start, so you can see what's being filled
-	draw_set_alpha(0.5);
-	for (var i = 0; i < 2; i++) {
-		var _o = _R - i;
-		draw_ellipse(x - _o, y - _o * 0.4, x + _o, y + _o * 0.4, true);
-	}
-
-	// the fill: grows from the middle out to the outline as it charges
-	var _r = _R * _charge;
-	draw_set_alpha(_full ? 0.2 : 0.35);   // softer once full
-	if (_r > 1) {
-		draw_ellipse(x - _r, y - _r * 0.4, x + _r, y + _r * 0.4, false);
-	}
-
-	draw_set_alpha(1);
-	draw_set_colour(c_white);
-	gpu_set_blendmode(bm_normal);
-}
-
-/// draws the player with the palette colours sweeping up his sword (use INSTEAD of draw_self)
-function fxRainbowSwordDraw(){
-	shader_set(parryShader);
-
-	var _uvs = sprite_get_uvs(sprite_index, image_index);
-	shader_set_uniform_f(u_uvs, _uvs[0], _uvs[1], _uvs[2], _uvs[3]);
-	shader_set_uniform_f(u_sweep, sword_sweep);
-	shader_set_uniform_f(u_band, sword_band);
-	shader_set_uniform_f(u_trail_len, sword_trail_len);
-	shader_set_uniform_f(u_colours, sword_colours);
-	shader_set_uniform_f(u_hue, sword_hue);
-	shader_set_uniform_f(u_saturation, sword_saturation);
-	shader_set_uniform_f(u_trail,
-		colour_get_red(sword_trail_colour)   / 255,
-		colour_get_green(sword_trail_colour) / 255,
-		colour_get_blue(sword_trail_colour)  / 255);
-	sword_palette_set(u_pal0, sword_palette[0]);
-	sword_palette_set(u_pal1, sword_palette[1]);
-	sword_palette_set(u_pal2, sword_palette[2]);
-
-	draw_self();
-	shader_reset();
-}
-
-/// hands one colour to the sword shader as red, green, blue from 0 to 1
-function sword_palette_set(_uniform, _colour){
-	shader_set_uniform_f(_uniform,
-		colour_get_red(_colour)   / 255,
-		colour_get_green(_colour) / 255,
-		colour_get_blue(_colour)  / 255);
-}
-
-/// moves the colour band up the sword - call every step while it's showing
-/// (set sword_sweep = 0 and sword_hue = 0 when it starts so it begins at the bottom on the first colours)
-function fxRainbowSwordStep(){
-	sword_sweep += sword_sweep_speed;
-	if (sword_sweep > 1 + sword_band + sword_trail_len) {
-		sword_sweep = 0;
-		sword_hue = (sword_hue + sword_colours) mod array_length(sword_palette);   // next pass = the next colours in sword_palette
-	}
-}
-
-/// he glows in the fx colour while charging, stronger as _charge goes 0 -> 1 (draw AFTER him)
-function fxChargeGlowDraw(_charge){
-	gpu_set_fog(true, tsunami_colour, 0, 0);
-	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.6 * _charge);
-	gpu_set_fog(false, c_white, 0, 0);
-}
-
-/// the ring that bursts outward (parry_shockwave_obj)
-function fxShockwaveBurst(_colour, _radius, _max_radius){
-	var _w = instance_create_depth(x, y, depth + 1, parry_shockwave_obj);
-	_w.colour     = _colour;
-	_w.radius     = _radius;
-	_w.max_radius = _max_radius;
-	return _w;
-}

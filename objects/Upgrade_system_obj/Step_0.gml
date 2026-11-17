@@ -1,3 +1,8 @@
+
+
+
+
+
 if (global.gameIsPaused) exit;
 
 //"choose" needs nothing here: the cards handle hover/flip/click themselves
@@ -31,6 +36,7 @@ switch (phase) {
 		if (_grown && mouse_check_button_pressed(mb_left)) {
 			if (yes_hover) {
 				applyUpgrade(chosen.upg);
+			    audio_play_sound(snd_burn, 20, false);
 				//snap to the big size so the burn lines up with the pixels
 				chosen.card_x = big_x;
 				chosen.card_y = big_y;

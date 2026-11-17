@@ -1,4 +1,7 @@
 // how wide the card is right now (1 = full, 0 = edge-on)
+draw_set_font(global.font_medieval);
+
+
 var _squash = abs(cos(flip * pi));
 var _w = card_w * _squash;
 
@@ -45,14 +48,14 @@ if (flip >= 1 && hovered) {
 	draw_set_font(global.font_medieval);
 
 	var _text   = upg.name + "\n\n" + upg.desc;
-	var _text_w = card_w * 3;   // how wide a line can get before it wraps
-	var _margin = 8;            // gap to keep from the screen edge
+	var _text_w = display_get_gui_width() * 0.5;   // how wide a line can get before it wraps (half the screen)
 
-	// centre the text box under the card...
-	var _text_x = card_x + card_w / 2 - _text_w / 2;
+	// every card's description goes in the same spot: centred on the screen, just under the row of cards
+	// (fa_center centres each line on this x, so it's the middle of the screen, not a left edge)
+	var _text_x = display_get_gui_width() / 2;
+	var _text_y = card_y + card_h + 20;
 
-	// ...then push it back on screen if it hangs off either side
-	_text_x = clamp(_text_x, _margin, display_get_gui_width() - _text_w - _margin);
-
-	draw_text_ext(_text_x, card_y + card_h + 8, _text, 14, _text_w);
+	draw_menu_text(_text_x, _text_y, _text, c_aqua, 1, fa_center, _text_w);
+	//draw_text_ext(_text_x, card_y + card_h + 8, _text, 14, _text_w);
 }
+
