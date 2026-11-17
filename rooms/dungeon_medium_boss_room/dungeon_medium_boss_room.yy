@@ -19,6 +19,7 @@
     {"name":"inst_65473F90","path":"rooms/dungeon_medium_boss_room/dungeon_medium_boss_room.yy",},
     {"name":"inst_140F65BF","path":"rooms/dungeon_medium_boss_room/dungeon_medium_boss_room.yy",},
     {"name":"inst_2B3FF4AE","path":"rooms/dungeon_medium_boss_room/dungeon_medium_boss_room.yy",},
+    {"name":"inst_433A9ACB","path":"rooms/dungeon_medium_boss_room/dungeon_medium_boss_room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -36,6 +37,7 @@
         {"$GMRInstance":"v4","%Name":"inst_65473F90","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_65473F90","objectId":{"name":"spawn_obj","path":"objects/spawn_obj/spawn_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.5,"scaleY":0.5,"x":384.0,"y":544.0,},
         {"$GMRInstance":"v4","%Name":"inst_140F65BF","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_140F65BF","objectId":{"name":"interior_room_enter_obj","path":"objects/interior_room_enter_obj/interior_room_enter_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":400.0,"y":304.0,},
         {"$GMRInstance":"v4","%Name":"inst_2B3FF4AE","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_2B3FF4AE","objectId":{"name":"spawn_exit_interior_obj","path":"objects/spawn_exit_interior_obj/spawn_exit_interior_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":368.0,"y":224.0,},
+        {"$GMRInstance":"v4","%Name":"inst_433A9ACB","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_433A9ACB","objectId":{"name":"enemy_wave_orc_obj","path":"objects/enemy_wave_orc_obj/enemy_wave_orc_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":400.0,"y":160.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"Props","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Props","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":38,"SerialiseWidth":50,"TileCompressedData":[
           -151,-2147483648,2,265,266,-44,-2147483648,6,268435679,268435678,-2147483648,-2147483648,280,281,-44,

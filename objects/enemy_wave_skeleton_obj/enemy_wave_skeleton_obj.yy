@@ -11,7 +11,10 @@
     "name":"wave_scripts_objs",
     "path":"folders/EnemyAI/wave_scripts_objs.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"enemy_wave_manager_obj",
+    "path":"objects/enemy_wave_manager_obj/enemy_wave_manager_obj.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

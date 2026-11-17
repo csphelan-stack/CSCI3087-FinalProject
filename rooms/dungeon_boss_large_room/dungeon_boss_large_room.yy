@@ -16,6 +16,7 @@
     {"name":"inst_4E2A27C8","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
     {"name":"inst_4A9B057D","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
     {"name":"inst_9179473","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
+    {"name":"inst_26E2C6A8","path":"rooms/dungeon_boss_large_room/dungeon_boss_large_room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -30,6 +31,7 @@
         {"$GMRInstance":"v4","%Name":"inst_4E2A27C8","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4E2A27C8","objectId":{"name":"spawn_obj","path":"objects/spawn_obj/spawn_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.5,"scaleY":0.5,"x":736.0,"y":960.0,},
         {"$GMRInstance":"v4","%Name":"inst_4A9B057D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4A9B057D","objectId":{"name":"spawn_exit_interior_obj","path":"objects/spawn_exit_interior_obj/spawn_exit_interior_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":736.0,"y":512.0,},
         {"$GMRInstance":"v4","%Name":"inst_9179473","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_9179473","objectId":{"name":"interior_room_enter_obj","path":"objects/interior_room_enter_obj/interior_room_enter_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":768.0,"y":608.0,},
+        {"$GMRInstance":"v4","%Name":"inst_26E2C6A8","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_26E2C6A8","objectId":{"name":"enemy_wave_cultist_obj","path":"objects/enemy_wave_cultist_obj/enemy_wave_cultist_obj.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":768.0,"y":672.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"Floor","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Floor","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":80,"SerialiseWidth":100,"TileCompressedData":[
           -941,-2147483648,1,0,-7,-2147483648,3,0,-2147483648,0,-89,-2147483648,1,0,-99,-2147483648,1,0,-181,-2147483648,
