@@ -2,6 +2,22 @@ if (global.gameIsPaused){
     exit;
 }
 
+// ---------- first frame in the room ----------
+// (done here and not in Create, so the child has already set its waves)
+if (wave_first_step)
+{
+    wave_first_step = false;
+
+    // this room was beaten before: skip straight to "done"
+    if (remember_when_beaten && variable_struct_exists(global.waves_beaten, room_get_name(room)))
+    {
+        current_wave = array_length(wave_data);
+        global.wave_current = current_wave;
+        global.waves_complete = true;
+        exit;
+    }
+}
+
 if (!wave_active && current_wave < array_length(wave_data)){
 
     //defined earlier as wave delay
@@ -38,7 +54,7 @@ if (!wave_active && current_wave < array_length(wave_data)){
             //get required quantity
             var _count = _group[1];
 
-            //ddd the required enemies to queue
+            //add the required enemies to queue
             for (var j = 0; j < _count; j++){
                 array_push(wave_queue, _enemy_obj);
             }
@@ -78,5 +94,8 @@ if (wave_active && _spawn_complete && _alive_count == 0) {
         //all waves completed?
         // this makes the door to the interior room (interior_room_enter_obj) appear and open on D
         global.waves_complete = true;
+
+        // remember that this room is beaten
+        global.waves_beaten[$ room_get_name(room)] = true;
     }
 }
