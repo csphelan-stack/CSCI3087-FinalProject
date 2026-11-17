@@ -43,7 +43,7 @@ function enemy_wave_spawn_next(){
                     _try_y,
                     _player.x,
                     _player.y
-                ) < 250;
+                ) < wave_spawn_min_dist;
         }
 
         //spawing if everything checks out
@@ -67,10 +67,13 @@ function enemy_wave_spawn_next(){
     }
 
     //create the enemy in the room's instance layer
+    //use the wave layer if the room has it, otherwise the wave object's own layer
+    var _layer = layer_exists(wave_layer) ? wave_layer : layer;
+
     var _new_enemy = instance_create_layer(
         _spawn_x,
         _spawn_y,
-        "Instances",
+        _layer,
         _enemy_obj
     );
 
