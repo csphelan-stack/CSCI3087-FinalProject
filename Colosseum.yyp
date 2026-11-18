@@ -228,6 +228,7 @@
     {"id":{"name":"snd_door","path":"sounds/snd_door/snd_door.yy",},},
     {"id":{"name":"snd_footstep","path":"sounds/snd_footstep/snd_footstep.yy",},},
     {"id":{"name":"snd_game_music","path":"sounds/snd_game_music/snd_game_music.yy",},},
+    {"id":{"name":"snd_heal","path":"sounds/snd_heal/snd_heal.yy",},},
     {"id":{"name":"snd_hurt","path":"sounds/snd_hurt/snd_hurt.yy",},},
     {"id":{"name":"snd_menu_music","path":"sounds/snd_menu_music/snd_menu_music.yy",},},
     {"id":{"name":"snd_new_room_music","path":"sounds/snd_new_room_music/snd_new_room_music.yy",},},

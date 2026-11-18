@@ -152,6 +152,7 @@
     {"name":"snd_door","order":19,"path":"sounds/snd_door/snd_door.yy",},
     {"name":"snd_footstep","order":18,"path":"sounds/snd_footstep/snd_footstep.yy",},
     {"name":"snd_game_music","order":1,"path":"sounds/snd_game_music/snd_game_music.yy",},
+    {"name":"snd_heal","order":20,"path":"sounds/snd_heal/snd_heal.yy",},
     {"name":"snd_hurt","order":5,"path":"sounds/snd_hurt/snd_hurt.yy",},
     {"name":"snd_menu_music","order":9,"path":"sounds/snd_menu_music/snd_menu_music.yy",},
     {"name":"snd_new_room_music","order":15,"path":"sounds/snd_new_room_music/snd_new_room_music.yy",},
