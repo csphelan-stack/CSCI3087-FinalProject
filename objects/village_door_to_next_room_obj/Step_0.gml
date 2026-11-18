@@ -5,6 +5,7 @@ if(keyboard_check_pressed(door_open_button) && collision_circle(x,y,radius,main_
 	if(sprite_open){
 		image_speed =1;            // start playing the opening animation
 		door_was_pressed = true;   // so Animation End changes rooms when the animation finishes
+		audio_play_sound(snd_door, 8, false);
 	}
 }
 

@@ -225,6 +225,8 @@
     {"id":{"name":"snd_dash","path":"sounds/snd_dash/snd_dash.yy",},},
     {"id":{"name":"snd_death_music","path":"sounds/snd_death_music/snd_death_music.yy",},},
     {"id":{"name":"snd_death","path":"sounds/snd_death/snd_death.yy",},},
+    {"id":{"name":"snd_door","path":"sounds/snd_door/snd_door.yy",},},
+    {"id":{"name":"snd_footstep","path":"sounds/snd_footstep/snd_footstep.yy",},},
     {"id":{"name":"snd_game_music","path":"sounds/snd_game_music/snd_game_music.yy",},},
     {"id":{"name":"snd_hurt","path":"sounds/snd_hurt/snd_hurt.yy",},},
     {"id":{"name":"snd_menu_music","path":"sounds/snd_menu_music/snd_menu_music.yy",},},
