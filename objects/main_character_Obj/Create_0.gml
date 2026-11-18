@@ -1,3 +1,13 @@
+footstep_timer = 0;
+audio_sound_gain(snd_footstep, 0.25, 0);
+
+audio_sound_gain(snd_new_room_music, 0.55, 0);
+audio_sound_gain(snd_boss_music, 0.55, 0);
+audio_sound_gain(snd_small_boss_music, 0.55, 0);
+audio_sound_gain(snd_next_room_music, 0.55, 0);
+
+
+
 //This is how you set up a state machine
 //you enum x amounts of states
 // and then put the case switch statement of these states in the player objects step event

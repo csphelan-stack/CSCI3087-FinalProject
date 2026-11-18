@@ -149,6 +149,8 @@
     {"name":"snd_dash","order":3,"path":"sounds/snd_dash/snd_dash.yy",},
     {"name":"snd_death_music","order":10,"path":"sounds/snd_death_music/snd_death_music.yy",},
     {"name":"snd_death","order":8,"path":"sounds/snd_death/snd_death.yy",},
+    {"name":"snd_door","order":19,"path":"sounds/snd_door/snd_door.yy",},
+    {"name":"snd_footstep","order":18,"path":"sounds/snd_footstep/snd_footstep.yy",},
     {"name":"snd_game_music","order":1,"path":"sounds/snd_game_music/snd_game_music.yy",},
     {"name":"snd_hurt","order":5,"path":"sounds/snd_hurt/snd_hurt.yy",},
     {"name":"snd_menu_music","order":9,"path":"sounds/snd_menu_music/snd_menu_music.yy",},

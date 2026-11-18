@@ -39,7 +39,6 @@
     {"name":"inst_1467619F","path":"rooms/outside_dungeon_first_level_room/outside_dungeon_first_level_room.yy",},
     {"name":"inst_A016F06","path":"rooms/outside_dungeon_first_level_room/outside_dungeon_first_level_room.yy",},
     {"name":"inst_3A5ABD1B","path":"rooms/outside_dungeon_first_level_room/outside_dungeon_first_level_room.yy",},
-    
   ],
   "isDnd":false,
   "layers":[

@@ -209,3 +209,16 @@ switch (state){
 		deathStateMC();
 		break;
 }
+
+
+var _moved = point_distance(x, y, xprevious, yprevious) > 0.5;
+if (_moved) {
+    footstep_timer -= 1;
+    if (footstep_timer <= 0) {
+        audio_play_sound(snd_footstep, 4, false);
+        footstep_timer = 18;
+    }
+} else {
+    audio_stop_sound(snd_footstep);
+    footstep_timer = 0;
+}
