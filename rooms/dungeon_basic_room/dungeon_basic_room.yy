@@ -1,7 +1,7 @@
 {
   "$GMRoom":"v1",
   "%Name":"dungeon_basic_room",
-  "creationCodeFile":"",
+  "creationCodeFile":"rooms/dungeon_basic_room/RoomCreationCode.gml",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,

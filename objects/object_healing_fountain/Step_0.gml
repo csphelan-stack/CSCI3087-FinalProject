@@ -25,6 +25,6 @@ if (instance_exists(main_character_Obj)) {
 		_p.hp = _p.total_hp;   // full heal
 		is_full = false;
 		//cooldown = cooldown_time;
-		// audio_play_sound(snd_heal, 20, false);
+	   audio_play_sound(snd_heal, 20, false);
 	}
 }
